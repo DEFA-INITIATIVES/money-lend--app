@@ -2,12 +2,14 @@ import {
   View,
   Text,
   SafeAreaView,
-  Image,
-  TextInput,
-  Button,
   TouchableOpacity,
 } from 'react-native';
 import React from 'react';
+import {EnvelopeIcon} from 'react-native-heroicons/outline';
+import {LockClosedIcon} from 'react-native-heroicons/outline';
+
+import AppTextInput from '../components/AppTextInput';
+import AppButton from '../components/AppButton';
 
 const LoginScreen = () => {
   return (
@@ -18,40 +20,45 @@ const LoginScreen = () => {
             Welcome TO Money Lending
           </Text>
         </View>
+
         <View className=" top-[216px] bg-white w-[360px] h-[360px] rounded-full items-center ">
           <Text className="text-black  font-extrabold text-[32px] mt-[50px]">
             Login
           </Text>
         </View>
 
-        <View className=" top-[410px] absolute ">
-          <Text className="text-black text-[12px] right-[130px]  pb-10">
-            Email
-          </Text>
+        <View className="flex flex-col space-y-1 w-full px-3">
+          <Text className="text-black text-[12px] ml-3">Email</Text>
+
+          <AppTextInput
+            placeholder="raziul.cse@gmail.com"
+            Icon={EnvelopeIcon}
+          />
+
+          <View className="border-[#000113]  border-b w-[300px]" />
         </View>
 
-        <TextInput
-          placeholder="raziul.cse@gmail.com"
-          placeholderTextColor="white"
-          keyboardType="email-address"
-          className="right-[200px]  absolute top-[410px]  mb-3 "
-        />
-        <View className="border-[#000113] absolute top-[460px]  px-0 w-[300px] border-b"></View>
-      </View>
-      <View className="flex-row absolute top-[492px] px-2">
-        <Text className="text-black text-[14px] flex-1 left-10">Passwaord</Text>
-        <Text className="text-black text-[14px] mr-7">Forgot?</Text>
-      </View>
-      <View className="border-[#000113]  absolute top-[522px] border-b w-[300px] m-3 ml-[50px]"></View>
+        <View className="flex-row  px-2 mt-5">
+          <Text className="text-black text-[14px] flex-1 ml-3">Password</Text>
+          <Text className="text-black text-[14px] mr-7">Forgot?</Text>
+        </View>
 
-      <TouchableOpacity className=" top-[546px] absolute  bg-[#000113] border  rounded-[10px] w-[300px] h-[40px] items-center p-2 left-[45px] mt-5 ">
-        <Text className="text-white">Log in</Text>
-      </TouchableOpacity>
-      <View className="top-[628px] absolute  items-center left-[150px]"></View>
-      <View className="absolute top-[664px]   flex-row   ">
-        <TouchableOpacity className="flex-1 px-2 w-[80px] h-[40px]  items-center  border-0 rounded-[4px] ">
-          <Text className="text-black">Don’t have account? Create now</Text>
-        </TouchableOpacity>
+        <View className="flex flex-col space-y-1 w-full px-3">
+          <AppTextInput secureTextEntry={true} Icon={LockClosedIcon} />
+
+          <View className="border-[#000113]  border-b w-[300px]" />
+        </View>
+
+        <View className="w-full px-3 mt-5">
+          <AppButton title="Login" color="dark" />
+        </View>
+
+        <View className="ml-3 mt-5 flex flex-row  space-x-3  ">
+          <Text>Don’t have account?</Text>
+          <TouchableOpacity className=" ">
+            <Text className="text-black">Create now</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </SafeAreaView>
   );
