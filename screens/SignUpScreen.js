@@ -39,7 +39,7 @@ const SignUpScreen = () => {
             </Text>
           </View>
 
-          <View className="flex flex-col space-y-1 w-full  mb-3">
+          <View className="flex flex-col space-y-1 w-full  mb-3 px-3">
             <Text className=" text-[12px] ml-3 text-white">Name</Text>
 
             <AppTextInput
@@ -50,7 +50,7 @@ const SignUpScreen = () => {
             <View className="border-white  border-b w-full" />
           </View>
 
-          <View className="flex flex-col space-y-1 w-full  mb-3">
+          <View className="flex flex-col space-y-1 w-full  mb-3 px-3 ">
             <Text className="text-white text-[12px] ml-3">Email</Text>
 
             <AppTextInput
@@ -77,29 +77,37 @@ const SignUpScreen = () => {
               Icon={IdentificationIcon}
             />
 
-            <View className="border-[#000113]  border-b w-full" />
+            <View className="border-white  border-b w-full" />
           </View>
 
           <View className="flex-row  px-2 mt-5">
             <Text className="text-white text-[14px] flex-1 ml-3">Password</Text>
           </View>
 
-          <View className="flex flex-col space-y-1 w-full ">
-            <AppTextInput secureTextEntry={true} Icon={LockClosedIcon} />
+          <View className="flex flex-col space-y-1 w-full px-3 ">
+            <AppTextInput
+              secureTextEntry={true}
+              Icon={LockClosedIcon}
+              placeholder="1234"
+            />
 
             <View className="border-white  border-b w-full" />
           </View>
 
           <View className="flex-row  px-2 mt-5">
-            <Text className="text-black text-[14px] flex-1 ml-3">
+            <Text className="text-white text-[14px] flex-1 ml-3">
               Confirm Password
             </Text>
           </View>
 
           <View className="flex flex-col space-y-1 w-full px-3">
-            <AppTextInput secureTextEntry={true} Icon={LockClosedIcon} />
+            <AppTextInput
+              secureTextEntry={true}
+              Icon={LockClosedIcon}
+              placeholder="P@ss1234"
+            />
 
-            <View className="border-[#000113]  border-b w-full" />
+            <View className="border-white  border-b w-full" />
           </View>
 
           <View className="w-full px-3 mt-5">

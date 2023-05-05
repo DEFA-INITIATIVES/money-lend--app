@@ -35,7 +35,7 @@ const LoginScreen = () => {
             Icon={EnvelopeIcon}
           />
 
-          <View className="border-white  border-b w-[350px]" />
+          <View className="border-white  border-b w-full" />
         </View>
 
         <View className="flex-row  px-2 mt-5">
@@ -47,10 +47,10 @@ const LoginScreen = () => {
           <AppTextInput
             secureTextEntry={true}
             Icon={LockClosedIcon}
-            placeholder="password"
+            placeholder="P@ss1234"
           />
 
-          <View className="border-white  border-b w-[350px]" />
+          <View className="border-white  border-b w-full" />
         </View>
 
         <View className="w-full px-3 mt-5">

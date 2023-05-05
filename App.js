@@ -9,9 +9,9 @@ function App() {
   return (
     <View>
       {/* <WelcomeScreen /> */}
-      <LoginScreen />
+      {/* <LoginScreen /> */}
       {/* <SignUpScreen /> */}
-      {/* <HomeScreen /> */}
+      <HomeScreen />
     </View>
   );
 }
