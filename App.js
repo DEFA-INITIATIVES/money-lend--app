@@ -4,12 +4,17 @@ import WelcomeScreen from './screens/WelcomeScreen';
 import LoginScreen from './screens/LoginScreen';
 import SignUpScreen from './screens/SignUpScreen';
 import HomeScreen from './screens/HomeScreen';
+<<<<<<< HEAD
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+=======
+import BorrowScreen from './screens/BorrowScreen';
+>>>>>>> 059f891f46101732f64231876f0ce58104d74e6c
 
 function App() {
   const Stack = createNativeStackNavigator();
   return (
+<<<<<<< HEAD
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
@@ -34,6 +39,15 @@ function App() {
         />
       </Stack.Navigator>
     </NavigationContainer>
+=======
+    <View>
+      {/* <WelcomeScreen /> */}
+      {/* <LoginScreen /> */}
+      {/* <SignUpScreen /> */}
+      <HomeScreen />
+      {/* <BorrowScreen/> */}
+    </View>
+>>>>>>> 059f891f46101732f64231876f0ce58104d74e6c
   );
 }
 
