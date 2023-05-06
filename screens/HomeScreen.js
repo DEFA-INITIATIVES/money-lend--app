@@ -77,7 +77,7 @@ const HomeScreen = ({navigation}) => {
 
       <Text className="mt-2 text-[30px] font-bold text-black px-4">More</Text>
 
-      <View className="w-full h-[310px] ">
+      <View className="w-full h-[320px] ">
         <LoanList />
       </View>
 
