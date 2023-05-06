@@ -12,8 +12,8 @@ function App() {
       {/* <WelcomeScreen /> */}
       {/* <LoginScreen /> */}
       {/* <SignUpScreen /> */}
-      {/* <HomeScreen /> */}
-      <BorrowScreen/>
+      <HomeScreen />
+      {/* <BorrowScreen/> */}
     </View>
   );
 }
