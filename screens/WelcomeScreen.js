@@ -1,27 +1,22 @@
-import {
-  View,
-  ImageBackground,
-  Button,
-  TouchableOpacity,
-  Text,
-} from 'react-native';
+import {View, ImageBackground, TouchableOpacity, Text} from 'react-native';
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const WelcomeScreen = ({navigation}) => {
   return (
-    <View>
+    <SafeAreaView>
       <ImageBackground
         source={{
           uri: 'https://images.pexels.com/photos/6771985/pexels-photo-6771985.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
         }}
-        className="w-full h-full">
-        <View className="items-center  mt-[400px] ">
-          <Text className="text-[60px] text-white font-sans font-extrabold ">
-            Here To Telp
-          </Text>
-          <View className="space-y-5">
+        className="w-full h-full ">
+        <View className="w-full h-full  flex items-center">
+          <View className="mt-10">
+            <Text className="text-3xl text-white font-sans font-extrabold ">
+              Welome To money Bank
+            </Text>
+          </View>
+          <View className="flex-1   flex items-center justify-center space-y-5">
             <TouchableOpacity
               className="  bg-black w-[343px] h-[48px] rounded-[10px] items-center p-3"
               onPress={() => navigation.navigate('Login')}>
@@ -29,13 +24,13 @@ const WelcomeScreen = ({navigation}) => {
             </TouchableOpacity>
             <TouchableOpacity
               className="  bg-[#FFFFFF] w-[343px] h-[48px] rounded-[10px] items-center p-3"
-              onPress={() => navigation.navigate('Signup')}>
+              onPress={() => navigation.navigate('Register')}>
               <Text className="text-black  font-extrabold "> Sign up</Text>
             </TouchableOpacity>
           </View>
         </View>
       </ImageBackground>
-    </View>
+    </SafeAreaView>
   );
 };
 

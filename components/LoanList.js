@@ -1,11 +1,20 @@
 import {View, Text, FlatList, ScrollView, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {loandata} from '../utlis/loandata';
-const Item = ({title, duration, credit, percentage, colorbg}) => (
+import {useNavigation} from '@react-navigation/native';
+
+const Item = ({
+  title,
+  duration,
+  credit,
+  percentage,
+  colorbg,
+  getnavigation,
+}) => (
   <View className="w-full px-2 ">
     <View className=" shadow-lg  h-[140px] mt-2 ml-3  mr-3  rounded-md bg-white ">
       <View className="flex-row items-center  p-2">
-        <View className={`rounded-full w-5 h-5 bg-[#fea651] mr-3`}></View>
+        <View className={`rounded-full w-5 h-5 ${colorbg} mr-3`}></View>
         <Text className="text-[20px] font-semibold text-black "> {title}</Text>
         <Text className="ml-3 bg-gray-300 rounded-md p-1"> 1 Minute</Text>
         <Text className="ml-3 bg-gray-300 rounded-md p-1"> {duration}</Text>
@@ -21,7 +30,9 @@ const Item = ({title, duration, credit, percentage, colorbg}) => (
         <Text className="mr-1 font-bold text-[20px] text-gray-500">
           {percentage}
         </Text>
-        <TouchableOpacity className="bg-[#576CB1] h-10  rounded-md p-2 w-14 items-center mr-2 ">
+        <TouchableOpacity
+          className="bg-[#576CB1] h-10  rounded-md p-2 w-14 items-center mr-2 "
+          onPress={getnavigation}>
           <Text className="text-white text-sm">Apply</Text>
         </TouchableOpacity>
       </View>
@@ -30,6 +41,7 @@ const Item = ({title, duration, credit, percentage, colorbg}) => (
 );
 
 const LoanList = () => {
+  const navigation = useNavigation();
   return (
     <ScrollView>
       <FlatList
@@ -41,6 +53,7 @@ const LoanList = () => {
             credit={item.credit}
             percentage={item.percentage}
             colorbg={item.colorbg}
+            getnavigation={() => navigation.navigate('Borrow')}
           />
         )}
         keyExtractor={item => item.id}

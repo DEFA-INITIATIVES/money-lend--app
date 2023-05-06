@@ -12,16 +12,22 @@ import {
   PlusIcon,
   MinusIcon,
   BanknotesIcon,
+  navigation,
 } from 'react-native-heroicons/outline';
 import colors from '../config/colors';
 import AppButton from '../components/AppButton';
+import Bottombar from '../components/Bottombar';
 
-const BorrowScreen = () => {
+const BorrowScreen = ({navigation}) => {
   return (
     <SafeAreaView className="bg-[#435aa6] h-full">
       <ScrollView className="p-5">
         <View className="w-full flex-row items-center justify-between p-2">
-          <ChevronLeftIcon color={colors.white} size={20} />
+          <ChevronLeftIcon
+            color={colors.white}
+            size={20}
+            onPress={() => navigation.goBack()}
+          />
 
           <Text className="text-white text-lg font-medium"> Loan apply </Text>
           <Text className="text-white text-sm"> Details</Text>
@@ -107,6 +113,7 @@ const BorrowScreen = () => {
           </View>
         </View>
       </ScrollView>
+      <Bottombar borrow={true} navigation={navigation} />
     </SafeAreaView>
   );
 };

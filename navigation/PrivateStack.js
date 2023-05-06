@@ -2,6 +2,7 @@ import {View, Text} from 'react-native';
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import BorrowScreen from '../screens/BorrowScreen';
 
 const privateStack = () => {
   const Stack = createNativeStackNavigator();
@@ -17,6 +18,7 @@ const privateStack = () => {
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
         <Stack.Screen name="SignUp" component={SignUpScreen} />
         <Stack.Screen name="Sign Up" component={LoginScreen} />
+        <Stack.Screen name="Borrow" component={BorrowScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

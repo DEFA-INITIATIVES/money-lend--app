@@ -14,7 +14,7 @@ import LoanList from '../components/LoanList';
 import {loandata} from '../utlis/loandata';
 import Bottombar from '../components/Bottombar';
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
   return (
     <View className="bg-white">
       <View className="bg-[#435aa6] w-full h-[230px]">
@@ -77,8 +77,11 @@ const HomeScreen = () => {
 
       <Text className="mt-2 text-[30px] font-bold text-black px-4">More</Text>
 
-      <LoanList />
-      <Bottombar />
+      <View className="w-full h-[310px] ">
+        <LoanList />
+      </View>
+
+      <Bottombar navigation={navigation} />
     </View>
   );
 };

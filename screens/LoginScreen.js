@@ -54,14 +54,18 @@ const LoginScreen = ({navigation}) => {
         </View>
 
         <View className="w-full px-3 mt-5">
-          <AppButton title="Login" color="dark" />
+          <AppButton
+            title="Login"
+            color="dark"
+            onPress={() => navigation.navigate('Welcome')}
+          />
         </View>
 
         <View className="ml-3 mt-5 flex flex-row  space-x-3  ">
           <Text className="text-white">Don’t have account?</Text>
           <TouchableOpacity
             className=" "
-            onPress={() => navigation.navigate('Signup')}>
+            onPress={() => navigation.navigate('Register')}>
             <Text className="text-white">Create now</Text>
           </TouchableOpacity>
         </View>
