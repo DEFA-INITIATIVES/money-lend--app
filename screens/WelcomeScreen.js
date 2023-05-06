@@ -6,8 +6,10 @@ import {
   Text,
 } from 'react-native';
 import React from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-const WelcomeScreen = () => {
+const WelcomeScreen = ({navigation}) => {
   return (
     <View>
       <ImageBackground
@@ -20,10 +22,14 @@ const WelcomeScreen = () => {
             Here To Telp
           </Text>
           <View className="space-y-5">
-            <TouchableOpacity className="  bg-black w-[343px] h-[48px] rounded-[10px] items-center p-3">
+            <TouchableOpacity
+              className="  bg-black w-[343px] h-[48px] rounded-[10px] items-center p-3"
+              onPress={() => navigation.navigate('Login')}>
               <Text className="text-white   font-extrabold "> Log in</Text>
             </TouchableOpacity>
-            <TouchableOpacity className="  bg-[#FFFFFF] w-[343px] h-[48px] rounded-[10px] items-center p-3">
+            <TouchableOpacity
+              className="  bg-[#FFFFFF] w-[343px] h-[48px] rounded-[10px] items-center p-3"
+              onPress={() => navigation.navigate('Signup')}>
               <Text className="text-black  font-extrabold "> Sign up</Text>
             </TouchableOpacity>
           </View>

@@ -6,7 +6,7 @@ import {LockClosedIcon} from 'react-native-heroicons/outline';
 import AppTextInput from '../components/AppTextInput';
 import AppButton from '../components/AppButton';
 
-const LoginScreen = () => {
+const LoginScreen = ({navigation}) => {
   return (
     <SafeAreaView>
       <View className=" bg-[#000113]  h-full items-center relative">
@@ -59,7 +59,9 @@ const LoginScreen = () => {
 
         <View className="ml-3 mt-5 flex flex-row  space-x-3  ">
           <Text className="text-white">Don’t have account?</Text>
-          <TouchableOpacity className=" ">
+          <TouchableOpacity
+            className=" "
+            onPress={() => navigation.navigate('Signup')}>
             <Text className="text-white">Create now</Text>
           </TouchableOpacity>
         </View>

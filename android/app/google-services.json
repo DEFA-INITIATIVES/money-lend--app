@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "463511971587",
+    "project_id": "loanapp-303e6",
+    "storage_bucket": "loanapp-303e6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:463511971587:android:47b4ad24df0caf70822b36",
+        "android_client_info": {
+          "package_name": "com.awesomeproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "463511971587-v4k14g3cg59103uobhshndhpc9dkgn7m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_W4zQqp8dnPX3cY4v7msJ0pcse5kp_FU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "463511971587-v4k14g3cg59103uobhshndhpc9dkgn7m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
