@@ -57,7 +57,7 @@ const LoginScreen = ({navigation}) => {
           <AppButton
             title="Login"
             color="dark"
-            onPress={() => navigation.navigate('Welcome')}
+            onPress={() => navigation.navigate('Dashboard')}
           />
         </View>
 

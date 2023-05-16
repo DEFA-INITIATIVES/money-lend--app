@@ -6,7 +6,7 @@ import {
   ScrollView,
   Image,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {EnvelopeIcon, IdentificationIcon} from 'react-native-heroicons/outline';
 import {
   LockClosedIcon,
@@ -18,6 +18,43 @@ import AppTextInput from '../components/AppTextInput';
 import AppButton from '../components/AppButton';
 
 const SignUpScreen = ({navigation}) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
+  const [nin, setNin] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [confirmPassward, setConfirmPassward] = useState('');
+
+  const onRegister = () => {
+    console.log('Register');
+    if (
+      !email.trim() ||
+      !password.trim() ||
+      !phoneNumber.trim() ||
+      !name.trim() ||
+      !nin ||
+      !confirmPassward
+    ) {
+      console.log('Enter  all fields');
+      return;
+    }
+    auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(() => {
+        console.log('User account created & signed in!');
+      })
+      .catch(error => {
+        if (error.code === 'auth/email-already-in-use') {
+          console.log('That email address is already in use!');
+        }
+
+        if (error.code === 'auth/invalid-email') {
+          console.log('That email address is invalid!');
+        }
+
+        console.error(error);
+      });
+  };
   return (
     <SafeAreaView>
       <ScrollView>
@@ -44,8 +81,9 @@ const SignUpScreen = ({navigation}) => {
 
             <AppTextInput
               placeholder="Muwonge Lawrence"
+              labelValue={name}
               Icon={PencilSquareIcon}
-              onChangeText={data => setPassword(data)}
+              onChangeText={data => setName(data)}
             />
 
             <View className="border-white  border-b w-full" />
@@ -57,7 +95,8 @@ const SignUpScreen = ({navigation}) => {
             <AppTextInput
               placeholder="raziul.cse@gmail.com"
               Icon={EnvelopeIcon}
-              onChangeText={data => setPassword(data)}
+              labelValue={email}
+              onChangeText={data => setEmail(data)}
             />
 
             <View className="border-white  border-b w-full" />
@@ -69,7 +108,8 @@ const SignUpScreen = ({navigation}) => {
             <AppTextInput
               placeholder="+256755168391"
               Icon={PhoneIcon}
-              onChangeText={data => setPassword(data)}
+              labelValue={phoneNumber}
+              onChangeText={data => setPhoneNumber(data)}
             />
 
             <View className="border-white  border-b w-full" />
@@ -81,7 +121,8 @@ const SignUpScreen = ({navigation}) => {
             <AppTextInput
               placeholder="CM9085556GGGHJKLJ"
               Icon={IdentificationIcon}
-              onChangeText={data => setPassword(data)}
+              labelValue={nin}
+              onChangeText={data => setNin(data)}
             />
 
             <View className="border-white  border-b w-full" />
@@ -94,8 +135,10 @@ const SignUpScreen = ({navigation}) => {
           <View className="flex flex-col space-y-1 w-full px-3 ">
             <AppTextInput
               secureTextEntry={true}
+              labelValue={password}
               Icon={LockClosedIcon}
               placeholder="1234"
+              onChangeText={data => setPassword(data)}
             />
 
             <View className="border-white  border-b w-full" />
@@ -111,8 +154,9 @@ const SignUpScreen = ({navigation}) => {
             <AppTextInput
               secureTextEntry={true}
               Icon={LockClosedIcon}
+              labelValue={confirmPassward}
               placeholder="P@ss1234"
-              onChangeText={data => setPassword(data)}
+              onChangeText={data => setConfirmPassward(data)}
             />
 
             <View className="border-white  border-b w-full" />
@@ -122,9 +166,7 @@ const SignUpScreen = ({navigation}) => {
             <AppButton
               title="Sign UP"
               color="dark"
-              onPress={() => navigation.navigate('Welcome')}>
-              {/* {onRegister} */}
-            </AppButton>
+              onPress={() => navigation.navigate('Dasboard')}></AppButton>
           </View>
 
           <View className="ml-3 mt-5 flex flex-row  space-x-3 mb-5">

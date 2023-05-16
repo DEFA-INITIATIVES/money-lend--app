@@ -18,7 +18,7 @@ const Bottombar = ({borrow, navigation}) => {
         <HomeIcon
           size={24}
           color="white"
-          onPress={() => navigation.navigate('Welcome')}
+          onPress={() => navigation.navigate('Home')}
         />
 
         <Text className="text-white">Home</Text>
