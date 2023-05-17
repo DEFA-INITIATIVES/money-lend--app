@@ -12,8 +12,8 @@ const Bottombar = ({borrow, navigation}) => {
   return (
     <View
       className={`${
-        borrow ? '' : 'border'
-      } w-full h-[55px]  pb-1 px-4 z-99 flex-row space-x-14 items-center  bg-[#435aa6]`}>
+        borrow ? '' : 'border border-[#0d1c64]'
+      } w-full h-[55px]  pb-1 px-4 z-99 flex-row space-x-14 items-center  bg-[#0d1c64]`}>
       <View className="items-center">
         <HomeIcon
           size={24}

@@ -17,7 +17,7 @@ import Bottombar from '../components/Bottombar';
 const HomeScreen = ({navigation}) => {
   return (
     <View className="bg-white">
-      <View className="bg-[#435aa6] w-full h-[230px]">
+      <View className="bg-[#0d1c64] w-full h-[230px]">
         <Text className="text-[30px] font-extrabold text-white px-4 mt-5 ">
           Service
         </Text>
@@ -60,7 +60,7 @@ const HomeScreen = ({navigation}) => {
         <View className="bg-[#eaf1fb] w-full h-[70px] mt-2 mr-3 rounded-md">
           <View className="flex-row">
             <View className="flex-1">
-              <Text className="mt-3 text-[20px] font-bold text-[#576CB1] px-3">
+              <Text className="mt-3 text-[20px] font-bold text-[#0d1c64] px-3">
                 New Product launch
               </Text>
               <Text className="px-3 tex-[#e3eafd]">
@@ -77,7 +77,7 @@ const HomeScreen = ({navigation}) => {
 
       <Text className="mt-2 text-[30px] font-bold text-black px-4">More</Text>
 
-      <View className="w-full h-[320px] ">
+      <View className="w-full h-[310px] ">
         <LoanList />
       </View>
 

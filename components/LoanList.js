@@ -26,12 +26,12 @@ const Item = ({
       </View>
 
       <View className=" px-4 flex-row space-x-10">
-        <Text className="text-[#576CB1] font-bold text-[20px]">{credit}</Text>
+        <Text className="text-[#0d1c64s] font-bold text-[20px]">{credit}</Text>
         <Text className="mr-1 font-bold text-[20px] text-gray-500">
           {percentage}
         </Text>
         <TouchableOpacity
-          className="bg-[#576CB1] h-10  rounded-md p-2 w-14 items-center mr-2 "
+          className="bg-[#0d1c64] h-10  rounded-md p-2 w-14 items-center mr-2 "
           onPress={getnavigation}>
           <Text className="text-white text-sm">Apply</Text>
         </TouchableOpacity>
