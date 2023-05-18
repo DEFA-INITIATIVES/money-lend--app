@@ -17,7 +17,7 @@ export default function AppTextInput({
         placeholderTextColor={colors.white}
         value={labelValue}
         onChangeText={onChangeText}
-        className=" w-[255px] px-2 text-white"
+        className="w-[255px] px-2 text-white"
         {...otherProps}
       />
     </View>

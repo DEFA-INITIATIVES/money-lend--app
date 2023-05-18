@@ -12,7 +12,7 @@ import PaymentsScreen from './screens/PaymentsScreen';
 import SettingScreen from './screens/SettingScreen';
 import SplashScreen from './screens/SplashScreen';
 import PrivateStack from './navigation/PrivateStack';
-import PaymentMethodScreen from './screens/PaymentMethodScreen';
+
 
 function App() {
   const Stack = createNativeStackNavigator();
@@ -36,8 +36,8 @@ function App() {
     //     <Stack.Screen name="Setting" component={SettingScreen} />
     //   </Stack.Navigator>
     // </NavigationContainer>
-    // <PrivateStack />
-    <PaymentMethodScreen/>
+    <PrivateStack />
+ 
   );
 }
 
