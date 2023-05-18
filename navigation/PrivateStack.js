@@ -10,6 +10,7 @@ import MessageScreen from '../screens/MessageScreen';
 import {NavigationContainer} from '@react-navigation/native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import CustomDrawer from '../components/CustomDrawer';
+
 const Drawer = createDrawerNavigator();
 
 const privateStack = () => {
