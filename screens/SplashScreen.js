@@ -26,7 +26,7 @@ const SplashScreen = ({navigation}) => {
             fontSize: 30,
             color: '#20315f',
           }}>
-          Money Bank
+          SupaCash
         </Text>
       </View>
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -37,7 +37,7 @@ const SplashScreen = ({navigation}) => {
       </View>
       <TouchableOpacity
         style={{
-          backgroundColor: '#AD40AF',
+          backgroundColor: '#0d1c64',
           padding: 20,
           width: '90%',
           borderRadius: 10,
@@ -45,7 +45,7 @@ const SplashScreen = ({navigation}) => {
           flexDirection: 'row',
           justifyContent: 'space-between',
         }}
-        onPress={() => navigation.navigate('Welome')}>
+        onPress={() => navigation.navigate('Welcome')}>
         <Text
           style={{
             color: 'white',

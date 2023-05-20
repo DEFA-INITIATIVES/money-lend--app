@@ -20,7 +20,7 @@ import Bottombar from '../components/Bottombar';
 
 const BorrowScreen = ({navigation}) => {
   return (
-    <SafeAreaView className="bg-[#435aa6] h-full">
+    <SafeAreaView className="bg-[#0d1c64] h-full">
       <ScrollView className="p-5">
         <View className="w-full flex-row items-center justify-between p-2">
           <ChevronLeftIcon
@@ -61,7 +61,7 @@ const BorrowScreen = ({navigation}) => {
           </Text>
 
           <View className="flex-row items-center space-x-3 space-y-2 flex-wrap p-1 mt-2">
-            <Text className="text-white bg-blue-600 border border-blue-500 py-1 px-2 rounded-full text-center">
+            <Text className="text-white bg-[#0d1c64] border border-blue-500 py-1 px-2 rounded-full text-center">
               6 months{' '}
             </Text>
             <Text className="text-gray-600 border border-gray-500 py-1 px-2 rounded-full text-center">
@@ -71,7 +71,7 @@ const BorrowScreen = ({navigation}) => {
               {' '}
               18 months{' '}
             </Text>
-            <Text className="text-gray-600 border border-gray-500 py-1 px-2 rounded-full text-center">
+            <Text className="text-[#0d1c64] border border-gray-500 py-1 px-2 rounded-full text-center">
               {' '}
               24 months{' '}
             </Text>
@@ -94,17 +94,17 @@ const BorrowScreen = ({navigation}) => {
 
             <View className="w-full flex-row justify-between mt-2 p-3">
               <Text>Down Payment</Text>
-              <Text className="text-blue-600 font-medium">$ 800.00 </Text>
+              <Text className="text-[#0d1c64] font-medium">$ 800.00 </Text>
             </View>
 
             <View className="w-full flex-row justify-between mt-2 p-3">
               <Text> Gross Interest</Text>
-              <Text className="text-blue-600 font-medium">$ 2130.00 </Text>
+              <Text className="text-[#0d1c64] font-medium">$ 2130.00 </Text>
             </View>
 
             <View className="w-full flex-row justify-between mt-2 p-3">
               <Text>Due date</Text>
-              <Text className="text-blue-600 font-medium"> 5th Month </Text>
+              <Text className="text-[#0d1c64] font-medium"> 5th Month </Text>
             </View>
           </View>
 

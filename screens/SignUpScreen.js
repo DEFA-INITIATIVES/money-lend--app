@@ -58,10 +58,10 @@ const SignUpScreen = ({navigation}) => {
   return (
     <SafeAreaView>
       <ScrollView>
-        <View className=" bg-[#000113] h-full items-center relative">
-          <View className="bg-[#1E293B] w-full h-[481.43px]  absolute top-[-127px] items-center">
+        <View className=" bg-white h-full items-center relative">
+          <View className="bg-[#0d1c64] w-full h-[481.43px]  absolute top-[-127px] items-center">
             <Text className="text-white text-[25px] absolute top-[170px] font-semibold  pb-3">
-              Money Bank
+              SupaCash
             </Text>
             <View></View>
             <Image
@@ -70,14 +70,14 @@ const SignUpScreen = ({navigation}) => {
             />
           </View>
 
-          <View className=" top-[216px] bg-[#000113] w-[360px] h-[360px] rounded-full items-center ">
-            <Text className="text-white  font-extrabold text-[32px] mt-[50px]">
+          <View className=" top-[216px] bg-white w-[360px] h-[360px] rounded-full items-center ">
+            <Text className="text-gray-700  font-extrabold text-[32px] mt-[50px]">
               Sign up
             </Text>
           </View>
 
           <View className="flex flex-col space-y-1 w-full  mb-3 px-3">
-            <Text className=" text-[12px] ml-3 text-white">Name</Text>
+            <Text className=" text-[12px] ml-3 text-gray-700">Name</Text>
 
             <AppTextInput
               placeholder="Muwonge Lawrence"
@@ -86,7 +86,7 @@ const SignUpScreen = ({navigation}) => {
               onChangeText={data => setName(data)}
             />
 
-            <View className="border-white  border-b w-full" />
+            <View className="border-[#0d1c64]  border-b w-full" />
           </View>
 
           <View className="flex flex-col space-y-1 w-full  mb-3 px-3 ">
@@ -99,7 +99,7 @@ const SignUpScreen = ({navigation}) => {
               onChangeText={data => setEmail(data)}
             />
 
-            <View className="border-white  border-b w-full" />
+            <View className="border-[#0d1c64]  border-b w-full" />
           </View>
 
           <View className="flex flex-col space-y-1 w-full px-3 mb-3">
@@ -112,7 +112,7 @@ const SignUpScreen = ({navigation}) => {
               onChangeText={data => setPhoneNumber(data)}
             />
 
-            <View className="border-white  border-b w-full" />
+            <View className="border-[#0d1c64]  border-b w-full" />
           </View>
 
           <View className="flex flex-col space-y-1 w-full px-3 mb-3">
@@ -125,7 +125,7 @@ const SignUpScreen = ({navigation}) => {
               onChangeText={data => setNin(data)}
             />
 
-            <View className="border-white  border-b w-full" />
+            <View className="border-[#0d1c64]  border-b w-full" />
           </View>
 
           <View className="flex-row  px-2 mt-5">
@@ -141,7 +141,7 @@ const SignUpScreen = ({navigation}) => {
               onChangeText={data => setPassword(data)}
             />
 
-            <View className="border-white  border-b w-full" />
+            <View className="border-[#0d1c64]  border-b w-full" />
           </View>
 
           <View className="flex-row  px-2 mt-5">
@@ -159,22 +159,22 @@ const SignUpScreen = ({navigation}) => {
               onChangeText={data => setConfirmPassward(data)}
             />
 
-            <View className="border-white  border-b w-full" />
+            <View className="border-[#0d1c64]  border-b w-full" />
           </View>
 
           <View className="w-full px-3 mt-5">
             <AppButton
               title="Sign UP"
-              color="dark"
-              onPress={() => navigation.navigate('Dasboard')}></AppButton>
+              color="primary"
+              onPress={() => navigation.navigate('Welcome')}></AppButton>
           </View>
 
           <View className="ml-3 mt-5 flex flex-row  space-x-3 mb-5">
-            <Text className="text-white">Already have account?</Text>
+            <Text className="text-gray-700">Already have account?</Text>
             <TouchableOpacity
               className=" "
               onPress={() => navigation.navigate('Login')}>
-              <Text className="text-white">Sign in</Text>
+              <Text className="text-gray-700">Sign in</Text>
             </TouchableOpacity>
           </View>
         </View>

@@ -13,7 +13,7 @@ const WelcomeScreen = ({navigation}) => {
         <View className="w-full h-full  flex items-center">
           <View className="mt-10">
             <Text className="text-3xl text-white font-sans font-extrabold ">
-              Welome To money Bank
+              Welome To SupaCash
             </Text>
           </View>
           <View className="flex-1   flex items-center justify-center space-y-5">

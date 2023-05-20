@@ -172,8 +172,7 @@ const PaymentCheckoutScreen = ({navigation}) => {
             <View className="w-full my-2">
               <TouchableOpacity className="flex-row items-center justify-center bg-[#0d1c64] p-2 rounded-md ">
                 <Text className="text-white uppercase text-lg">
-                  {' '}
-                  Make Payment{' '}
+                  Make Payment
                 </Text>
               </TouchableOpacity>
             </View>

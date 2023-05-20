@@ -1,26 +1,29 @@
-import {View, Text, ScrollView, TouchableOpacity} from 'react-native';
+import {View, Text} from 'react-native';
 import React from 'react';
 import {
-  ChartBarIcon,
-  ChatBubbleBottomCenterIcon,
+  Bars3Icon,
   ClipboardDocumentCheckIcon,
   GiftIcon,
-  HomeIcon,
-  HomeModernIcon,
   RectangleStackIcon,
   Square3Stack3DIcon,
 } from 'react-native-heroicons/outline';
 import LoanList from '../components/LoanList';
-import {loandata} from '../utlis/loandata';
 import Bottombar from '../components/Bottombar';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const HomeScreen = ({navigation}) => {
   return (
     <View className="bg-white">
       <View className="bg-[#0d1c64] w-full h-[230px]">
-        <Text className="text-[30px] font-extrabold text-white px-4 mt-5 ">
-          Service
-        </Text>
+        <View className="flex-row px-4 mt-5">
+          <Text className="text-[30px] font-extrabold text-white   flex-1">
+            SupaCash
+          </Text>
+          <TouchableOpacity onPress={() => navigation.openDrawer()}>
+            <Bars3Icon color="white" className="px-3" size={30} />
+          </TouchableOpacity>
+        </View>
+
         <Text className="text-white  font-semibold  text-[14px] px-4">
           {' '}
           Not the same finacial life

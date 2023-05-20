@@ -7,11 +7,10 @@ import {
   SafeAreaView,
   Image,
 } from 'react-native';
-import { ChevronLeftIcon } from 'react-native-heroicons/outline';
+import {ChevronLeftIcon} from 'react-native-heroicons/outline';
 import colors from '../config/colors';
 
-
-const PaymentMethodScreen = ({ navigation }) => {
+const PaymentMethodScreen = ({navigation}) => {
   return (
     <SafeAreaView className="bg-[#0d1c64] h-full">
       <ScrollView className="p-5">
@@ -42,7 +41,6 @@ const PaymentMethodScreen = ({ navigation }) => {
           </Text>
 
           <View className="flex flex-col space-y-3 p-3">
-
             <View className="flex-row items-center space-x-3 p-5 w-full h-20  rounded-md bg-white border border-white shadow-xl">
               <View className=" w-16 h-16 rounded-md">
                 <Image
@@ -104,14 +102,14 @@ const PaymentMethodScreen = ({ navigation }) => {
             </View>
 
             <View className="w-full my-2">
-              <TouchableOpacity className="flex-row items-center justify-center bg-[#0d1c64] p-2 rounded-md ">
+              <TouchableOpacity
+                className="flex-row items-center justify-center bg-[#0d1c64] p-2 rounded-md "
+                onPress={() => navigation.navigate('Checkout')}>
                 <Text className="text-white uppercase text-lg">
-                  {' '}
-                  Add Payment Method{' '}
+                  Add Payment Method
                 </Text>
               </TouchableOpacity>
             </View>
-
           </View>
         </View>
       </ScrollView>

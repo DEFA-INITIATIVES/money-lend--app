@@ -18,8 +18,10 @@ import {
   ShareIcon,
   TableCellsIcon,
 } from 'react-native-heroicons/outline';
+import {useNavigation} from '@react-navigation/native';
 
 const CustomDrawer = props => {
+  const navigation = useNavigation();
   return (
     <View style={{flex: 1}}>
       <DrawerContentScrollView
@@ -72,16 +74,20 @@ const CustomDrawer = props => {
           </View>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => {}} style={{paddingVertical: 15}}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <ArrowLeftOnRectangleIcon size={22} color="gray" />
-            <Text
-              style={{
-                fontSize: 15,
-                fontFamily: 'Roboto-Medium',
-                marginLeft: 5,
-              }}>
-              Sign Out
-            </Text>
+          <View>
+            <TouchableOpacity
+              style={{flexDirection: 'row', alignItems: 'center'}}
+              onPress={() => navigation.navigate('Login')}>
+              <ArrowLeftOnRectangleIcon size={22} color="gray" />
+              <Text
+                style={{
+                  fontSize: 15,
+                  fontFamily: 'Roboto-Medium',
+                  marginLeft: 5,
+                }}>
+                Sign Out
+              </Text>
+            </TouchableOpacity>
           </View>
         </TouchableOpacity>
       </View>

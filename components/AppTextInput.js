@@ -11,13 +11,13 @@ export default function AppTextInput({
   return (
     <View className="flex-row p-3 overflow-hidden">
       <View style={styles.icon}>
-        {Icon && <Icon color={colors.medium} size={20} />}
+        {Icon && <Icon color={colors.primary} size={20} />}
       </View>
       <TextInput
-        placeholderTextColor={colors.white}
+        placeholderTextColor={colors.primary}
         value={labelValue}
         onChangeText={onChangeText}
-        className="w-[255px] px-2 text-white"
+        className="w-[255px] px-2 text-gray-700"
         {...otherProps}
       />
     </View>

@@ -10,6 +10,11 @@ import MessageScreen from '../screens/MessageScreen';
 import {NavigationContainer} from '@react-navigation/native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import CustomDrawer from '../components/CustomDrawer';
+import PaymentMethodScreen from '../screens/PaymentMethodScreen';
+import PaymentCheckoutScreen from '../screens/PaymentCheckoutScreen';
+import SignUpScreen from '../screens/SignUpScreen';
+import LoginScreen from '../screens/LoginScreen';
+import SplashScreen from '../screens/SplashScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -25,11 +30,15 @@ const privateStack = () => {
           },
           headerShown: false,
         }}>
-        <Drawer.Screen name="Home" component={HomeScreen} />
+        <Drawer.Screen name="Home" component={SplashScreen} />
+        <Drawer.Screen name="Welcome" component={HomeScreen} />
         <Drawer.Screen name="Setting" component={SettingScreen} />
-        <Drawer.Screen name="Pay" component={PaymentsScreen} />
+        <Drawer.Screen name="Pay" component={PaymentMethodScreen} />
+        <Drawer.Screen name="Checkout" component={PaymentCheckoutScreen} />
         <Drawer.Screen name="Borrow" component={BorrowScreen} />
-        <Drawer.Screen name="Message" component={MessageScreen} />
+        <Drawer.Screen name="Notification" component={MessageScreen} />
+        <Drawer.Screen name="Register" component={SignUpScreen} />
+        <Drawer.Screen name="Login" component={LoginScreen} />
       </Drawer.Navigator>
     </NavigationContainer>
   );
