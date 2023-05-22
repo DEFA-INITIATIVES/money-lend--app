@@ -7,12 +7,11 @@ import HomeScreen from './screens/HomeScreen';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
 import BorrowScreen from './screens/BorrowScreen';
-import MessageScreen from './screens/MessageScreen';
+import MessageScreen from './screens/NotificationScreen';
 import PaymentsScreen from './screens/PaymentsScreen';
-import SettingScreen from './screens/SettingScreen';
+import SettingScreen from './screens/ContactScreen';
 import SplashScreen from './screens/SplashScreen';
 import PrivateStack from './navigation/PrivateStack';
-
 
 function App() {
   const Stack = createNativeStackNavigator();
@@ -37,7 +36,6 @@ function App() {
     //   </Stack.Navigator>
     // </NavigationContainer>
     <PrivateStack />
- 
   );
 }
 

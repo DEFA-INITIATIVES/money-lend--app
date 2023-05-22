@@ -4,8 +4,10 @@ import {
   ChatBubbleBottomCenterIcon,
   Cog6ToothIcon,
   CurrencyDollarIcon,
+  EnvelopeIcon,
+  EnvelopeOpenIcon,
   HomeIcon,
-  
+  MegaphoneIcon,
 } from 'react-native-heroicons/outline';
 
 const Bottombar = ({borrow, navigation}) => {
@@ -14,7 +16,6 @@ const Bottombar = ({borrow, navigation}) => {
       className={`${
         borrow ? '' : 'border border-[#0d1c64]'
       } w-full h-[55px]  p-2 flex-row items-center justify-around space-x-2  bg-[#0d1c64]`}>
-      
       <TouchableOpacity
         className="items-center"
         onPress={() => navigation.navigate('Welcome')}>
@@ -26,10 +27,10 @@ const Bottombar = ({borrow, navigation}) => {
       <TouchableOpacity
         className="items-center"
         onPress={() => navigation.navigate('Message')}>
-        <ChatBubbleBottomCenterIcon
+        <MegaphoneIcon
           size={24}
           color="white"
-          onPress={() => navigation.navigate('Notification')}
+          onPress={() => navigation.navigate('Notifications')}
         />
         <Text className="text-white">Notifications</Text>
       </TouchableOpacity>
@@ -43,9 +44,9 @@ const Bottombar = ({borrow, navigation}) => {
 
       <TouchableOpacity
         className="items-center"
-        onPress={() => navigation.openDrawer()}>
-        <Cog6ToothIcon size={24} color="white" />
-        <Text className="text-white"> Settings</Text>
+        onPress={() => navigation.navigate('Contact')}>
+        <EnvelopeOpenIcon size={24} color="white" />
+        <Text className="text-white"> Contact</Text>
       </TouchableOpacity>
     </View>
   );
