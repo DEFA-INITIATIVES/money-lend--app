@@ -64,3 +64,79 @@ export const loandata = [
     colorbg: 'bg-[#8821B0]',
   },
 ];
+
+
+  export const chatlist =[{
+
+  id:1,
+  title:"Borrowed",
+  amount:20000,
+  time:2,
+  times:3
+},
+
+
+{
+
+  id:1,
+  title:"Paid",
+  amount:90000,
+  time:7,
+  times:1
+},
+{
+
+  id:1,
+  title:"Borrowed",
+  amount:20000,
+  time:2,
+  times:3
+},
+{
+
+  id:1,
+  title:"Borrowed",
+  amount:20000,
+  time:2,
+  times:3
+},
+{
+
+  id:1,
+  title:"Paid",
+  amount:20000,
+  time:2,
+  times:3
+},
+{
+
+  id:1,
+  title:"Borrowed",
+  amount:20000,
+  time:2,
+  times:3
+},
+{
+
+  id:1,
+  title:"Paid",
+  amount:70000,
+  time:2,
+  times:8
+},
+{
+
+  id:1,
+  title:"Borrowed",
+  amount:70000,
+  time:2,
+  times:5
+},
+{
+
+  id:1,
+  title:"Paid",
+  amount:40000,
+  time:4,
+  times:3
+}]

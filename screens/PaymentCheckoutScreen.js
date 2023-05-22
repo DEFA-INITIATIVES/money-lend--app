@@ -97,7 +97,8 @@ const PaymentCheckoutScreen = ({navigation}) => {
                 </Text>
                 <View className="">
                   <TextInput
-                    placeholder="10/25/2030"
+                    placeholder="10/25"
+                    maxLength={5}
                     placeholderTextColor={colors.dark}
                     value={expiry}
                     underlineColorAndroid="transparent"
@@ -115,9 +116,11 @@ const PaymentCheckoutScreen = ({navigation}) => {
                 </Text>
                 <View className="">
                   <TextInput
+                    secureTextEntry={true}
                     keyboardType="number-pad"
                     placeholder="***"
                     placeholderTextColor={colors.dark}
+                    maxLength={3}
                     value={cvcnumber}
                     underlineColorAndroid="transparent"
                     onChangeText={data => setCvcNumber(data)}

@@ -43,22 +43,20 @@ const Item = ({
 const LoanList = () => {
   const navigation = useNavigation();
   return (
-    <ScrollView>
-      <FlatList
-        data={loandata}
-        renderItem={({item}) => (
-          <Item
-            title={item.title}
-            duration={item.duration}
-            credit={item.credit}
-            percentage={item.percentage}
-            colorbg={item.colorbg}
-            getnavigation={() => navigation.navigate('Borrow')}
-          />
-        )}
-        keyExtractor={item => item.id}
-      />
-    </ScrollView>
+    <FlatList
+      data={loandata}
+      renderItem={({item}) => (
+        <Item
+          title={item.title}
+          duration={item.duration}
+          credit={item.credit}
+          percentage={item.percentage}
+          colorbg={item.colorbg}
+          getnavigation={() => navigation.navigate('Borrow')}
+        />
+      )}
+      keyExtractor={item => item.id}
+    />
   );
 };
 
