@@ -1,4 +1,4 @@
-import {View, Text, SafeAreaView} from 'react-native';
+import {View, Text, SafeAreaView, TouchableOpacity} from 'react-native';
 import React from 'react';
 import Bottombar from '../components/Bottombar';
 import {TextInput} from 'react-native-gesture-handler';
@@ -56,7 +56,11 @@ const SettingScreen = ({navigation}) => {
               className="text-white "
             />
           </View>
-          <AppButton title="SEND" />
+          <View className=" mt-7 mx-3">
+            <TouchableOpacity className="flex-row items-center justify-center bg-[#0d1c64] p-2 rounded-md ">
+              <Text className="text-white uppercase text-lg">Send</Text>
+            </TouchableOpacity>
+          </View>
         </View>
         <Bottombar navigation={navigation} borrow={true} />
       </View>
