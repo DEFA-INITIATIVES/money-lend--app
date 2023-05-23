@@ -109,7 +109,11 @@ const BorrowScreen = ({navigation}) => {
           </View>
 
           <View className="w-full px-3 my-2">
-            <AppButton title="Apply" color="primary" />
+            <AppButton
+              title="Apply"
+              color="primary"
+              onPress={() => navigation.navigate('Details')}
+            />
           </View>
         </View>
       </ScrollView>

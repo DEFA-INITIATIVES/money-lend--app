@@ -8,19 +8,22 @@ import {
   TextInput,
 } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
-import {EnvelopeIcon, MapPinIcon, PhoneIcon} from 'react-native-heroicons/outline';
+import {
+  EnvelopeIcon,
+  MapPinIcon,
+  PhoneIcon,
+} from 'react-native-heroicons/outline';
 import AppTextInput from '../components/AppTextInput';
 import {ArrowLeftIcon, Bars3Icon} from 'react-native-heroicons/outline';
 import Bottombar from '../components/Bottombar';
 import colors from '../config/colors';
 
 const BorrowDetailsScreen = ({navigation}) => {
-
   const [loanAmount, setLoanAmount] = useState('');
   const [employment, setEmpolyment] = useState('');
   const [reason, setReason] = useState('');
   const [selectedDate, setSelectedDate] = useState('');
-  const [ residence , setResidence] = useState('');
+  const [residence, setResidence] = useState('');
 
   return (
     <SafeAreaView className="flex-1">
@@ -29,7 +32,7 @@ const BorrowDetailsScreen = ({navigation}) => {
           <ArrowLeftIcon
             color="white"
             className="mr-10"
-            onPress={() => navigation.navigate('Welcome')}
+            onPress={() => navigation.navigate('Checkout')}
           />
 
           <Text className="text-base text-white font-bold   font-sans text-[20px] flex-1 ">
@@ -171,10 +174,7 @@ const BorrowDetailsScreen = ({navigation}) => {
                 Where do you reside ?
               </Text>
 
-              <AppTextInput
-                placeholder="kampala"
-                Icon={ MapPinIcon }
-              />
+              <AppTextInput placeholder="kampala" Icon={MapPinIcon} />
 
               <View className="border-[#0d1c64]  border-b w-full" />
             </View>
@@ -193,7 +193,6 @@ const BorrowDetailsScreen = ({navigation}) => {
       <View className="">
         <Bottombar navigation={navigation} />
       </View>
-
     </SafeAreaView>
   );
 };

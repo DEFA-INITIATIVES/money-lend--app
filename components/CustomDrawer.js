@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   View,
   Text,
@@ -19,9 +19,12 @@ import {
   TableCellsIcon,
 } from 'react-native-heroicons/outline';
 import {useNavigation} from '@react-navigation/native';
+import {AuthContext} from '../context/AuthContext';
 
 const CustomDrawer = props => {
   const navigation = useNavigation();
+
+  const {logout} = useContext(AuthContext);
   return (
     <View style={{flex: 1}}>
       <DrawerContentScrollView
@@ -77,7 +80,7 @@ const CustomDrawer = props => {
           <View>
             <TouchableOpacity
               style={{flexDirection: 'row', alignItems: 'center'}}
-              onPress={() => navigation.navigate('Login')}>
+              onPress={() => logout()}>
               <ArrowLeftOnRectangleIcon size={22} color="gray" />
               <Text
                 style={{

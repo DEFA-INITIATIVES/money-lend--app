@@ -1,11 +1,14 @@
 import {View, Text, SafeAreaView, TouchableOpacity, Image} from 'react-native';
-import React from 'react';
+import React, {useContext} from 'react';
 import {EnvelopeIcon} from 'react-native-heroicons/outline';
 import {LockClosedIcon} from 'react-native-heroicons/outline';
 import AppTextInput from '../components/AppTextInput';
 import AppButton from '../components/AppButton';
+import {AuthContext} from '../context/AuthContext';
 
 const LoginScreen = ({navigation}) => {
+  const {login, userToken} = useContext(AuthContext);
+  console.log(userToken);
   return (
     <SafeAreaView>
       <View className=" bg-white  h-full items-center relative">
@@ -55,11 +58,7 @@ const LoginScreen = ({navigation}) => {
         </View>
 
         <View className="w-full px-3 mt-5">
-          <AppButton
-            title="Login"
-            color="primary"
-            onPress={() => navigation.navigate('Welcome')}
-          />
+          <AppButton title="Login" color="primary" onPress={() => login()} />
         </View>
 
         <View className="ml-3 mt-5 flex flex-row  space-x-3  ">

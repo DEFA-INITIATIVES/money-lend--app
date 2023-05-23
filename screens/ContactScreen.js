@@ -37,7 +37,7 @@ const SettingScreen = ({navigation}) => {
               className="text-white w-full"
             />
           </View>
-          <View className="border bg-[#0d1c64]   px-4 flex-row items-center rounded-md  mx-3 ">
+          <View className="border opacity-7 s bg-[#0d1c64]   px-4 flex-row items-center rounded-md  mx-3 ">
             <AtSymbolIcon color={colors.white} />
             <AppTextInput
               keyboardType="text"
@@ -49,7 +49,7 @@ const SettingScreen = ({navigation}) => {
           </View>
           <View className="border bg-[#0d1c64]  h-60  px-1  rounded-md  mx-3 ">
             <AppTextInput
-              keyboardType="email"
+              keyboardType="emai;"
               placeholder="Message....."
               placeholderTextColor={colors.white}
               maxLength={50}

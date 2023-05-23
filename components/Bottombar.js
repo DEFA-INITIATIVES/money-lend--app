@@ -15,7 +15,7 @@ const Bottombar = ({borrow, navigation}) => {
       } w-full h-[55px]  p-2 flex-row items-center justify-around space-x-2  bg-[#0d1c64]`}>
       <TouchableOpacity
         className="items-center"
-        onPress={() => navigation.navigate('Welcome')}>
+        onPress={() => navigation.navigate('Home')}>
         <HomeIcon size={24} color="white" />
 
         <Text className="text-white">Home</Text>

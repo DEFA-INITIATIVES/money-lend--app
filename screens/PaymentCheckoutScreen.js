@@ -13,10 +13,8 @@ import {
   ViewfinderCircleIcon,
 } from 'react-native-heroicons/outline';
 import colors from '../config/colors';
-import AppTextInput from '../components/AppTextInput';
 
 const PaymentCheckoutScreen = ({navigation}) => {
-
   const [name, setName] = useState('');
   const [cardNumber, setCardNumber] = useState('');
   const [expiry, setExpiry] = useState('');
@@ -174,13 +172,14 @@ const PaymentCheckoutScreen = ({navigation}) => {
             </View>
 
             <View className="w-full my-2">
-              <TouchableOpacity className="flex-row items-center justify-center bg-[#0d1c64] p-2 rounded-md ">
+              <TouchableOpacity
+                className="flex-row items-center justify-center bg-[#0d1c64] p-2 rounded-md "
+                onPress={() => navigation.navigate('BorrowDatails')}>
                 <Text className="text-white uppercase text-lg">
                   Make Payment
                 </Text>
               </TouchableOpacity>
             </View>
-            
           </View>
         </View>
       </ScrollView>
