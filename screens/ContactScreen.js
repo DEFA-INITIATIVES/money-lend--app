@@ -13,7 +13,7 @@ const SettingScreen = ({navigation}) => {
     <SafeAreaView>
       <View className="bg-white   h-full ">
         <View className=" items-center  pt-4">
-          <Text className="text-black    font-bold text-[24px]   ">
+          <Text className="text-black font-bold text-[24px]">
             {' '}
             Contact
           </Text>

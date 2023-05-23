@@ -16,6 +16,7 @@ import colors from '../config/colors';
 import AppTextInput from '../components/AppTextInput';
 
 const PaymentCheckoutScreen = ({navigation}) => {
+
   const [name, setName] = useState('');
   const [cardNumber, setCardNumber] = useState('');
   const [expiry, setExpiry] = useState('');
@@ -179,6 +180,7 @@ const PaymentCheckoutScreen = ({navigation}) => {
                 </Text>
               </TouchableOpacity>
             </View>
+            
           </View>
         </View>
       </ScrollView>

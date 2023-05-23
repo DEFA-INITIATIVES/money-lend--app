@@ -2,7 +2,6 @@ import {View, Text, SafeAreaView, TouchableOpacity, Image} from 'react-native';
 import React from 'react';
 import {EnvelopeIcon} from 'react-native-heroicons/outline';
 import {LockClosedIcon} from 'react-native-heroicons/outline';
-
 import AppTextInput from '../components/AppTextInput';
 import AppButton from '../components/AppButton';
 

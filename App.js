@@ -1,20 +1,12 @@
 import React from 'react';
-import {View} from 'react-native';
-import WelcomeScreen from './screens/WelcomeScreen';
-import LoginScreen from './screens/LoginScreen';
-import SignUpScreen from './screens/SignUpScreen';
-import HomeScreen from './screens/HomeScreen';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {NavigationContainer} from '@react-navigation/native';
-import BorrowScreen from './screens/BorrowScreen';
-import MessageScreen from './screens/NotificationScreen';
-import PaymentsScreen from './screens/PaymentsScreen';
-import SettingScreen from './screens/ContactScreen';
-import SplashScreen from './screens/SplashScreen';
 import PrivateStack from './navigation/PrivateStack';
 
+
 function App() {
+
   const Stack = createNativeStackNavigator();
+  
   return (
     // <NavigationContainer>
     //   <Stack.Navigator
@@ -36,6 +28,7 @@ function App() {
     //   </Stack.Navigator>
     // </NavigationContainer>
     <PrivateStack />
+    
   );
 }
 
