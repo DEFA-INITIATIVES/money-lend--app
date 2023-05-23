@@ -1,10 +1,7 @@
 import {View, Text, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {
-  ChatBubbleBottomCenterIcon,
-  Cog6ToothIcon,
   CurrencyDollarIcon,
-  EnvelopeIcon,
   EnvelopeOpenIcon,
   HomeIcon,
   MegaphoneIcon,
@@ -26,12 +23,8 @@ const Bottombar = ({borrow, navigation}) => {
 
       <TouchableOpacity
         className="items-center"
-        onPress={() => navigation.navigate('Message')}>
-        <MegaphoneIcon
-          size={24}
-          color="white"
-          onPress={() => navigation.navigate('Notifications')}
-        />
+        onPress={() => navigation.navigate('Notifications')}>
+        <MegaphoneIcon size={24} color="white" />
         <Text className="text-white">Notifications</Text>
       </TouchableOpacity>
 
