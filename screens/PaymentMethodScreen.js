@@ -18,7 +18,7 @@ const PaymentMethodScreen = ({navigation}) => {
           <ChevronLeftIcon
             color={colors.white}
             size={20}
-            onPress={() => navigation.goBack()}
+            onPress={() => navigation.navigate('Welcome')}
           />
 
           <Text className="text-white text-lg font-medium">

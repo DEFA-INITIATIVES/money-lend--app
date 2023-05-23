@@ -49,7 +49,7 @@ const SettingScreen = ({navigation}) => {
           </View>
           <View className="border bg-[#0d1c64]  h-60  px-1  rounded-md  mx-3 ">
             <AppTextInput
-              keyboardType="text"
+              keyboardType="email"
               placeholder="Message....."
               placeholderTextColor={colors.white}
               maxLength={50}

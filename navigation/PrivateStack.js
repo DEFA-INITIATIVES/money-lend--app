@@ -4,9 +4,8 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import BorrowScreen from '../screens/BorrowScreen';
 import HomeScreen from '../screens/HomeScreen';
-import SettingScreen from '../screens/ContactScreen';
-import PaymentsScreen from '../screens/PaymentsScreen';
-import MessageScreen from '../screens/NotificationScreen';
+import ContactScreen from '../screens/ContactScreen';
+import NotificationScreen from '../screens/NotificationScreen';
 import {NavigationContainer} from '@react-navigation/native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import CustomDrawer from '../components/CustomDrawer';
@@ -32,11 +31,11 @@ const privateStack = () => {
         }}>
         <Drawer.Screen name="Home" component={SplashScreen} />
         <Drawer.Screen name="Welcome" component={HomeScreen} />
-        <Drawer.Screen name="Contact" component={SettingScreen} />
+        <Drawer.Screen name="Contact" component={ContactScreen} />
         <Drawer.Screen name="Pay" component={PaymentMethodScreen} />
         <Drawer.Screen name="Checkout" component={PaymentCheckoutScreen} />
         <Drawer.Screen name="Borrow" component={BorrowScreen} />
-        <Drawer.Screen name="Notifications" component={MessageScreen} />
+        <Drawer.Screen name="Notifications" component={NotificationScreen} />
         <Drawer.Screen name="Register" component={SignUpScreen} />
         <Drawer.Screen name="Login" component={LoginScreen} />
       </Drawer.Navigator>

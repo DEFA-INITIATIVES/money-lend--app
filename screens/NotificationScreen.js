@@ -18,11 +18,10 @@ const MessageScreen = ({navigation}) => {
           <ArrowLeftIcon
             color="white"
             className="mr-10"
-            onPress={() => navigation.goBack()}
+            onPress={() => navigation.navigate('Welcome')}
           />
 
           <Text className="text-base text-white font-bold   font-sans text-[20px] flex-1 ">
-            {' '}
             Notifications
           </Text>
           <TouchableOpacity onPress={() => navigation.openDrawer()}>
@@ -35,7 +34,7 @@ const MessageScreen = ({navigation}) => {
 
       <View className="flex-1">
         <ScrollView contentContainerStyle={{flexGrow: 1}}>
-          <View className="flex-1 pb-10" >
+          <View className="flex-1 pb-10">
             <NotificationList />
           </View>
         </ScrollView>
@@ -44,7 +43,6 @@ const MessageScreen = ({navigation}) => {
       <View className="">
         <Bottombar navigation={navigation} />
       </View>
-
     </SafeAreaView>
   );
 };
