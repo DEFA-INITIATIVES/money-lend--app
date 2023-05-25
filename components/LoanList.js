@@ -14,7 +14,7 @@ const Item = ({
   <View className="w-full px-2 ">
     <View className=" shadow-lg  h-[140px] mt-2 ml-3  mr-3  rounded-md bg-white ">
       <View className="flex-row items-center  p-2">
-        <View className={`rounded-full w-5 h-5 bg-yellow-400 mr-3`}></View>
+        <View className={`rounded-full w-5 h-5 bg-${ colorbg } mr-3`}></View>
         <Text className="text-[20px] font-semibold text-black "> {title}</Text>
         <Text className="ml-3 bg-gray-300 rounded-md p-1"> 1 Minute</Text>
         <Text className="ml-3 bg-gray-300 rounded-md p-1"> {duration}</Text>
@@ -26,7 +26,7 @@ const Item = ({
       </View>
 
       <View className=" px-4 flex-row space-x-10">
-        <Text className="text-[#0d1c64s] font-bold text-[20px]">{credit}</Text>
+        <Text className="text-[#0d1c64] font-bold text-[20px]">{credit}</Text>
         <Text className="mr-1 font-bold text-[20px] text-gray-500">
           {percentage}
         </Text>

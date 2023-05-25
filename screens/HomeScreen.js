@@ -1,4 +1,4 @@
-import {View, Text, ScrollView} from 'react-native';
+import {View, Text} from 'react-native';
 import React from 'react';
 import {
   Bars3Icon,
@@ -71,7 +71,7 @@ const HomeScreen = ({navigation}) => {
                 <Text className="mt-3 text-[20px] font-bold text-[#0d1c64] px-3">
                   New Product launch
                 </Text>
-                <Text className="px-3 tex-[#e3eafd]">
+                <Text className="px-3 text-[#e3eafd]">
                   {' '}
                   0 down payment enough new Machine
                 </Text>
@@ -86,22 +86,15 @@ const HomeScreen = ({navigation}) => {
         <Text className="mt-2 text-[30px] font-bold text-black px-4">More</Text>
       </View>
 
-      {/* <View className="w-full h-[310px] ">
-        <LoanList />
-      </View> */}
-
       <View className="flex-1">
-        <ScrollView contentContainerStyle={{flexGrow: 1}}>
-          <View style={{flex: 1}}>
-            <LoanList />
-          </View>
-        </ScrollView>
+        <View style={{flex: 1}}>
+          <LoanList />
+        </View>
       </View>
 
       <View className="">
         <Bottombar navigation={navigation} />
       </View>
-
     </View>
   );
 };

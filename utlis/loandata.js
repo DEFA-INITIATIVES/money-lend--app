@@ -5,7 +5,7 @@ export const loandata = [
     duration: '2-14 days',
     credit: '2500-5000',
     percentage: '0.02%',
-    colorbg: 'bg-red-800',
+    colorbg: 'red-800',
   },
   {
     id: 2,
@@ -13,7 +13,7 @@ export const loandata = [
     duration: '7-20 days',
     credit: '3500-4000',
     percentage: '0.07%',
-    colorbg: 'bg-[#b12322',
+    colorbg: '[#b12322]',
   },
   {
     id: 3,
@@ -21,7 +21,7 @@ export const loandata = [
     duration: '7-14 days',
     credit: '5500-6000',
     percentage: '0.01%',
-    colorbg: 'bg-[#b12322]',
+    colorbg: '[#b12322]',
   },
   {
     id: 4,
@@ -29,7 +29,7 @@ export const loandata = [
     duration: '7-14 days',
     credit: '6500-7000',
     percentage: '0.06%',
-    colorbg: 'bg-[#fea651]',
+    colorbg: '[#fea651]',
   },
   {
     id: 5,
@@ -37,7 +37,7 @@ export const loandata = [
     duration: '7-14 days',
     credit: '6500-7000',
     percentage: '0.06%',
-    colorbg: 'bg-[#b12322]',
+    colorbg: '[#b12322]',
   },
   {
     id: 6,
@@ -45,7 +45,7 @@ export const loandata = [
     duration: '7-14 days',
     credit: '6500-7000',
     percentage: '0.06%',
-    colorbg: 'bg-[#b12322]',
+    colorbg: '[#b12322]',
   },
   {
     id: 7,
@@ -53,7 +53,7 @@ export const loandata = [
     duration: '7-14 days',
     credit: '6500-7000',
     percentage: '0.06%',
-    colorbg: 'bg-[#FEA651]',
+    colorbg: '[#FEA651]',
   },
   {
     id: 8,
@@ -61,12 +61,12 @@ export const loandata = [
     duration: '7-14 days',
     credit: '6500-7000',
     percentage: '0.06%',
-    colorbg: 'bg-[#8821B0]',
+    colorbg: '[#8821B0]',
   },
 ];
 
 
-  export const chatlist =[{
+export const chatlist =[{
 
   id:1,
   title:"Borrowed",

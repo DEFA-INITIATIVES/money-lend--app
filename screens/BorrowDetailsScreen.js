@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -174,7 +174,11 @@ const BorrowDetailsScreen = ({navigation}) => {
                 Where do you reside ?
               </Text>
 
-              <AppTextInput placeholder="kampala" Icon={MapPinIcon} />
+              <AppTextInput 
+               onChangeText={ (data) => setResidence(data)}
+               placeholder="kampala"
+               Icon={MapPinIcon} 
+               />
 
               <View className="border-[#0d1c64]  border-b w-full" />
             </View>

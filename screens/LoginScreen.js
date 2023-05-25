@@ -7,7 +7,7 @@ import AppButton from '../components/AppButton';
 import {AuthContext} from '../context/AuthContext';
 
 const LoginScreen = ({navigation}) => {
-  const {login, userToken} = useContext(AuthContext);
+  const { login, userToken} = useContext(AuthContext);
   console.log(userToken);
   return (
     <SafeAreaView>
