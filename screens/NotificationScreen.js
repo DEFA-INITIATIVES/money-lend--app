@@ -33,11 +33,9 @@ const MessageScreen = ({navigation}) => {
       </View>
 
       <View className="flex-1">
-        <ScrollView contentContainerStyle={{flexGrow: 1}}>
-          <View className="flex-1 pb-10">
-            <NotificationList />
-          </View>
-        </ScrollView>
+        <View className="flex-1 pb-10">
+          <NotificationList />
+        </View>
       </View>
 
       <View className="">

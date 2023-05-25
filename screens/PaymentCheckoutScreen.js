@@ -15,6 +15,7 @@ import {
 import colors from '../config/colors';
 
 const PaymentCheckoutScreen = ({navigation}) => {
+  
   const [name, setName] = useState('');
   const [cardNumber, setCardNumber] = useState('');
   const [expiry, setExpiry] = useState('');
@@ -134,7 +135,7 @@ const PaymentCheckoutScreen = ({navigation}) => {
             <View className="w-full">
               <Text className="text-xs text-gray-500">
                 {' '}
-                Debit cards are accepted of some categories.
+                we only accept Debit cards of some categories.
               </Text>
               <View className="flex-row items-center space-x-3 my-2">
                 <View className=" w-10 h-7 rounded-md">
@@ -174,7 +175,7 @@ const PaymentCheckoutScreen = ({navigation}) => {
             <View className="w-full my-2">
               <TouchableOpacity
                 className="flex-row items-center justify-center bg-[#0d1c64] p-2 rounded-md "
-                onPress={() => navigation.navigate('BorrowDatails')}>
+                onPress={() => console.log("...........Making payment..........")}>
                 <Text className="text-white uppercase text-lg">
                   Make Payment
                 </Text>

@@ -1,66 +1,67 @@
-import {View, Text, SafeAreaView, TouchableOpacity} from 'react-native';
+import { View, Text, SafeAreaView, TouchableOpacity } from 'react-native';
 import React from 'react';
 import Bottombar from '../components/Bottombar';
-import {TextInput} from 'react-native-gesture-handler';
 import colors from '../config/colors';
-import {AtSymbolIcon, UserCircleIcon} from 'react-native-heroicons/outline';
-import AppText from '../components/AppText';
+import { EnvelopeIcon, UserCircleIcon } from 'react-native-heroicons/outline';
 import AppTextInput from '../components/AppTextInput';
-import AppButton from '../components/AppButton';
 
-const SettingScreen = ({navigation}) => {
+
+const ContactScreen = ({navigation}) => {
   return (
     <SafeAreaView>
-      <View className="bg-white   h-full ">
-        <View className=" items-center  pt-4">
-          <Text className="text-black font-bold text-[24px]">
+      <View className="bg-white h-full">
+        
+        <View className="flex items-center justify-center  mt-4">
+         
+          <Text className="text-gray-600 font-bold text-lg">
             {' '}
             Contact
           </Text>
 
-          <Text className=" text-[16px]  mx-10  font-serif mb-2 font-semibold">
+          <Text className=" text-[16px] text-left  mx-10  font-serif mb-2 font-semibold">
             Feel free to get in touch with us via Contact from below.
-            <Text>
-              {' '}
-              Our representatives will respond you as soon as possible
-            </Text>
+            Our representatives will respond you as soon as possible.
           </Text>
+
         </View>
+
         <View className="flex-1 mt-9 space-y-4">
-          <View className="border bg-[#0d1c64]   px-4 flex-row items-center rounded-md  mx-3 ">
-            <UserCircleIcon color={colors.white} />
+          
+          <View className=" bg-gray-100   px-4 flex-row items-center rounded-md  mx-3 ">
+            <UserCircleIcon color={colors.dark} />
             <AppTextInput
-              keyboardType="text"
               placeholder="Enter Your Name"
-              placeholderTextColor={colors.white}
+              placeholderTextColor={colors.dark}
               maxLength={50}
-              className="text-white w-full"
+              className="text-gray-500"
             />
           </View>
-          <View className="border opacity-7 s bg-[#0d1c64]   px-4 flex-row items-center rounded-md  mx-3 ">
-            <AtSymbolIcon color={colors.white} />
+
+          <View className="bg-gray-100  px-4 flex-row items-center rounded-md  mx-3 ">
+            <EnvelopeIcon color={colors.dark} />
             <AppTextInput
-              keyboardType="text"
               placeholder="Enter Your Email"
-              placeholderTextColor={colors.white}
+              placeholderTextColor={colors.dark}
               maxLength={50}
-              className="text-white "
+              className="text-gray-500 "
             />
           </View>
-          <View className="border bg-[#0d1c64]  h-60  px-1  rounded-md  mx-3 ">
+
+          <View className="bg-gray-100 h-60  px-1  rounded-md  mx-3 ">
             <AppTextInput
-              keyboardType="emai;"
-              placeholder="Message....."
-              placeholderTextColor={colors.white}
-              maxLength={50}
-              className="text-white "
+              placeholder="Type your here ....."
+              placeholderTextColor = {colors.dark}
+              maxLength={ 50 }
+              className="text-gray-500 "
             />
           </View>
+
           <View className=" mt-7 mx-3">
             <TouchableOpacity className="flex-row items-center justify-center bg-[#0d1c64] p-2 rounded-md ">
               <Text className="text-white uppercase text-lg">Send</Text>
             </TouchableOpacity>
           </View>
+
         </View>
         <Bottombar navigation={navigation} borrow={true} />
       </View>
@@ -68,4 +69,4 @@ const SettingScreen = ({navigation}) => {
   );
 };
 
-export default SettingScreen;
+export default ContactScreen;

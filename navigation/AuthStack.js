@@ -1,10 +1,11 @@
 import React from 'react';
-import WelcomeScreen from '../screens/WelcomeScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import LoginScreen from '../screens/LoginScreen';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import SplashScreen from '../screens/SplashScreen';
 
 const AuthStack = () => {
+  
   const Stack = createNativeStackNavigator();
 
   return (
@@ -15,9 +16,9 @@ const AuthStack = () => {
         },
         headerShown: false,
       }}>
-      <Stack.Screen name="Home" component={WelcomeScreen} />
-      <Stack.Screen name="Register" component={SignUpScreen} />
+      <Stack.Screen name="Home" component={SplashScreen} />
       <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="Register" component={SignUpScreen} />
     </Stack.Navigator>
   );
 };

@@ -13,7 +13,7 @@ export const loandata = [
     duration: '7-20 days',
     credit: '3500-4000',
     percentage: '0.07%',
-    colorbg: '[#b12322]',
+    colorbg: 'yellow-600',
   },
   {
     id: 3,
@@ -21,7 +21,7 @@ export const loandata = [
     duration: '7-14 days',
     credit: '5500-6000',
     percentage: '0.01%',
-    colorbg: '[#b12322]',
+    colorbg: 'green-600',
   },
   {
     id: 4,
@@ -29,7 +29,7 @@ export const loandata = [
     duration: '7-14 days',
     credit: '6500-7000',
     percentage: '0.06%',
-    colorbg: '[#fea651]',
+    colorbg: 'blue-600',
   },
   {
     id: 5,
@@ -37,7 +37,7 @@ export const loandata = [
     duration: '7-14 days',
     credit: '6500-7000',
     percentage: '0.06%',
-    colorbg: '[#b12322]',
+    colorbg: 'yellow-600',
   },
   {
     id: 6,
@@ -45,7 +45,7 @@ export const loandata = [
     duration: '7-14 days',
     credit: '6500-7000',
     percentage: '0.06%',
-    colorbg: '[#b12322]',
+    colorbg: 'blue-600',
   },
   {
     id: 7,
@@ -53,7 +53,7 @@ export const loandata = [
     duration: '7-14 days',
     credit: '6500-7000',
     percentage: '0.06%',
-    colorbg: '[#FEA651]',
+    colorbg: 'blue-600',
   },
   {
     id: 8,
@@ -61,7 +61,7 @@ export const loandata = [
     duration: '7-14 days',
     credit: '6500-7000',
     percentage: '0.06%',
-    colorbg: '[#8821B0]',
+    colorbg: 'yellow-600',
   },
 ];
 
@@ -78,7 +78,7 @@ export const chatlist =[{
 
 {
 
-  id:1,
+  id:2,
   title:"Paid",
   amount:90000,
   time:7,
@@ -86,7 +86,7 @@ export const chatlist =[{
 },
 {
 
-  id:1,
+  id:3,
   title:"Borrowed",
   amount:20000,
   time:2,
@@ -94,7 +94,7 @@ export const chatlist =[{
 },
 {
 
-  id:1,
+  id:4,
   title:"Borrowed",
   amount:20000,
   time:2,
@@ -102,7 +102,7 @@ export const chatlist =[{
 },
 {
 
-  id:1,
+  id:5,
   title:"Paid",
   amount:20000,
   time:2,
@@ -110,7 +110,7 @@ export const chatlist =[{
 },
 {
 
-  id:1,
+  id:6,
   title:"Borrowed",
   amount:20000,
   time:2,
@@ -118,7 +118,7 @@ export const chatlist =[{
 },
 {
 
-  id:1,
+  id:7,
   title:"Paid",
   amount:70000,
   time:2,
@@ -126,7 +126,7 @@ export const chatlist =[{
 },
 {
 
-  id:1,
+  id:8,
   title:"Borrowed",
   amount:70000,
   time:2,
@@ -134,7 +134,7 @@ export const chatlist =[{
 },
 {
 
-  id:1,
+  id:9,
   title:"Paid",
   amount:40000,
   time:4,

@@ -16,8 +16,13 @@ import {
 
 import AppTextInput from '../components/AppTextInput';
 import AppButton from '../components/AppButton';
+import { AuthContext } from '../context/AuthContext';
 
 const SignUpScreen = ({navigation}) => {
+
+  const { login, userToken} = useContext(AuthContext);
+  console.log(userToken);
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
@@ -25,36 +30,7 @@ const SignUpScreen = ({navigation}) => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [confirmPassward, setConfirmPassward] = useState('');
 
-  const onRegister = () => {
-    console.log('Register');
-    if (
-      !email.trim() ||
-      !password.trim() ||
-      !phoneNumber.trim() ||
-      !name.trim() ||
-      !nin ||
-      !confirmPassward
-    ) {
-      console.log('Enter  all fields');
-      return;
-    }
-    auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then(() => {
-        console.log('User account created & signed in!');
-      })
-      .catch(error => {
-        if (error.code === 'auth/email-already-in-use') {
-          console.log('That email address is already in use!');
-        }
 
-        if (error.code === 'auth/invalid-email') {
-          console.log('That email address is invalid!');
-        }
-
-        console.error(error);
-      });
-  };
   return (
     <SafeAreaView>
       <ScrollView>
@@ -166,7 +142,7 @@ const SignUpScreen = ({navigation}) => {
             <AppButton
               title="Sign UP"
               color="primary"
-              onPress={() => navigation.navigate('Welcome')}></AppButton>
+              onPress={() => login() }></AppButton>
           </View>
 
           <View className="ml-3 mt-5 flex flex-row  space-x-3 mb-5">

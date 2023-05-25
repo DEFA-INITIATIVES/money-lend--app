@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, TextInput, View, Platform} from 'react-native';
+import {StyleSheet, TextInput, View } from 'react-native';
 import colors from '../config/colors';
 
 export default function AppTextInput({
@@ -13,6 +13,7 @@ export default function AppTextInput({
       <View style={styles.icon}>
         {Icon && <Icon color={colors.primary} size={20} />}
       </View>
+
       <TextInput
         placeholderTextColor={colors.primary}
         value={labelValue}

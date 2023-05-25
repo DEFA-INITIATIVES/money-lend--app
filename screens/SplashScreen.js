@@ -1,13 +1,13 @@
 import {View, Text, Image, SafeAreaView, TouchableOpacity} from 'react-native';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import {ArrowRightIcon} from 'react-native-heroicons/outline';
 
-const SplashScreen = ({navigation}) => {
+const SplashScreen = ({ navigation }) => {
+ 
   useEffect(() => {
     setTimeout(() => {
       navigation.navigate('Login');
-    }, 3000);
+    }, 4000);
   }, []);
 
   return (
@@ -45,7 +45,7 @@ const SplashScreen = ({navigation}) => {
           flexDirection: 'row',
           justifyContent: 'space-between',
         }}
-        onPress={() => navigation.navigate('Welcome')}>
+        onPress={() => navigation.navigate('Login')}>
         <Text
           style={{
             color: 'white',
