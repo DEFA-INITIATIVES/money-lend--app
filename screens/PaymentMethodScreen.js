@@ -44,7 +44,9 @@ const PaymentMethodScreen = ({navigation}) => {
             <View className="flex-row items-center space-x-3 p-5 w-full h-20  rounded-md bg-white border border-white shadow-xl">
               <View className=" w-16 h-16 rounded-md">
                 <Image
-                  source={require('../assets/images/master_card.webp')}
+                  source={{
+                    uri: 'https://www.shutterstock.com/image-vector/black-credit-card-template-isolated-600w-342993056.jpg',
+                  }}
                   className="w-full h-full object-cover"
                   resizeMode="cover"
                 />

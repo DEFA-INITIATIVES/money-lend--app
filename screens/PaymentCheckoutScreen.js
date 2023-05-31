@@ -15,7 +15,6 @@ import {
 import colors from '../config/colors';
 
 const PaymentCheckoutScreen = ({navigation}) => {
-  
   const [name, setName] = useState('');
   const [cardNumber, setCardNumber] = useState('');
   const [expiry, setExpiry] = useState('');
@@ -148,7 +147,7 @@ const PaymentCheckoutScreen = ({navigation}) => {
 
                 <View className=" w-10 h-7 rounded-md">
                   <Image
-                    source={require('../assets/images/visa2.jpeg')}
+                    source={require('../assets/images/visa.jpg')}
                     className="w-full h-full object-cover"
                     resizeMode="cover"
                   />
@@ -156,7 +155,9 @@ const PaymentCheckoutScreen = ({navigation}) => {
 
                 <View className=" w-10 h-7 rounded-md">
                   <Image
-                    source={require('../assets/images/master_card.jpg')}
+                    source={{
+                      uri: 'https://www.shutterstock.com/image-vector/humpolec-czech-republic-october-13-600w-2225761257.jpg',
+                    }}
                     className="w-full h-full object-cover"
                     resizeMode="cover"
                   />
@@ -164,7 +165,9 @@ const PaymentCheckoutScreen = ({navigation}) => {
 
                 <View className=" w-10 h-7 rounded-md">
                   <Image
-                    source={require('../assets/images/master_card.webp')}
+                    source={{
+                      uri: 'https://www.shutterstock.com/image-vector/black-credit-card-template-isolated-600w-342993056.jpg',
+                    }}
                     className="w-full h-full object-cover"
                     resizeMode="cover"
                   />
@@ -175,7 +178,9 @@ const PaymentCheckoutScreen = ({navigation}) => {
             <View className="w-full my-2">
               <TouchableOpacity
                 className="flex-row items-center justify-center bg-[#0d1c64] p-2 rounded-md "
-                onPress={() => console.log("...........Making payment..........")}>
+                onPress={() =>
+                  console.log('...........Making payment..........')
+                }>
                 <Text className="text-white uppercase text-lg">
                   Make Payment
                 </Text>
