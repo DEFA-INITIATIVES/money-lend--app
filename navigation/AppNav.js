@@ -8,8 +8,8 @@ const AppNav = () => {
   const {isLoading, userToken} = useContext(AuthContext);
   if (isLoading) {
     return (
-      <View className="flex-1 justify-center items-center">
-        <ActivityIndicator size={lazy} />
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <ActivityIndicator size={'large'} />
       </View>
     );
   }

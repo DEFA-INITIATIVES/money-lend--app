@@ -16,20 +16,18 @@ import {
 
 import AppTextInput from '../components/AppTextInput';
 import AppButton from '../components/AppButton';
-import { AuthContext } from '../context/AuthContext';
+import {AuthContext} from '../context/AuthContext';
 
 const SignUpScreen = ({navigation}) => {
-
-  const { login, userToken} = useContext(AuthContext);
+  const {register, userToken} = useContext(AuthContext);
   console.log(userToken);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
-  const [nin, setNin] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [confirmPassward, setConfirmPassward] = useState('');
-
+  const [ninNumber, setninNumber] = useState('');
+  const [contact, setContact] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   return (
     <SafeAreaView>
@@ -84,8 +82,8 @@ const SignUpScreen = ({navigation}) => {
             <AppTextInput
               placeholder="+256755168391"
               Icon={PhoneIcon}
-              labelValue={phoneNumber}
-              onChangeText={data => setPhoneNumber(data)}
+              labelValue={contact}
+              onChangeText={data => setContact(data)}
             />
 
             <View className="border-[#0d1c64]  border-b w-full" />
@@ -97,8 +95,8 @@ const SignUpScreen = ({navigation}) => {
             <AppTextInput
               placeholder="CM9085556GGGHJKLJ"
               Icon={IdentificationIcon}
-              labelValue={nin}
-              onChangeText={data => setNin(data)}
+              labelValue={ninNumber}
+              onChangeText={data => setninNumber(data)}
             />
 
             <View className="border-[#0d1c64]  border-b w-full" />
@@ -130,9 +128,9 @@ const SignUpScreen = ({navigation}) => {
             <AppTextInput
               secureTextEntry={true}
               Icon={LockClosedIcon}
-              labelValue={confirmPassward}
+              labelValue={confirmPassword}
               placeholder="P@ss1234"
-              onChangeText={data => setConfirmPassward(data)}
+              onChangeText={data => setConfirmPassword(data)}
             />
 
             <View className="border-[#0d1c64]  border-b w-full" />
@@ -142,7 +140,17 @@ const SignUpScreen = ({navigation}) => {
             <AppButton
               title="Sign UP"
               color="primary"
-              onPress={() => login() }></AppButton>
+              onPress={() =>
+                register({
+                  name,
+                  email,
+                  password,
+                  contact,
+                  ninNumber,
+                  password,
+                  confirmPassword,
+                })
+              }></AppButton>
           </View>
 
           <View className="ml-3 mt-5 flex flex-row  space-x-3 mb-5">

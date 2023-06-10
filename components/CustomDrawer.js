@@ -24,7 +24,8 @@ import {AuthContext} from '../context/AuthContext';
 const CustomDrawer = props => {
   const navigation = useNavigation();
 
-  const {logout} = useContext(AuthContext);
+  const {logout, userInfo} = useContext(AuthContext);
+  console.log(userInfo);
   return (
     <View style={{flex: 1}}>
       <DrawerContentScrollView
@@ -44,7 +45,7 @@ const CustomDrawer = props => {
               fontFamily: 'Roboto-Medium',
               marginBottom: 5,
             }}>
-            John Doe
+            {userInfo.name}
           </Text>
           <View style={{flexDirection: 'row'}}>
             <Text
@@ -53,7 +54,7 @@ const CustomDrawer = props => {
                 fontFamily: 'Roboto-Regular',
                 marginRight: 5,
               }}>
-              280 Coins
+              {userInfo.email}
             </Text>
             <FontAwesome5 name="coins" size={14} color="#fff" />
           </View>

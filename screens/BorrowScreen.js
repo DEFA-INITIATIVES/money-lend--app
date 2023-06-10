@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {
   ChevronLeftIcon,
   ChevronUpIcon,
@@ -15,10 +15,29 @@ import {
   navigation,
 } from 'react-native-heroicons/outline';
 import colors from '../config/colors';
+import {useRoute} from '@react-navigation/native';
 import AppButton from '../components/AppButton';
 import Bottombar from '../components/Bottombar';
+import {presets} from '../babel.config';
 
 const BorrowScreen = ({navigation}) => {
+  const route = useRoute();
+  const {item} = route.params;
+
+  console.log(item.minimumCredit);
+
+  const [selectedLoan, SetSelectedLoan] = useState(item.minimumCredit);
+  const handleIcrement = () => {
+    if (selectedLoan !== item.maximumCredit) {
+      SetSelectedLoan(prev => (prev += 1000));
+    }
+  };
+  const handledecrement = () => {
+    if (selectedLoan !== item.minimumCredit) {
+      SetSelectedLoan(prev => (prev -= 1000));
+    }
+  };
+
   return (
     <SafeAreaView className="bg-[#0d1c64] h-full">
       <ScrollView className="p-5">
@@ -26,7 +45,7 @@ const BorrowScreen = ({navigation}) => {
           <ChevronLeftIcon
             color={colors.white}
             size={20}
-            onPress={() => navigation.navigate('Welcome')}
+            onPress={() => navigation.navigate('Home')}
           />
 
           <Text className="text-white text-lg font-medium"> Loan apply </Text>
@@ -43,17 +62,21 @@ const BorrowScreen = ({navigation}) => {
           </Text>
 
           <View className=" mt-2 p-5 flex-row items-center justify-around bg-white border-b-2  border-gray-400 rounded-md">
-            <View className="flex items-center justify-center bg-gray-200 p-3 rounded-md">
+            <TouchableOpacity
+              onPress={handledecrement}
+              className="flex items-center justify-center bg-gray-200 p-3 rounded-md">
               <MinusIcon color={colors.medium} size={14} />
-            </View>
+            </TouchableOpacity>
 
             <Text className="text-2xl text-[#435aa6] font-semibold">
-              12,000
+              {selectedLoan}
             </Text>
 
-            <View className="flex items-center justify-center bg-gray-200 p-3 rounded-md">
+            <TouchableOpacity
+              className="flex items-center justify-center bg-gray-200 p-3 rounded-md"
+              onPress={handleIcrement}>
               <PlusIcon color={colors.medium} size={14} />
-            </View>
+            </TouchableOpacity>
           </View>
 
           <Text className="text-base font-semibold text-gray-700 px-4 mt-2">

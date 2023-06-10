@@ -10,6 +10,7 @@ import {
 import LoanList from '../components/LoanList';
 import Bottombar from '../components/Bottombar';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {useNavigation} from '@react-navigation/native';
 
 const HomeScreen = ({navigation}) => {
   return (

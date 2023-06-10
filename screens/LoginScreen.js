@@ -1,5 +1,5 @@
 import {View, Text, SafeAreaView, TouchableOpacity, Image} from 'react-native';
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {EnvelopeIcon} from 'react-native-heroicons/outline';
 import {LockClosedIcon} from 'react-native-heroicons/outline';
 import AppTextInput from '../components/AppTextInput';
@@ -7,7 +7,9 @@ import AppButton from '../components/AppButton';
 import {AuthContext} from '../context/AuthContext';
 
 const LoginScreen = ({navigation}) => {
-  const { login, userToken} = useContext(AuthContext);
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
+  const {login, userToken} = useContext(AuthContext);
   console.log(userToken);
   return (
     <SafeAreaView>
@@ -35,6 +37,8 @@ const LoginScreen = ({navigation}) => {
           <AppTextInput
             placeholder="raziul.cse@gmail.com"
             Icon={EnvelopeIcon}
+            labelValue={email}
+            onChangeText={text => setEmail(text)}
           />
 
           <View className="border-[#0d1c64]  border-b w-full" />
@@ -52,13 +56,19 @@ const LoginScreen = ({navigation}) => {
             secureTextEntry={true}
             Icon={LockClosedIcon}
             placeholder="P@ss1234"
+            labelValue={password}
+            onChangeText={text => setPassword(text)}
           />
 
           <View className="border-[#0d1c64]  border-b w-full" />
         </View>
 
         <View className="w-full px-3 mt-5">
-          <AppButton title="Login" color="primary" onPress={() => login()} />
+          <AppButton
+            title="Login"
+            color="primary"
+            onPress={() => login({email, password})}
+          />
         </View>
 
         <View className="ml-3 mt-5 flex flex-row  space-x-3  ">
