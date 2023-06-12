@@ -1,16 +1,33 @@
 import {View, Text, SafeAreaView, TouchableOpacity, Image} from 'react-native';
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import {EnvelopeIcon} from 'react-native-heroicons/outline';
 import {LockClosedIcon} from 'react-native-heroicons/outline';
 import AppTextInput from '../components/AppTextInput';
 import AppButton from '../components/AppButton';
 import {AuthContext} from '../context/AuthContext';
+// import {tokens} from 'react-native-paper/lib/typescript/src/styles/themes/v3/tokens';
+import NotificationService from '../components/NotificationService';
 
 const LoginScreen = ({navigation}) => {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
+  const [loginstr, setLoging] = useState('login');
+  const [isLoading, setIsLoading] = useState(false);
   const {login, userToken} = useContext(AuthContext);
   console.log(userToken);
+  const handleLogin = () => {
+    setIsLoading(true);
+
+    login({email, password});
+
+    if (userToken) {
+      NotificationService.showSuccessNotification('signed in  successfully.');
+    } else {
+      NotificationService.showErrorNotification('API request failed.');
+    }
+
+    setIsLoading(false);
+  };
   return (
     <SafeAreaView>
       <View className=" bg-white  h-full items-center relative">
@@ -67,12 +84,14 @@ const LoginScreen = ({navigation}) => {
           <AppButton
             title="Login"
             color="primary"
-            onPress={() => login({email, password})}
+            onPress={() => handleLogin()}
+            isLoading={isLoading}
           />
         </View>
 
         <View className="ml-3 mt-5 flex flex-row  space-x-3  ">
           <Text className="text-gray-700">Don’t have account?</Text>
+
           <TouchableOpacity
             className=" "
             onPress={() => navigation.navigate('Register')}>

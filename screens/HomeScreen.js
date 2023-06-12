@@ -84,7 +84,9 @@ const HomeScreen = ({navigation}) => {
           </View>
         </View>
 
-        <Text className="mt-2 text-[30px] font-bold text-black px-4">More</Text>
+        <Text className="mt-2 text-[20px] font-bold text-black px-4">
+          Select package
+        </Text>
       </View>
 
       <View className="flex-1">

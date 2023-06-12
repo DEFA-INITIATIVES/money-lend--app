@@ -4,29 +4,48 @@ import {
   ScrollView,
   TouchableOpacity,
   SafeAreaView,
+  StyleSheet,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import {
   ChevronLeftIcon,
   ChevronUpIcon,
   PlusIcon,
   MinusIcon,
   BanknotesIcon,
-  navigation,
 } from 'react-native-heroicons/outline';
 import colors from '../config/colors';
 import {useRoute} from '@react-navigation/native';
 import AppButton from '../components/AppButton';
 import Bottombar from '../components/Bottombar';
-import {presets} from '../babel.config';
 
 const BorrowScreen = ({navigation}) => {
+  const [activeButton, setActiveButton] = useState('6 months');
+
   const route = useRoute();
   const {item} = route.params;
-
-  console.log(item.minimumCredit);
-
   const [selectedLoan, SetSelectedLoan] = useState(item.minimumCredit);
+
+  console.log('Minimum :', item.minimumCredit);
+  console.log('Maximum :', item.maximumCredit);
+  console.log('Current State: ', selectedLoan);
+
+  const handleButtonPress = buttonText => {
+    setActiveButton(buttonText);
+  };
+
+  const getButtonStyle = buttonText => {
+    return activeButton === buttonText
+      ? styles.activeButton
+      : styles.inactiveButton;
+  };
+
+  const getButtonTextStyle = buttonText => {
+    return activeButton === buttonText
+      ? styles.activeText
+      : styles.inactiveText;
+  };
+
   const handleIcrement = () => {
     if (selectedLoan !== item.maximumCredit) {
       SetSelectedLoan(prev => (prev += 1000));
@@ -37,6 +56,11 @@ const BorrowScreen = ({navigation}) => {
       SetSelectedLoan(prev => (prev -= 1000));
     }
   };
+
+  // Changing the minimumCredit on change of the item...
+  useEffect(() => {
+    SetSelectedLoan(item.minimumCredit);
+  }, [item]);
 
   return (
     <SafeAreaView className="bg-[#0d1c64] h-full">
@@ -58,7 +82,7 @@ const BorrowScreen = ({navigation}) => {
           </Text>
 
           <Text className="text-xs font-semibold text-gray-500 px-4 mt-1">
-            You can loan up to Ugx 80000
+            You can loan up to Ugx {item.maximumCredit}
           </Text>
 
           <View className=" mt-2 p-5 flex-row items-center justify-around bg-white border-b-2  border-gray-400 rounded-md">
@@ -83,7 +107,7 @@ const BorrowScreen = ({navigation}) => {
             Life of loan
           </Text>
 
-          <View className="flex-row items-center space-x-3 space-y-2 flex-wrap p-1 mt-2">
+          {/* <View className="flex-row items-center space-x-3 space-y-2 flex-wrap p-1 mt-2">
             <Text className="text-white bg-[#0d1c64] border border-blue-500 py-1 px-2 rounded-full text-center">
               6 months{' '}
             </Text>
@@ -102,6 +126,51 @@ const BorrowScreen = ({navigation}) => {
               {' '}
               other{' '}
             </Text>
+          </View> */}
+
+          <View className="flex-row items-center space-x-3 space-y-2 flex-wrap p-1 mt-2">
+            <TouchableOpacity
+              style={[styles.button, getButtonStyle('6 months')]}
+              onPress={() => handleButtonPress('6 months')}>
+              <Text style={[styles.buttonText, getButtonTextStyle('6 months')]}>
+                {'6 months'}
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[styles.button, getButtonStyle('12 months')]}
+              onPress={() => handleButtonPress('12 months')}>
+              <Text
+                style={[styles.buttonText, getButtonTextStyle('12 months')]}>
+                {'12 months'}
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[styles.button, getButtonStyle('18 months')]}
+              onPress={() => handleButtonPress('18 months')}>
+              <Text
+                style={[styles.buttonText, getButtonTextStyle('18 months')]}>
+                {'18 months'}
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[styles.button, getButtonStyle('24 months')]}
+              onPress={() => handleButtonPress('24 months')}>
+              <Text
+                style={[styles.buttonText, getButtonTextStyle('24 months')]}>
+                {'24 months'}
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[styles.button, getButtonStyle('other')]}
+              onPress={() => handleButtonPress('other')}>
+              <Text style={[styles.buttonText, getButtonTextStyle('other')]}>
+                {'other'}
+              </Text>
+            </TouchableOpacity>
           </View>
 
           <View className="flex-row items-center justify-end space-x-2 px-3 mt-2 w-full bg-white rounded-md">
@@ -144,5 +213,41 @@ const BorrowScreen = ({navigation}) => {
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    padding: 8,
+    marginTop: 16,
+  },
+  button: {
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 18,
+    marginVertical: 3,
+    marginHorizontal: 3,
+    borderWidth: 1,
+    borderColor: 'black',
+  },
+  buttonText: {
+    fontSize: 10,
+    textAlign: 'center',
+  },
+  activeButton: {
+    backgroundColor: '#0d1c64',
+  },
+  inactiveButton: {
+    backgroundColor: 'transparent',
+  },
+  activeText: {
+    color: 'white',
+  },
+  inactiveText: {
+    color: 'gray',
+  },
+});
 
 export default BorrowScreen;
