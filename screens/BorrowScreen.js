@@ -26,9 +26,9 @@ const BorrowScreen = ({navigation}) => {
   const {item} = route.params;
   const [selectedLoan, SetSelectedLoan] = useState(item.minimumCredit);
 
-  console.log('Minimum :', item.minimumCredit);
-  console.log('Maximum :', item.maximumCredit);
-  console.log('Current State: ', selectedLoan);
+  // console.log('Minimum :', item.minimumCredit);
+  // console.log('Maximum :', item.maximumCredit);
+  // console.log('Current State: ', selectedLoan);
 
   const handleButtonPress = buttonText => {
     setActiveButton(buttonText);

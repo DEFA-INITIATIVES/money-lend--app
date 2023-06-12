@@ -6,7 +6,6 @@ import AppTextInput from '../components/AppTextInput';
 import AppButton from '../components/AppButton';
 import {AuthContext} from '../context/AuthContext';
 // import {tokens} from 'react-native-paper/lib/typescript/src/styles/themes/v3/tokens';
-import NotificationService from '../components/NotificationService';
 
 const LoginScreen = ({navigation}) => {
   const [email, setEmail] = useState(null);
@@ -15,19 +14,15 @@ const LoginScreen = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(false);
   const {login, userToken} = useContext(AuthContext);
   console.log(userToken);
+
   const handleLogin = () => {
     setIsLoading(true);
 
     login({email, password});
 
-    if (userToken) {
-      NotificationService.showSuccessNotification('signed in  successfully.');
-    } else {
-      NotificationService.showErrorNotification('API request failed.');
-    }
-
     setIsLoading(false);
   };
+
   return (
     <SafeAreaView>
       <View className=" bg-white  h-full items-center relative">

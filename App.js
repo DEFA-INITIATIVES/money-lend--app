@@ -1,7 +1,6 @@
 import React from 'react';
 import {AuthProvider} from './context/AuthContext';
 import AppNav from './navigation/AppNav';
-
 function App() {
   return (
     <AuthProvider>
