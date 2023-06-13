@@ -5,7 +5,13 @@ import {LockClosedIcon} from 'react-native-heroicons/outline';
 import AppTextInput from '../components/AppTextInput';
 import AppButton from '../components/AppButton';
 import {AuthContext} from '../context/AuthContext';
-// import {tokens} from 'react-native-paper/lib/typescript/src/styles/themes/v3/tokens';
+import * as Yup from 'yup';
+import {AppForm, AppFormField, SubmitButton} from '../components/forms';
+
+const validationSchema = Yup.object().shape({
+  email: Yup.string().required().email().label('Email'),
+  password: Yup.string().required().min(4).label('Password'),
+});
 
 const LoginScreen = ({navigation}) => {
   const [email, setEmail] = useState(null);
@@ -13,11 +19,14 @@ const LoginScreen = ({navigation}) => {
   const [loginstr, setLoging] = useState('login');
   const [isLoading, setIsLoading] = useState(false);
   const {login, userToken} = useContext(AuthContext);
+
   console.log(userToken);
 
-  const handleLogin = () => {
+  const handleLogin = values => {
     setIsLoading(true);
 
+    // Logging in the user.....
+    const {email, password} = values;
     login({email, password});
 
     setIsLoading(false);
@@ -43,46 +52,49 @@ const LoginScreen = ({navigation}) => {
           </Text>
         </View>
 
-        <View className="flex flex-col space-y-1 w-full px-3">
-          <Text className="text-gray-700 text-[12px] ml-3">Email</Text>
+        <AppForm
+          initialValues={{email: '', password: ''}}
+          onSubmit={values => handleLogin(values)}
+          validationSchema={validationSchema}>
+          <View className="flex flex-col space-y-1 w-full px-3">
+            <Text className="text-gray-700 text-[12px] ml-3">Email</Text>
 
-          <AppTextInput
-            placeholder="raziul.cse@gmail.com"
-            Icon={EnvelopeIcon}
-            labelValue={email}
-            onChangeText={text => setEmail(text)}
-          />
+            <AppFormField
+              autoCapitalize="none"
+              autoCorrect={false}
+              placeholder="examplemail@gmail.com"
+              Icon={EnvelopeIcon}
+              name="email"
+              keyBoardType="email-address"
+              textContentType="emailAddress"
+            />
+          </View>
 
-          <View className="border-[#0d1c64]  border-b w-full" />
-        </View>
+          <View className="flex-row  px-2 mt-5">
+            <Text className="text-gray-700 text-[14px] flex-1 ml-3">
+              Password
+            </Text>
+            <Text className="text-gray-700 text-[14px] mr-7">
+              Forgot Password?
+            </Text>
+          </View>
 
-        <View className="flex-row  px-2 mt-5">
-          <Text className="text-gray-700 text-[14px] flex-1 ml-3">
-            Password
-          </Text>
-          <Text className="text-white text-[14px] mr-7">Forgot?</Text>
-        </View>
+          <View className="w-full mt-3 px-3">
+            <AppFormField
+              autoCapitalize="none"
+              autoCorrect={false}
+              placeholder="Password"
+              Icon={LockClosedIcon}
+              name="password"
+              textContentType="password"
+              secureTextEntry={true}
+            />
+          </View>
 
-        <View className="flex flex-col space-y-1 w-full px-3">
-          <AppTextInput
-            secureTextEntry={true}
-            Icon={LockClosedIcon}
-            placeholder="P@ss1234"
-            labelValue={password}
-            onChangeText={text => setPassword(text)}
-          />
-
-          <View className="border-[#0d1c64]  border-b w-full" />
-        </View>
-
-        <View className="w-full px-3 mt-5">
-          <AppButton
-            title="Login"
-            color="primary"
-            onPress={() => handleLogin()}
-            isLoading={isLoading}
-          />
-        </View>
+          <View className="w-full px-3 mt-3">
+            <SubmitButton isLoading={isLoading} title="login" />
+          </View>
+        </AppForm>
 
         <View className="ml-3 mt-5 flex flex-row  space-x-3  ">
           <Text className="text-gray-700">Don’t have account?</Text>

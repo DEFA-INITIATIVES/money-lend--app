@@ -13,11 +13,13 @@ export default function AppButton({
   color = 'primary',
   isLoading,
 }) {
+
+console.log("Checking the loading status:",isLoading);
   return (
     <TouchableOpacity
-      style={[styles.button, {backgroundColor: colors[color]}]}
+      style={[styles.button, { backgroundColor: colors[color] }]}
       onPress={onPress}>
-      {isLoading ? (
+      { isLoading ? (
         <ActivityIndicator size="large" color="white" />
       ) : (
         <Text style={styles.text}>{title}</Text>

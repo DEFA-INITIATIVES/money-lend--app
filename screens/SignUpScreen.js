@@ -13,21 +13,39 @@ import {
   PhoneIcon,
   PencilSquareIcon,
 } from 'react-native-heroicons/outline';
-
-import AppTextInput from '../components/AppTextInput';
-import AppButton from '../components/AppButton';
+import * as Yup from 'yup';
 import {AuthContext} from '../context/AuthContext';
+import {AppForm, AppFormField, SubmitButton } from '../components/forms';
+
+const validationSchema = Yup.object().shape({
+  email: Yup.string().required().email().label('Email'),
+  password: Yup.string().required().min(4).label('Password'),
+  name: Yup.string().required().label('Name'),
+  ninNumber: Yup.string().required().label('NinNumber'),
+  contact: Yup.string().required().label('Contact'),
+  confirmPassword: Yup.string().required().label('ConfirmPassword'),
+});
 
 const SignUpScreen = ({navigation}) => {
+  const [isLoading, setIsLoading] = useState(false);
   const {register, userToken} = useContext(AuthContext);
-  console.log(userToken);
+  // console.log(userToken);
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
-  const [ninNumber, setninNumber] = useState('');
-  const [contact, setContact] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const handelRegister = values => {
+    // console.log('Recieved values', values);
+     setIsLoading(true);
+    const {name, email, password, contact, ninNumber, confirmPassword} = values;
+    register({
+      name,
+      email,
+      password,
+      contact,
+      ninNumber,
+      confirmPassword,
+    });
+
+    setIsLoading(false);
+  };
 
   return (
     <SafeAreaView>
@@ -50,108 +68,102 @@ const SignUpScreen = ({navigation}) => {
             </Text>
           </View>
 
-          <View className="flex flex-col space-y-1 w-full  mb-3 px-3">
-            <Text className=" text-[12px] ml-3 text-gray-700">Name</Text>
+          <AppForm
+            initialValues={{
+              email: '',
+              password: '',
+              name: '',
+              ninNumber: '',
+              contact: '',
+              confirmPassword: '',
+            }}
+            onSubmit={values => handelRegister(values)}
+            validationSchema={validationSchema}>
+            <View className="flex flex-col space-y-1 w-full px-3">
+              <Text className="text-gray-700 text-[12px] ml-3">Name</Text>
 
-            <AppTextInput
-              placeholder="Muwonge Lawrence"
-              labelValue={name}
-              Icon={PencilSquareIcon}
-              onChangeText={data => setName(data)}
-            />
+              <AppFormField
+                autoCapitalize="none"
+                autoCorrect={false}
+                placeholder="Muwonge Lawrence"
+                Icon={PencilSquareIcon}
+                name="name"
+              />
+            </View>
 
-            <View className="border-[#0d1c64]  border-b w-full" />
-          </View>
+            <View className="flex flex-col space-y-1 w-full px-3 mt-2">
+              <Text className="text-gray-700 text-[12px] ml-3">Email</Text>
 
-          <View className="flex flex-col space-y-1 w-full  mb-3 px-3 ">
-            <Text className="text-white text-[12px] ml-3">Email</Text>
+              <AppFormField
+                autoCapitalize="none"
+                autoCorrect={false}
+                placeholder="examplemail@gmail.com"
+                Icon={EnvelopeIcon}
+                name="email"
+                keyBoardType="email-address"
+                textContentType="emailAddress"
+              />
+            </View>
 
-            <AppTextInput
-              placeholder="raziul.cse@gmail.com"
-              Icon={EnvelopeIcon}
-              labelValue={email}
-              onChangeText={data => setEmail(data)}
-            />
+            <View className="flex flex-col space-y-1 w-full px-3 mt-2">
+              <Text className="text-gray-700 text-[12px] ml-3">Contact</Text>
 
-            <View className="border-[#0d1c64]  border-b w-full" />
-          </View>
+              <AppFormField
+                autoCapitalize="none"
+                autoCorrect={false}
+                placeholder="+256755168391"
+                Icon={PhoneIcon}
+                name="contact"
+              />
+            </View>
 
-          <View className="flex flex-col space-y-1 w-full px-3 mb-3">
-            <Text className="text-white text-[12px] ml-3">Contact</Text>
+            <View className="flex flex-col space-y-1 w-full px-3 mt-2">
+              <Text className="text-gray-700 text-[12px] ml-3">NIN Number</Text>
 
-            <AppTextInput
-              placeholder="+256755168391"
-              Icon={PhoneIcon}
-              labelValue={contact}
-              onChangeText={data => setContact(data)}
-            />
+              <AppFormField
+                autoCapitalize="none"
+                autoCorrect={false}
+                placeholder="CM9085556GGGHJKLJ"
+                Icon={IdentificationIcon}
+                name="ninNumber"
+              />
+            </View>
 
-            <View className="border-[#0d1c64]  border-b w-full" />
-          </View>
+            <View className="flex flex-col space-y-1 w-full px-3 mt-2">
+              <Text className="text-gray-700 text-[12px] ml-3">Password</Text>
 
-          <View className="flex flex-col space-y-1 w-full px-3 mb-3">
-            <Text className="text-white text-[12px] ml-3">NIN</Text>
+              <AppFormField
+                autoCapitalize="none"
+                autoCorrect={false}
+                placeholder="P@ss1234"
+                Icon={LockClosedIcon}
+                name="password"
+                textContentType="password"
+                secureTextEntry={true}
+              />
+            </View>
 
-            <AppTextInput
-              placeholder="CM9085556GGGHJKLJ"
-              Icon={IdentificationIcon}
-              labelValue={ninNumber}
-              onChangeText={data => setninNumber(data)}
-            />
+            <View className="flex flex-col space-y-1 w-full px-3 mt-2">
+              <Text className="text-gray-700 text-[12px] ml-3">
+                Confirm Password
+              </Text>
 
-            <View className="border-[#0d1c64]  border-b w-full" />
-          </View>
+              <AppFormField
+                autoCapitalize="none"
+                autoCorrect={false}
+                placeholder="P@ss1234"
+                Icon={LockClosedIcon}
+                name="confirmPassword"
+                textContentType="password"
+                secureTextEntry={true}
+              />
+            </View>
 
-          <View className="flex-row  px-2 mt-5">
-            <Text className="text-white text-[14px] flex-1 ml-3">Password</Text>
-          </View>
+            <View className="w-full px-3 mt-3">
+              <SubmitButton isLoading={isLoading} title="Register" />
+            </View>
+          </AppForm>
 
-          <View className="flex flex-col space-y-1 w-full px-3 ">
-            <AppTextInput
-              secureTextEntry={true}
-              labelValue={password}
-              Icon={LockClosedIcon}
-              placeholder="1234"
-              onChangeText={data => setPassword(data)}
-            />
-
-            <View className="border-[#0d1c64]  border-b w-full" />
-          </View>
-
-          <View className="flex-row  px-2 mt-5">
-            <Text className="text-white text-[14px] flex-1 ml-3">
-              Confirm Password
-            </Text>
-          </View>
-
-          <View className="flex flex-col space-y-1 w-full px-3">
-            <AppTextInput
-              secureTextEntry={true}
-              Icon={LockClosedIcon}
-              labelValue={confirmPassword}
-              placeholder="P@ss1234"
-              onChangeText={data => setConfirmPassword(data)}
-            />
-
-            <View className="border-[#0d1c64]  border-b w-full" />
-          </View>
-
-          <View className="w-full px-3 mt-5">
-            <AppButton
-              title="Sign UP"
-              color="primary"
-              onPress={() =>
-                register({
-                  name,
-                  email,
-                  password,
-                  contact,
-                  ninNumber,
-                  password,
-                  confirmPassword,
-                })
-              }></AppButton>
-          </View>
 
           <View className="ml-3 mt-5 flex flex-row  space-x-3 mb-5">
             <Text className="text-gray-700">Already have account?</Text>
