@@ -1,9 +1,7 @@
 import {View, Text, SafeAreaView, TouchableOpacity, Image} from 'react-native';
-import React, {useContext, useState, useEffect} from 'react';
+import React, {useContext, useState } from 'react';
 import {EnvelopeIcon} from 'react-native-heroicons/outline';
 import {LockClosedIcon} from 'react-native-heroicons/outline';
-import AppTextInput from '../components/AppTextInput';
-import AppButton from '../components/AppButton';
 import {AuthContext} from '../context/AuthContext';
 import * as Yup from 'yup';
 import {AppForm, AppFormField, SubmitButton} from '../components/forms';
@@ -14,22 +12,20 @@ const validationSchema = Yup.object().shape({
 });
 
 const LoginScreen = ({navigation}) => {
-  const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
-  const [loginstr, setLoging] = useState('login');
+
   const [isLoading, setIsLoading] = useState(false);
   const {login, userToken} = useContext(AuthContext);
 
   console.log(userToken);
 
   const handleLogin = values => {
-    setIsLoading(true);
+    // setIsLoading(true);
 
     // Logging in the user.....
     const {email, password} = values;
     login({email, password});
 
-    setIsLoading(false);
+    // setIsLoading(false);
   };
 
   return (

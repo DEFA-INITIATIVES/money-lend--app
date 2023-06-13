@@ -3,7 +3,6 @@ import {
   Text,
   SafeAreaView,
   TouchableOpacity,
-  ScrollView,
 } from 'react-native';
 import React from 'react';
 import {ArrowLeftIcon, Bars3Icon} from 'react-native-heroicons/outline';
