@@ -13,14 +13,15 @@ export default function AppButton({
   color = 'primary',
   isLoading,
 }) {
-
-console.log("Checking the loading status:",isLoading);
   return (
     <TouchableOpacity
-      style={[styles.button, { backgroundColor: colors[color] }]}
+      style={[styles.button, {backgroundColor: colors[color]}]}
       onPress={onPress}>
-      { isLoading ? (
-        <ActivityIndicator size="large" color="white" />
+      {isLoading ? (
+        <Text clasaName="flex flex-row items-center justify-center ">
+          <ActivityIndicator size="small" color="white" />
+          <Text className="ml-2 text-white"> Loading...</Text>
+        </Text>
       ) : (
         <Text style={styles.text}>{title}</Text>
       )}
@@ -35,7 +36,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 15,
-
     marginVertical: 10,
   },
 

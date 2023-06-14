@@ -1,4 +1,11 @@
-import {View, Text, FlatList, ScrollView, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  ScrollView,
+  TouchableOpacity,
+  RefreshControl,
+} from 'react-native';
 import React, {useEffect, useState, useContext} from 'react';
 import {loandata} from '../utlis/loandata';
 import {useNavigation} from '@react-navigation/native';
@@ -53,6 +60,7 @@ const Item = ({
 );
 
 const LoanList = () => {
+  const [refreshing, setRefreshing] = useState(false);
   const navigation = useNavigation();
   const [data, setData] = useState(null);
   const [isLoading, setLoading] = useState(false);
@@ -66,11 +74,27 @@ const LoanList = () => {
 
         setData(data);
         setLoading(false);
+        setRefreshing(false);
       })
       .catch(error => {
         setLoading(false);
       });
   }, [2000]);
+  const handleRefresh = () => {
+    setRefreshing(true);
+    axios
+      .get(`${BASE_URL}/api/loans`)
+      .then(res => {
+        const data = res.data;
+
+        setData(data);
+        setLoading(false);
+        setRefreshing(false);
+      })
+      .catch(error => {
+        setLoading(false);
+      });
+  };
 
   return isLoading ? (
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -92,6 +116,9 @@ const LoanList = () => {
         />
       )}
       keyExtractor={item => item._id}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+      }
     />
   );
 };

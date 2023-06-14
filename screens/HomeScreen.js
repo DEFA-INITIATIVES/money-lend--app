@@ -10,7 +10,7 @@ import {
 import LoanList from '../components/LoanList';
 import Bottombar from '../components/Bottombar';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
 const HomeScreen = ({navigation}) => {
   return (
@@ -21,7 +21,7 @@ const HomeScreen = ({navigation}) => {
             <Text className="text-[30px] font-extrabold text-white   flex-1">
               SupaCash
             </Text>
-            <TouchableOpacity onPress={() => navigation.openDrawer()}>
+            <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
               <Bars3Icon color="white" className="px-3" size={30} />
             </TouchableOpacity>
           </View>

@@ -1,10 +1,12 @@
 import {View, Text, SafeAreaView, TouchableOpacity, Image} from 'react-native';
-import React, {useContext, useState } from 'react';
+import React, {useContext, useState} from 'react';
 import {EnvelopeIcon} from 'react-native-heroicons/outline';
 import {LockClosedIcon} from 'react-native-heroicons/outline';
 import {AuthContext} from '../context/AuthContext';
 import * as Yup from 'yup';
 import {AppForm, AppFormField, SubmitButton} from '../components/forms';
+
+import {authenticateUser} from '../services/userService';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label('Email'),
@@ -12,20 +14,25 @@ const validationSchema = Yup.object().shape({
 });
 
 const LoginScreen = ({navigation}) => {
-
   const [isLoading, setIsLoading] = useState(false);
-  const {login, userToken} = useContext(AuthContext);
+  const {login} = useContext(AuthContext);
 
-  console.log(userToken);
+  const handleLogin = async values => {
+    setIsLoading(true);
 
-  const handleLogin = values => {
-    // setIsLoading(true);
+    try {
+      setIsLoading(true);
+      const {data: token} = await authenticateUser(values);
+      // console.log('RETURNED Data : ', data);
+      login({token});
+      setIsLoading(false);
+    } catch (ex) {
+      setIsLoading(false);
 
-    // Logging in the user.....
-    const {email, password} = values;
-    login({email, password});
-
-    // setIsLoading(false);
+      if (ex.response && ex.response.status === 400) {
+        console.log(ex.response.data);
+      }
+    }
   };
 
   return (

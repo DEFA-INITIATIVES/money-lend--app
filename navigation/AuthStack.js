@@ -5,7 +5,6 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import SplashScreen from '../screens/SplashScreen';
 
 const AuthStack = () => {
-  
   const Stack = createNativeStackNavigator();
 
   return (

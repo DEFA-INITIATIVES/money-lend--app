@@ -1,9 +1,4 @@
-import {
-  View,
-  Text,
-  SafeAreaView,
-  TouchableOpacity,
-} from 'react-native';
+import {View, Text, SafeAreaView, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {ArrowLeftIcon, Bars3Icon} from 'react-native-heroicons/outline';
 import NotificationList from '../components/NatificationList';
@@ -23,7 +18,7 @@ const MessageScreen = ({navigation}) => {
           <Text className="text-base text-white font-bold   font-sans text-[20px] flex-1 ">
             Notifications
           </Text>
-          <TouchableOpacity onPress={() => navigation.openDrawer()}>
+          <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
             <View className="">
               <Bars3Icon color="white" size={27} className=" ml-10" />
             </View>

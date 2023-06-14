@@ -14,9 +14,7 @@ const Notification = ({
   onPress,
   renderRightActions,
 }) => (
-  <Swipeable
-  renderRightActions = {renderRightActions}
-  >
+  <Swipeable renderRightActions={renderRightActions}>
     <TouchableOpacity
       className="mt-4 px-4 flex-row items-center "
       onPress={onPress}>
@@ -39,7 +37,6 @@ const Notification = ({
 );
 
 const NotificationList = () => {
-  
   const [notifications, setNotifications] = useState(chatlist);
 
   const handleDelete = notification => {

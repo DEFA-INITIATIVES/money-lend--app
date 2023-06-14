@@ -15,7 +15,8 @@ import {
 } from 'react-native-heroicons/outline';
 import * as Yup from 'yup';
 import {AuthContext} from '../context/AuthContext';
-import {AppForm, AppFormField, SubmitButton } from '../components/forms';
+import {AppForm, AppFormField, SubmitButton} from '../components/forms';
+import {registerUser} from '../services/userService';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label('Email'),
@@ -31,20 +32,24 @@ const SignUpScreen = ({navigation}) => {
   const {register, userToken} = useContext(AuthContext);
   // console.log(userToken);
 
-  const handelRegister = values => {
+  const handelRegister = async values => {
     // console.log('Recieved values', values);
-     setIsLoading(true);
-    const {name, email, password, contact, ninNumber, confirmPassword} = values;
-    register({
-      name,
-      email,
-      password,
-      contact,
-      ninNumber,
-      confirmPassword,
-    });
+    // setIsLoading(true);
+    // const {name, email, password, contact, ninNumber, confirmPassword} = values;
 
-    setIsLoading(false);
+    try {
+      setIsLoading(true);
+      const {data: token} = await registerUser(values);
+      // console.log('RETURNED Data : ', data);
+      register({token});
+      setIsLoading(false);
+    } catch (ex) {
+      setIsLoading(false);
+
+      if (ex.response && ex.response.status === 400) {
+        console.log(ex.response.data);
+      }
+    }
   };
 
   return (
@@ -163,7 +168,6 @@ const SignUpScreen = ({navigation}) => {
               <SubmitButton isLoading={isLoading} title="Register" />
             </View>
           </AppForm>
-
 
           <View className="ml-3 mt-5 flex flex-row  space-x-3 mb-5">
             <Text className="text-gray-700">Already have account?</Text>

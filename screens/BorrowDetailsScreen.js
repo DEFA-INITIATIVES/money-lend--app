@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -38,7 +38,7 @@ const BorrowDetailsScreen = ({navigation}) => {
           <Text className="text-base text-white font-bold   font-sans text-[20px] flex-1 ">
             Loan Details
           </Text>
-          <TouchableOpacity onPress={() => navigation.openDrawer()}>
+          <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
             <View className="">
               <Bars3Icon color="white" size={27} className=" ml-10" />
             </View>
@@ -174,11 +174,11 @@ const BorrowDetailsScreen = ({navigation}) => {
                 Where do you reside ?
               </Text>
 
-              <AppTextInput 
-               onChangeText={ (data) => setResidence(data)}
-               placeholder="kampala"
-               Icon={MapPinIcon} 
-               />
+              <AppTextInput
+                onChangeText={data => setResidence(data)}
+                placeholder="kampala"
+                Icon={MapPinIcon}
+              />
 
               <View className="border-[#0d1c64]  border-b w-full" />
             </View>

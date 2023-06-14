@@ -10,6 +10,7 @@ import CustomDrawer from '../components/CustomDrawer';
 import PaymentMethodScreen from '../screens/PaymentMethodScreen';
 import PaymentCheckoutScreen from '../screens/PaymentCheckoutScreen';
 import BorrowDetailsScreen from '../screens/BorrowDetailsScreen';
+import ProfileScreen from '../screens/ProfileScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -31,6 +32,7 @@ const privateStack = () => {
       <Drawer.Screen name="Borrow" component={BorrowScreen} />
       <Drawer.Screen name="Notifications" component={NotificationScreen} />
       <Drawer.Screen name="Details" component={BorrowDetailsScreen} />
+      <Drawer.Screen name="Profile" component={ProfileScreen} />
     </Drawer.Navigator>
   );
 };
