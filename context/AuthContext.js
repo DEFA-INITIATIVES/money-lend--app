@@ -9,6 +9,7 @@ export const AuthProvider = ({children}) => {
   const [userToken, setUserToken] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
   const [user, setUser] = useState(null);
+  const [staticData, setStaticData] = useState(null);
 
   // Logging in User ...
   const login = ({token}) => {
@@ -60,6 +61,11 @@ export const AuthProvider = ({children}) => {
       console.log(`islogged in error ${e}`);
     }
   };
+
+  const getData = data => {
+    setStaticData(data);
+  };
+
   useEffect(() => {
     isLoggedIn();
   }, []);
@@ -73,6 +79,8 @@ export const AuthProvider = ({children}) => {
         userInfo,
         register,
         setIsLoading,
+        getData,
+        staticData,
       }}>
       {children}
     </AuthContext.Provider>

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {Alert} from 'react-native';
 
 axios.interceptors.response.use(null, error => {
   const ExpectedError =
@@ -8,6 +9,10 @@ axios.interceptors.response.use(null, error => {
 
   if (!ExpectedError) {
     console.log(
+      'AN unexpected error occurred, check your internet connectivity and try again...',
+    );
+
+    Alert.alert(
       'AN unexpected error occurred, check your internet connectivity and try again...',
     );
   }

@@ -1,11 +1,18 @@
-import {View, Text, SafeAreaView, TouchableOpacity, Image} from 'react-native';
+import {
+  View,
+  Text,
+  SafeAreaView,
+  TouchableOpacity,
+  Image,
+  Alert,
+} from 'react-native';
 import React, {useContext, useState} from 'react';
 import {EnvelopeIcon} from 'react-native-heroicons/outline';
+import {EyeIcon, EyeSlashIcon} from 'react-native-heroicons/outline';
 import {LockClosedIcon} from 'react-native-heroicons/outline';
 import {AuthContext} from '../context/AuthContext';
 import * as Yup from 'yup';
 import {AppForm, AppFormField, SubmitButton} from '../components/forms';
-
 import {authenticateUser} from '../services/userService';
 
 const validationSchema = Yup.object().shape({
@@ -16,7 +23,11 @@ const validationSchema = Yup.object().shape({
 const LoginScreen = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(false);
   const {login} = useContext(AuthContext);
+  const [showPassword, setShowPassword] = useState(false);
 
+  const toggleVisibility = () => {
+    setShowPassword(!showPassword);
+  };
   const handleLogin = async values => {
     setIsLoading(true);
 
@@ -31,6 +42,7 @@ const LoginScreen = ({navigation}) => {
 
       if (ex.response && ex.response.status === 400) {
         console.log(ex.response.data);
+        Alert.alert(ex.response.data);
       }
     }
   };
@@ -90,9 +102,21 @@ const LoginScreen = ({navigation}) => {
               Icon={LockClosedIcon}
               name="password"
               textContentType="password"
-              secureTextEntry={true}
+              secureTextEntry={showPassword}
+              showPassword={showPassword}
+              toggleVisibility={toggleVisibility}
             />
           </View>
+
+          {/* {showPassword ? (
+            <EyeSlashIcon
+              onPress={toggleVisibility}
+              color="#0d1c64"
+              size={20}
+            />
+          ) : (
+            <EyeIcon onPress={toggleVisibility} color="#0d1c64" size={20} />
+          )} */}
 
           <View className="w-full px-3 mt-3">
             <SubmitButton isLoading={isLoading} title="login" />

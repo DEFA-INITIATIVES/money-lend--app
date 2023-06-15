@@ -1,5 +1,5 @@
 import {View, Text} from 'react-native';
-import React from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   Bars3Icon,
   ClipboardDocumentCheckIcon,
@@ -10,9 +10,21 @@ import {
 import LoanList from '../components/LoanList';
 import Bottombar from '../components/Bottombar';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {useNavigation} from '@react-navigation/native';
+import {getStaticData} from '../services/dataService';
+import {AuthContext} from '../context/AuthContext';
+import {numberWithCommas} from '../utlis/helper';
 
 const HomeScreen = ({navigation}) => {
+  const {getData, staticData} = useContext(AuthContext);
+  const [refresh, setRefresh] = useState(false);
+  useEffect(() => {
+    const receiveStaticData = async () => {
+      const {data} = await getStaticData();
+      getData(data[0]);
+    };
+    receiveStaticData();
+  }, [refresh]);
+  console.log('hello', staticData);
   return (
     <View className="flex-1 bg-white">
       <View className="">
@@ -27,7 +39,6 @@ const HomeScreen = ({navigation}) => {
           </View>
 
           <Text className="text-white  font-semibold  text-[14px] px-4">
-            {' '}
             Not the same finacial life
           </Text>
 
@@ -36,7 +47,7 @@ const HomeScreen = ({navigation}) => {
           </Text>
           <View className="flex-row">
             <Text className="text-white px-4  text-[30px] font-extrabold flex-1">
-              2000,000.00
+              {staticData?.availableCredit?.toLocaleString()}
             </Text>
             <View className=" bg-white w-[130px] h-[45px]  rounded-md mr-3 items-center py-1">
               <Text className="font-bold text-[25px] text-[#515a71]">

@@ -147,6 +147,21 @@ const BorrowDetailsScreen = ({navigation}) => {
               <View className="border-[#0d1c64]  border-b w-full" />
             </View>
 
+            <View className="flex flex-col space-y-1 w-full px-3">
+              <Text className="text-gray-700 text-[12px] ml-3  font-semibold">
+                Mode of Payment
+              </Text>
+
+              <Picker
+                selectedValue={reason}
+                onValueChange={(itemValue, itemIndex) => setReason(itemValue)}>
+                <Picker.Item label="Daily" value="option1" />
+                <Picker.Item label="Monthly " value="option2" />
+                <Picker.Item label="Fortnight" value="option3" />
+              </Picker>
+
+              <View className="border-[#0d1c64]  border-b w-full" />
+            </View>
             <View className="flex flex-col space-y-1 w-full px-3 my-2">
               <Text className="text-gray-700 text-[12px] ml-3  font-semibold">
                 {' '}
@@ -156,6 +171,26 @@ const BorrowDetailsScreen = ({navigation}) => {
               <View className="">
                 <TextInput
                   placeholder="10/25/23"
+                  maxLength={8}
+                  placeholderTextColor={colors.dark}
+                  value={selectedDate}
+                  underlineColorAndroid="transparent"
+                  onChangeText={data => setSelectedDate(data)}
+                  className="w-full px-2 text-gray-600"
+                />
+              </View>
+
+              <View className="border-[#0d1c64]  border-b w-full" />
+            </View>
+            <View className="flex flex-col space-y-1 w-full px-3 my-2">
+              <Text className="text-gray-700 text-[12px] ml-3  font-semibold">
+                {' '}
+                Finacial Card
+              </Text>
+
+              <View className="">
+                <TextInput
+                  placeholder="finacial card number"
                   maxLength={8}
                   placeholderTextColor={colors.dark}
                   value={selectedDate}

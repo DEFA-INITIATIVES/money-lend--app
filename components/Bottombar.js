@@ -28,12 +28,12 @@ const Bottombar = ({borrow, navigation}) => {
         <Text className="text-white">Notifications</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity
+      {/* <TouchableOpacity
         className="items-center"
         onPress={() => navigation.navigate('Pay')}>
         <CurrencyDollarIcon size={24} color="white" />
         <Text className="text-white">pay</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
       <TouchableOpacity
         className="items-center"

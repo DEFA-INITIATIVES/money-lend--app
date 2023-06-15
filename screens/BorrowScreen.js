@@ -5,8 +5,9 @@ import {
   TouchableOpacity,
   SafeAreaView,
   StyleSheet,
+  TextInput,
 } from 'react-native';
-import React, {useRef, useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   ChevronLeftIcon,
   ChevronUpIcon,
@@ -21,14 +22,12 @@ import Bottombar from '../components/Bottombar';
 
 const BorrowScreen = ({navigation}) => {
   const [activeButton, setActiveButton] = useState('6 months');
-
   const route = useRoute();
   const {item} = route.params;
-  const [selectedLoan, SetSelectedLoan] = useState(item.minimumCredit);
-
-  // console.log('Minimum :', item.minimumCredit);
-  // console.log('Maximum :', item.maximumCredit);
-  // console.log('Current State: ', selectedLoan);
+  const [selectedLoan, SetSelectedLoan] = useState(
+    item.minimumCredit.toLocaleString(),
+  );
+  const [validateLoan, setValidateLoan] = useState(false);
 
   const handleButtonPress = buttonText => {
     setActiveButton(buttonText);
@@ -62,6 +61,20 @@ const BorrowScreen = ({navigation}) => {
     SetSelectedLoan(item.minimumCredit);
   }, [item]);
 
+  const handleInputChange = text => {
+    if (
+      parseInt(text) >= item.minimumCredit &&
+      parseInt(text) <= item.maximumCredit &&
+      text !== 'NaN'
+    ) {
+      console.log('Current Text:', text);
+      SetSelectedLoan(parseInt(text).toLocaleString());
+      setValidateLoan(false);
+    } else {
+      SetSelectedLoan(parseInt(text).toLocaleString());
+      setValidateLoan(true);
+    }
+  };
   return (
     <SafeAreaView className="bg-[#0d1c64] h-full">
       <ScrollView className="p-5">
@@ -85,22 +98,38 @@ const BorrowScreen = ({navigation}) => {
             You can loan up to Ugx {item.maximumCredit}
           </Text>
 
-          <View className=" mt-2 p-5 flex-row items-center justify-around bg-white border-b-2  border-gray-400 rounded-md">
-            <TouchableOpacity
-              onPress={handledecrement}
-              className="flex items-center justify-center bg-gray-200 p-3 rounded-md">
-              <MinusIcon color={colors.medium} size={14} />
-            </TouchableOpacity>
+          <View className="flex flex-col  space-y-2">
+            <View className=" mt-2 p-5 flex-row items-center justify-around bg-white border-b-2  border-gray-400 rounded-md">
+              <TouchableOpacity
+                onPress={handledecrement}
+                className="flex items-center justify-center bg-gray-200 p-3 rounded-md">
+                <MinusIcon color={colors.medium} size={14} />
+              </TouchableOpacity>
 
-            <Text className="text-2xl text-[#435aa6] font-semibold">
-              {selectedLoan}
-            </Text>
+              <View className=" flex items-center justify-center text-2xl  text-[#435aa6] font-semibold">
+                <TextInput
+                  className="w-20  px-2 text-gray-700 "
+                  value={selectedLoan}
+                  // placeholder="hello"
+                  keyboardType="number-pad"
+                  onChangeText={handleInputChange}
+                />
+              </View>
 
-            <TouchableOpacity
-              className="flex items-center justify-center bg-gray-200 p-3 rounded-md"
-              onPress={handleIcrement}>
-              <PlusIcon color={colors.medium} size={14} />
-            </TouchableOpacity>
+              <TouchableOpacity
+                className="flex items-center justify-center bg-gray-200 p-3 rounded-md"
+                onPress={handleIcrement}>
+                <PlusIcon color={colors.medium} size={14} />
+              </TouchableOpacity>
+            </View>
+
+            {validateLoan && (
+              <Text className="text-xs text-red-500 font-medium">
+                {' '}
+                value should be in range {item.minimumCredit} -{' '}
+                {item.maximumCredit}
+              </Text>
+            )}
           </View>
 
           <Text className="text-base font-semibold text-gray-700 px-4 mt-2">

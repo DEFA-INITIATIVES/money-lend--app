@@ -1,19 +1,9 @@
-import {
-  View,
-  Text,
-  FlatList,
-  ScrollView,
-  TouchableOpacity,
-  RefreshControl,
-} from 'react-native';
-import React, {useEffect, useState, useContext} from 'react';
-import {loandata} from '../utlis/loandata';
+import {View, Text, FlatList, RefreshControl} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
 import {BASE_URL} from '../config';
 import moment from 'moment';
-import {AuthContext} from '../context/AuthContext';
-import {err} from 'react-native-svg/lib/typescript/xml';
 import {ActivityIndicator} from 'react-native-paper';
 
 const Item = ({
@@ -26,18 +16,22 @@ const Item = ({
   type,
   getnavigation,
 }) => (
-  <TouchableOpacity onPress={getnavigation}>
+  <View>
     <View className="w-full px-2 ">
-      <View className=" shadow-lg  h-[140px] mt-2 ml-3  mr-3  rounded-md bg-white ">
+      <View className=" shadow-lg  h-[140px] mt-2  mr-3  rounded-md bg-white ">
         <View className="flex-row items-center  p-2">
           <View className={`rounded-full w-5 bg-yellow-950 mr-3`}></View>
           <Text className="text-[20px] font-semibold text-black "> {type}</Text>
           <Text className="ml-3 bg-gray-300 rounded-md p-1">
-            {' '}
             {moment(createdAt).startOf('hour').fromNow()}
           </Text>
           <Text className="ml-3 bg-gray-300 rounded-md p-1">
             {minimumValidation} -{maximumValidation} days
+          </Text>
+          <Text
+            onPress={getnavigation}
+            className="text-white bg-[#0d1c64]  w-14 rounded justify-center items-center p-2 ml-3">
+            Apply
           </Text>
         </View>
         <View className="w-full border-b border-gray-300" />
@@ -56,7 +50,7 @@ const Item = ({
         </View>
       </View>
     </View>
-  </TouchableOpacity>
+  </View>
 );
 
 const LoanList = () => {
@@ -107,9 +101,9 @@ const LoanList = () => {
         <Item
           createdAt={item.createdAt}
           dailyInterest={item.dailyInterest}
-          maximumCredit={item.maximumCredit}
+          maximumCredit={item.maximumCredit?.toLocaleString()}
           maximumValidation={item.maximumValidation}
-          minimumCredit={item.minimumCredit}
+          minimumCredit={item.minimumCredit?.toLocaleString()}
           minimumValidation={item.minimumValidation}
           type={item.type}
           getnavigation={() => navigation.navigate('Borrow', {item})}

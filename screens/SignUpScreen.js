@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Image,
+  Alert,
 } from 'react-native';
 import React, {useState, useContext} from 'react';
 import {EnvelopeIcon, IdentificationIcon} from 'react-native-heroicons/outline';
@@ -47,6 +48,7 @@ const SignUpScreen = ({navigation}) => {
       setIsLoading(false);
 
       if (ex.response && ex.response.status === 400) {
+        Alert.alert(ex.response.data);
         console.log(ex.response.data);
       }
     }
