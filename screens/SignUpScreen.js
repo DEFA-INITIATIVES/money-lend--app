@@ -18,6 +18,7 @@ import * as Yup from 'yup';
 import {AuthContext} from '../context/AuthContext';
 import {AppForm, AppFormField, SubmitButton} from '../components/forms';
 import {registerUser} from '../services/userService';
+import AppFormPassword from '../components/forms/AppFormPassword';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label('Email'),
@@ -31,7 +32,12 @@ const validationSchema = Yup.object().shape({
 const SignUpScreen = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(false);
   const {register, userToken} = useContext(AuthContext);
+  const [showPassword, setShowPassword] = useState(true);
   // console.log(userToken);
+
+  const toggleVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   const handelRegister = async values => {
     // console.log('Recieved values', values);
@@ -139,14 +145,16 @@ const SignUpScreen = ({navigation}) => {
             <View className="flex flex-col space-y-1 w-full px-3 mt-2">
               <Text className="text-gray-700 text-[12px] ml-3">Password</Text>
 
-              <AppFormField
+              <AppFormPassword
                 autoCapitalize="none"
                 autoCorrect={false}
                 placeholder="P@ss1234"
                 Icon={LockClosedIcon}
                 name="password"
                 textContentType="password"
-                secureTextEntry={true}
+                secureTextEntry={ showPassword }
+                showPassword={showPassword}
+                toggleVisibility={toggleVisibility}
               />
             </View>
 
@@ -155,19 +163,25 @@ const SignUpScreen = ({navigation}) => {
                 Confirm Password
               </Text>
 
-              <AppFormField
+              <AppFormPassword
                 autoCapitalize="none"
                 autoCorrect={false}
                 placeholder="P@ss1234"
                 Icon={LockClosedIcon}
                 name="confirmPassword"
                 textContentType="password"
-                secureTextEntry={true}
+                secureTextEntry={ showPassword }
+                showPassword={showPassword }
+                toggleVisibility={toggleVisibility}
               />
             </View>
 
             <View className="w-full px-3 mt-3">
-              <SubmitButton isLoading={isLoading} title="Register" />
+              <SubmitButton
+               isLoading={isLoading}
+               title="Register"
+               loadingText = "Registering..."
+                />
             </View>
           </AppForm>
 

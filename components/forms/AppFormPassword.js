@@ -1,24 +1,31 @@
+import {View} from 'react-native';
 import React from 'react';
-import {useFormikContext} from 'formik';
+import { EyeIcon, EyeSlashIcon } from 'react-native-heroicons/outline';
+import { useFormikContext } from 'formik';
 import AppTextInput from '../AppTextInput';
 import ErrorMessage from './ErrorMessage';
-import { View } from 'react-native';
 
-export default function AppFormField({
+const AppFormPassword = ({
   name,
+  showPassword,
+  toggleVisibility,
   ...otherProps
-}) {
-
+}) => {
   const { handleChange, errors, setFieldTouched, touched } = useFormikContext();
-
   return (
     <>
-      <View className="flex flex-row items-center justify-center">
+      <View className="flex flex-row items-center justify-center mr-2">
         <AppTextInput
           onBlur={() => setFieldTouched(name)}
           onChangeText={handleChange(name)}
           {...otherProps}
         />
+
+        {showPassword ? (
+          <EyeSlashIcon onPress={toggleVisibility} color="#0d1c64" size={20} />
+        ) : (
+          <EyeIcon onPress={toggleVisibility} color="#0d1c64" size={20} />
+        )}
       </View>
 
       <View className="border-[#0d1c64]  border-b w-full" />
@@ -26,4 +33,6 @@ export default function AppFormField({
       <ErrorMessage error={errors[name]} visible={touched[name]} />
     </>
   );
-}
+};
+
+export default AppFormPassword;

@@ -11,6 +11,7 @@ export default function AppButton({
   title,
   onPress,
   color = 'primary',
+  loadingText,
   isLoading,
 }) {
   return (
@@ -18,9 +19,9 @@ export default function AppButton({
       style={[styles.button, {backgroundColor: colors[color]}]}
       onPress={onPress}>
       {isLoading ? (
-        <Text clasaName="flex flex-row items-center justify-center ">
-          <ActivityIndicator size="small" color="white" />
-          <Text className="ml-2 text-white"> Loading...</Text>
+        <Text clasaName="flex flex-row items-center space-x-3 justify-center ">
+          <Text className="mr-2"><ActivityIndicator size="small" color="white" /></Text>
+          <Text className=" text-white text-lg font-semibold">{ loadingText }</Text>
         </Text>
       ) : (
         <Text style={styles.text}>{title}</Text>

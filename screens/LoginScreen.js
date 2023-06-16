@@ -8,12 +8,12 @@ import {
 } from 'react-native';
 import React, {useContext, useState} from 'react';
 import {EnvelopeIcon} from 'react-native-heroicons/outline';
-import {EyeIcon, EyeSlashIcon} from 'react-native-heroicons/outline';
 import {LockClosedIcon} from 'react-native-heroicons/outline';
 import {AuthContext} from '../context/AuthContext';
 import * as Yup from 'yup';
 import {AppForm, AppFormField, SubmitButton} from '../components/forms';
 import {authenticateUser} from '../services/userService';
+import AppFormPassword from '../components/forms/AppFormPassword';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label('Email'),
@@ -23,11 +23,12 @@ const validationSchema = Yup.object().shape({
 const LoginScreen = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(false);
   const {login} = useContext(AuthContext);
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(true);
 
   const toggleVisibility = () => {
     setShowPassword(!showPassword);
   };
+  
   const handleLogin = async values => {
     setIsLoading(true);
 
@@ -95,7 +96,7 @@ const LoginScreen = ({navigation}) => {
           </View>
 
           <View className="w-full mt-3 px-3">
-            <AppFormField
+            <AppFormPassword
               autoCapitalize="none"
               autoCorrect={false}
               placeholder="Password"
@@ -108,18 +109,11 @@ const LoginScreen = ({navigation}) => {
             />
           </View>
 
-          {/* {showPassword ? (
-            <EyeSlashIcon
-              onPress={toggleVisibility}
-              color="#0d1c64"
-              size={20}
-            />
-          ) : (
-            <EyeIcon onPress={toggleVisibility} color="#0d1c64" size={20} />
-          )} */}
-
           <View className="w-full px-3 mt-3">
-            <SubmitButton isLoading={isLoading} title="login" />
+            <SubmitButton isLoading={isLoading} 
+            title="login" 
+            loadingText ="Signing in..."
+            />
           </View>
         </AppForm>
 
