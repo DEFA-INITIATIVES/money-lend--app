@@ -24,9 +24,7 @@ const BorrowScreen = ({navigation}) => {
   const [activeButton, setActiveButton] = useState('6 months');
   const route = useRoute();
   const {item} = route.params;
-  const [selectedLoan, SetSelectedLoan] = useState(
-    item.minimumCredit.toLocaleString(),
-  );
+  const [selectedLoan, SetSelectedLoan] = useState(item.minimumCredit);
   const [validateLoan, setValidateLoan] = useState(false);
 
   const handleButtonPress = buttonText => {
@@ -62,16 +60,20 @@ const BorrowScreen = ({navigation}) => {
   }, [item]);
 
   const handleInputChange = text => {
-    if (
+    if(text === 'NaN'){
+      console.log('Not a number Current Text:', text);
+      SetSelectedLoan(0);
+    }
+    else if (
       parseInt(text) >= item.minimumCredit &&
-      parseInt(text) <= item.maximumCredit &&
-      text !== 'NaN'
+      parseInt(text) <= item.maximumCredit
     ) {
       console.log('Current Text:', text);
-      SetSelectedLoan(parseInt(text).toLocaleString());
+      SetSelectedLoan(parseInt(text));
       setValidateLoan(false);
     } else {
-      SetSelectedLoan(parseInt(text).toLocaleString());
+      console.log('Out of Range Current Text:', text);
+      SetSelectedLoan(parseInt(text));
       setValidateLoan(true);
     }
   };
@@ -109,7 +111,7 @@ const BorrowScreen = ({navigation}) => {
               <View className=" flex items-center justify-center text-2xl  text-[#435aa6] font-semibold">
                 <TextInput
                   className="w-20  px-2 text-gray-700 "
-                  value={selectedLoan}
+                  value={selectedLoan.toLocaleString()}
                   // placeholder="hello"
                   keyboardType="number-pad"
                   onChangeText={handleInputChange}
