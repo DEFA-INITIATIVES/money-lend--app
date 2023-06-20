@@ -60,20 +60,19 @@ const BorrowScreen = ({navigation}) => {
   }, [item]);
 
   const handleInputChange = text => {
-    if(text === 'NaN'){
-      console.log('Not a number Current Text:', text);
+    if (isNaN(parseInt(text))) {
+      // If the input is NaN or empty, set it to 0
       SetSelectedLoan(0);
+    } else {
+      SetSelectedLoan(parseInt(text));
     }
-    else if (
+
+    if (
       parseInt(text) >= item.minimumCredit &&
       parseInt(text) <= item.maximumCredit
     ) {
-      console.log('Current Text:', text);
-      SetSelectedLoan(parseInt(text));
       setValidateLoan(false);
     } else {
-      console.log('Out of Range Current Text:', text);
-      SetSelectedLoan(parseInt(text));
       setValidateLoan(true);
     }
   };
@@ -110,9 +109,10 @@ const BorrowScreen = ({navigation}) => {
 
               <View className=" flex items-center justify-center text-2xl  text-[#435aa6] font-semibold">
                 <TextInput
-                  className="w-20  px-2 text-gray-700 "
-                  value={selectedLoan.toLocaleString()}
-                  // placeholder="hello"
+                  className="w-20  px-2 text-lg  text-blue-500 "
+                  value={
+                    selectedLoan !== 0 ? selectedLoan.toLocaleString() : ''
+                  }
                   keyboardType="number-pad"
                   onChangeText={handleInputChange}
                 />

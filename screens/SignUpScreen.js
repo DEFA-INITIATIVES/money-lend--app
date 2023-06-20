@@ -7,7 +7,7 @@ import {
   Image,
   Alert,
 } from 'react-native';
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import {EnvelopeIcon, IdentificationIcon} from 'react-native-heroicons/outline';
 import {
   LockClosedIcon,
@@ -17,8 +17,12 @@ import {
 import * as Yup from 'yup';
 import {AuthContext} from '../context/AuthContext';
 import {AppForm, AppFormField, SubmitButton} from '../components/forms';
-import {registerUser} from '../services/userService';
 import AppFormPassword from '../components/forms/AppFormPassword';
+import {validateContact, validateNinNumber} from '../services/kycService';
+import AppFormContact from '../components/forms/AppFormContact';
+import AppFormNin from '../components/forms/AppFormNin';
+import {registerUser} from '../services/userService';
+import {getStaticData} from '../services/dataService';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label('Email'),
@@ -30,9 +34,13 @@ const validationSchema = Yup.object().shape({
 });
 
 const SignUpScreen = ({navigation}) => {
+  const [validateNin, setValidateNin] = useState(false);
+  const [validContact, setValidContact] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const {register, userToken} = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(true);
+  const [submitted, setSubmitted] = useState(false);
+  const [kycUri, setKycUri] = useState({});
   // console.log(userToken);
 
   const toggleVisibility = () => {
@@ -40,25 +48,62 @@ const SignUpScreen = ({navigation}) => {
   };
 
   const handelRegister = async values => {
-    // console.log('Recieved values', values);
-    // setIsLoading(true);
-    // const {name, email, password, contact, ninNumber, confirmPassword} = values;
+    const parameters = {
+      kycLink: kycUri.kycvalidationLink,
+      ninNumber: values.ninNumber,
+      contact: values.contact,
+    };
 
-    try {
-      setIsLoading(true);
-      const {data: token} = await registerUser(values);
-      // console.log('RETURNED Data : ', data);
-      register({token});
-      setIsLoading(false);
-    } catch (ex) {
-      setIsLoading(false);
+    console.log(parameters);
 
-      if (ex.response && ex.response.status === 400) {
-        Alert.alert(ex.response.data);
-        console.log(ex.response.data);
+    if (values.ninNumber && values.contact) {
+      const {data: ninNumberData} = await validateNinNumber(parameters);
+      const {data: contactData} = await validateContact(parameters);
+
+      // console.log(
+      //   'Validation Data:',
+      //   ninNumberData.validation.status,
+      //   ' Second Data ',
+      //   contactData.validation.status,
+      // );
+
+      setSubmitted(true);
+      setValidateNin(ninNumberData.validation.status === 'SUCCESSFUL');
+      setValidContact(contactData.validation.status === 'SUCCESSFUL');
+      if (
+        ninNumberData.validation.status === 'SUCCESSFUL' &&
+        contactData.validation.status === 'SUCCESSFUL'
+      ) {
+        try {
+          setIsLoading(true);
+          const {data: token} = await registerUser(values);
+
+          register({token});
+          setIsLoading(false);
+        } catch (ex) {
+          setIsLoading(false);
+          if (ex.response && ex.response.status === 400) {
+            Alert.alert(ex.response.data);
+            console.log(ex.response.data);
+          }
+        }
+      } else {
+        Alert.alert('Provide Valid Phone Number And Nin Number');
       }
     }
+
+    // console.log('current values', validContact);
+    // console.log('current values', validateNin);
   };
+  useEffect(() => {
+    const receiveStaticData = async () => {
+      const {data} = await getStaticData();
+      setKycUri(data[0]);
+      // getData(data[0]);
+      // console.log(' static data', kycUri);
+    };
+    receiveStaticData();
+  });
 
   return (
     <SafeAreaView>
@@ -121,24 +166,28 @@ const SignUpScreen = ({navigation}) => {
             <View className="flex flex-col space-y-1 w-full px-3 mt-2">
               <Text className="text-gray-700 text-[12px] ml-3">Contact</Text>
 
-              <AppFormField
+              <AppFormContact
                 autoCapitalize="none"
                 autoCorrect={false}
                 placeholder="+256755168391"
                 Icon={PhoneIcon}
                 name="contact"
+                validContact={validContact}
+                submitted={submitted}
               />
             </View>
 
             <View className="flex flex-col space-y-1 w-full px-3 mt-2">
               <Text className="text-gray-700 text-[12px] ml-3">NIN Number</Text>
 
-              <AppFormField
+              <AppFormNin
                 autoCapitalize="none"
                 autoCorrect={false}
                 placeholder="CM9085556GGGHJKLJ"
                 Icon={IdentificationIcon}
                 name="ninNumber"
+                validateNin={validateNin}
+                submitted={submitted}
               />
             </View>
 
@@ -152,7 +201,7 @@ const SignUpScreen = ({navigation}) => {
                 Icon={LockClosedIcon}
                 name="password"
                 textContentType="password"
-                secureTextEntry={ showPassword }
+                secureTextEntry={showPassword}
                 showPassword={showPassword}
                 toggleVisibility={toggleVisibility}
               />
@@ -170,18 +219,18 @@ const SignUpScreen = ({navigation}) => {
                 Icon={LockClosedIcon}
                 name="confirmPassword"
                 textContentType="password"
-                secureTextEntry={ showPassword }
-                showPassword={showPassword }
+                secureTextEntry={showPassword}
+                showPassword={showPassword}
                 toggleVisibility={toggleVisibility}
               />
             </View>
 
             <View className="w-full px-3 mt-3">
               <SubmitButton
-               isLoading={isLoading}
-               title="Register"
-               loadingText = "Registering..."
-                />
+                isLoading={isLoading}
+                title="Register"
+                loadingText="Registering..."
+              />
             </View>
           </AppForm>
 
