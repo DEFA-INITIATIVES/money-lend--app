@@ -6,9 +6,14 @@ import {
   ScrollView,
   Image,
   Alert,
+  TextInput,
 } from 'react-native';
 import React, {useState, useContext, useEffect} from 'react';
-import {EnvelopeIcon, IdentificationIcon} from 'react-native-heroicons/outline';
+import {
+  EnvelopeIcon,
+  IdentificationIcon,
+  MapPinIcon,
+} from 'react-native-heroicons/outline';
 import {
   LockClosedIcon,
   PhoneIcon,
@@ -23,6 +28,9 @@ import AppFormContact from '../components/forms/AppFormContact';
 import AppFormNin from '../components/forms/AppFormNin';
 import {registerUser} from '../services/userService';
 import {getStaticData} from '../services/dataService';
+import {Picker} from '@react-native-picker/picker';
+import AppTextInput from '../components/AppTextInput';
+import colors from '../config/colors';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label('Email'),
@@ -34,6 +42,11 @@ const validationSchema = Yup.object().shape({
 });
 
 const SignUpScreen = ({navigation}) => {
+  const [residence, setResidence] = useState('');
+  const [employment, setEmpolyment] = useState('');
+
+  const [selectedDate, setSelectedDate] = useState('');
+  const [reason, setReason] = useState('');
   const [validateNin, setValidateNin] = useState(false);
   const [validContact, setValidContact] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -190,7 +203,79 @@ const SignUpScreen = ({navigation}) => {
                 submitted={submitted}
               />
             </View>
+            <View className="flex flex-col space-y-1 w-full px-3">
+              <Text className="text-gray-700 text-[12px] ml-3  font-semibold">
+                What is your source of income?
+              </Text>
 
+              <Picker
+                selectedValue={employment}
+                onValueChange={(itemValue, itemIndex) =>
+                  setEmpolyment(itemValue)
+                }>
+                <Picker.Item label="Self Employment" value="option1" />
+                <Picker.Item label="Company Employment" value="option2" />
+                <Picker.Item label="Casual worker" value="option3" />
+                <Picker.Item label="Part-time Employment" value="option4" />
+                <Picker.Item label="Full-time Employment" value="option5" />
+              </Picker>
+
+              <View className="border-[#0d1c64]  border-b w-full" />
+            </View>
+            <View className="flex flex-col space-y-1 w-full px-3">
+              <Text className="text-gray-700 text-[12px] ml-3  font-semibold">
+                What is the purpose of the Loan?
+              </Text>
+
+              <Picker
+                selectedValue={reason}
+                onValueChange={(itemValue, itemIndex) => setReason(itemValue)}>
+                <Picker.Item label="Everyday Bills/Emergency" value="option1" />
+                <Picker.Item label="Auto repair" value="option2" />
+                <Picker.Item label="Auto purchase" value="option3" />
+                <Picker.Item label="Moving" value="option4" />
+                <Picker.Item label="Medical" value="option5" />
+                <Picker.Item label="Business" value="option6" />
+                <Picker.Item label="Taxes" value="option7" />
+                <Picker.Item label="Rent or mortgage" value="option8" />
+                <Picker.Item label="Major purchase" value="option9" />
+                <Picker.Item label="other" value="option10" />
+              </Picker>
+
+              <View className="border-[#0d1c64]  border-b w-full" />
+            </View>
+            <View className="flex flex-col space-y-1 w-full px-3 my-2">
+              <Text className="text-gray-700 text-[12px] ml-3 font-semibold">
+                Where do you reside ?
+              </Text>
+
+              <AppTextInput
+                onChangeText={data => setResidence(data)}
+                placeholder="kampala"
+                Icon={MapPinIcon}
+              />
+
+              <View className="border-[#0d1c64]  border-b w-full" />
+            </View>
+            <View className="flex flex-col space-y-1 w-full px-3 my-2">
+              <Text className="text-gray-700 text-[12px] ml-3  font-semibold">
+                Finacial Card
+              </Text>
+
+              <View className="">
+                <TextInput
+                  placeholder="finacial card number"
+                  maxLength={8}
+                  placeholderTextColor={colors.dark}
+                  value={selectedDate}
+                  underlineColorAndroid="transparent"
+                  onChangeText={data => setSelectedDate(data)}
+                  className="w-full px-2 text-gray-600"
+                />
+              </View>
+
+              <View className="border-[#0d1c64]  border-b w-full" />
+            </View>
             <View className="flex flex-col space-y-1 w-full px-3 mt-2">
               <Text className="text-gray-700 text-[12px] ml-3">Password</Text>
 

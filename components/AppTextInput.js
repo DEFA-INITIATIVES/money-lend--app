@@ -15,10 +15,10 @@ export default function AppTextInput({
       </View>
 
       <TextInput
-        placeholderTextColor={colors.primary}
+        placeholderTextColor={colors.dark}
         value={labelValue}
         onChangeText={onChangeText}
-        className="w-[255px] px-2 text-gray-700"
+        className="w-[255px] px-2 text-gray-700 "
         {...otherProps}
       />
     </View>

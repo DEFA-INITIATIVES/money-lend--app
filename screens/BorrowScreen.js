@@ -127,7 +127,6 @@ const BorrowScreen = ({navigation}) => {
 
             {validateLoan && (
               <Text className="text-xs text-red-500 font-medium">
-                {' '}
                 value should be in range {item.minimumCredit} -{' '}
                 {item.maximumCredit}
               </Text>
@@ -235,7 +234,7 @@ const BorrowScreen = ({navigation}) => {
             <AppButton
               title="Apply"
               color="primary"
-              onPress={() => navigation.navigate('Details')}
+              onPress={() => navigation.navigate('Details', selectedLoan)}
             />
           </View>
         </View>

@@ -28,7 +28,7 @@ const LoginScreen = ({navigation}) => {
   const toggleVisibility = () => {
     setShowPassword(!showPassword);
   };
-  
+
   const handleLogin = async values => {
     setIsLoading(true);
 
@@ -90,9 +90,11 @@ const LoginScreen = ({navigation}) => {
             <Text className="text-gray-700 text-[14px] flex-1 ml-3">
               Password
             </Text>
-            <Text className="text-gray-700 text-[14px] mr-7">
-              Forgot Password?
-            </Text>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Forgotpassword')}
+              className="text-gray-700 text-[14px] mr-7">
+              <Text>Forgot Password?</Text>
+            </TouchableOpacity>
           </View>
 
           <View className="w-full mt-3 px-3">
@@ -110,9 +112,10 @@ const LoginScreen = ({navigation}) => {
           </View>
 
           <View className="w-full px-3 mt-3">
-            <SubmitButton isLoading={isLoading} 
-            title="login" 
-            loadingText ="Signing in..."
+            <SubmitButton
+              isLoading={isLoading}
+              title="login"
+              loadingText="Signing in..."
             />
           </View>
         </AppForm>
