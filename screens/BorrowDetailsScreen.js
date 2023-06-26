@@ -29,7 +29,7 @@ const BorrowDetailsScreen = ({navigation}) => {
   const [reason, setReason] = useState('');
 
   const {logout, userInfo} = useContext(AuthContext);
-  // console.log(item);
+  console.log(userInfo);
   return (
     <SafeAreaView className="flex-1">
       <View className="">
@@ -66,7 +66,6 @@ const BorrowDetailsScreen = ({navigation}) => {
 
             <View className="flex flex-col space-y-1 w-full px-3 my-2">
               <Text className="text-gray-700 text-[12px] ml-3  font-semibold">
-                {' '}
                 Your Email
               </Text>
 
@@ -82,7 +81,40 @@ const BorrowDetailsScreen = ({navigation}) => {
               <Text> {selectedLoan} UGX</Text>
               <View className="border-[#0d1c64]  border-b w-full" />
             </View>
+            <View className="flex flex-col space-y-1 w-full px-3 my-2">
+              <Text className="text-gray-700 text-[12px] ml-3  font-semibold">
+                Your Financial Card
+              </Text>
 
+              <Text className="ml-3 font-bold ">{userInfo.financialCard}</Text>
+              <View className="border-[#0d1c64]  border-b w-full" />
+            </View>
+
+            <View className="flex flex-col space-y-1 w-full px-3 my-2">
+              <Text className="text-gray-700 text-[12px] ml-3  font-semibold">
+                your source of income
+              </Text>
+
+              <Text className="ml-3 font-bold ">{userInfo.incomeSource}</Text>
+              <View className="border-[#0d1c64]  border-b w-full" />
+            </View>
+            <View className="flex flex-col space-y-1 w-full px-3 my-2">
+              <Text className="text-gray-700 text-[12px] ml-3  font-semibold">
+                Reason for this loan
+              </Text>
+
+              <Text className="ml-3 font-bold ">{userInfo.reason}</Text>
+              <View className="border-[#0d1c64]  border-b w-full" />
+            </View>
+
+            <View className="flex flex-col space-y-1 w-full px-3 my-2">
+              <Text className="text-gray-700 text-[12px] ml-3  font-semibold">
+                Residence
+              </Text>
+
+              <Text className="ml-3 font-bold ">{userInfo.location}</Text>
+              <View className="border-[#0d1c64]  border-b w-full" />
+            </View>
             <View className="flex flex-col space-y-1 w-full px-3 my-2">
               <Text className="text-gray-700 text-[12px] ml-3  font-semibold">
                 Primary phone
@@ -131,7 +163,9 @@ const BorrowDetailsScreen = ({navigation}) => {
 
             <View className="w-full my-2 px-3">
               <TouchableOpacity className=" w-full flex-row items-center justify-center bg-[#0d1c64] p-2 rounded-md ">
-                <Text className="text-white uppercase text-lg">Request </Text>
+                <Text className="text-white uppercase text-lg">
+                  Request Loan
+                </Text>
               </TouchableOpacity>
             </View>
           </View>

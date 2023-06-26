@@ -6,13 +6,16 @@ import {
   ScrollView,
   Image,
   Alert,
-  TextInput,
 } from 'react-native';
 import React, {useState, useContext, useEffect} from 'react';
 import {
+  CreditCardIcon,
+  CurrencyDollarIcon,
   EnvelopeIcon,
   IdentificationIcon,
+  MapIcon,
   MapPinIcon,
+  TableCellsIcon,
 } from 'react-native-heroicons/outline';
 import {
   LockClosedIcon,
@@ -28,9 +31,6 @@ import AppFormContact from '../components/forms/AppFormContact';
 import AppFormNin from '../components/forms/AppFormNin';
 import {registerUser} from '../services/userService';
 import {getStaticData} from '../services/dataService';
-import {Picker} from '@react-native-picker/picker';
-import AppTextInput from '../components/AppTextInput';
-import colors from '../config/colors';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label('Email'),
@@ -38,15 +38,14 @@ const validationSchema = Yup.object().shape({
   name: Yup.string().required().label('Name'),
   ninNumber: Yup.string().required().label('NinNumber'),
   contact: Yup.string().required().label('Contact'),
+  incomeSource: Yup.string().required().label('IncomeSource'),
+  location: Yup.string().required().label('Location'),
+  reason: Yup.string().required().label('Reason'),
+  financialCard: Yup.string().required().label('FinancialCard'),
   confirmPassword: Yup.string().required().label('ConfirmPassword'),
 });
 
 const SignUpScreen = ({navigation}) => {
-  const [residence, setResidence] = useState('');
-  const [employment, setEmpolyment] = useState('');
-
-  const [selectedDate, setSelectedDate] = useState('');
-  const [reason, setReason] = useState('');
   const [validateNin, setValidateNin] = useState(false);
   const [validContact, setValidContact] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -61,59 +60,54 @@ const SignUpScreen = ({navigation}) => {
   };
 
   const handelRegister = async values => {
+    setIsLoading(true);
     const parameters = {
       kycLink: kycUri.kycvalidationLink,
       ninNumber: values.ninNumber,
       contact: values.contact,
     };
 
-    console.log(parameters);
+    // console.log('values needed', values);
 
     if (values.ninNumber && values.contact) {
       const {data: ninNumberData} = await validateNinNumber(parameters);
       const {data: contactData} = await validateContact(parameters);
 
-      // console.log(
-      //   'Validation Data:',
-      //   ninNumberData.validation.status,
-      //   ' Second Data ',
-      //   contactData.validation.status,
-      // );
-
       setSubmitted(true);
+
       setValidateNin(ninNumberData.validation.status === 'SUCCESSFUL');
       setValidContact(contactData.validation.status === 'SUCCESSFUL');
       if (
-        ninNumberData.validation.status === 'SUCCESSFUL' &&
-        contactData.validation.status === 'SUCCESSFUL'
+        ninNumberData?.validation?.status === 'SUCCESSFUL' &&
+        contactData?.validation?.status === 'SUCCESSFUL'
       ) {
         try {
           setIsLoading(true);
           const {data: token} = await registerUser(values);
-
           register({token});
           setIsLoading(false);
         } catch (ex) {
           setIsLoading(false);
           if (ex.response && ex.response.status === 400) {
             Alert.alert(ex.response.data);
-            console.log(ex.response.data);
+            // console.log(ex.response.data);
           }
         }
       } else {
         Alert.alert('Provide Valid Phone Number And Nin Number');
+        setIsLoading(false);
       }
     }
 
     // console.log('current values', validContact);
     // console.log('current values', validateNin);
+    console.log(' invalida nin and number', isLoading);
   };
+
   useEffect(() => {
     const receiveStaticData = async () => {
       const {data} = await getStaticData();
       setKycUri(data[0]);
-      // getData(data[0]);
-      // console.log(' static data', kycUri);
     };
     receiveStaticData();
   });
@@ -133,7 +127,7 @@ const SignUpScreen = ({navigation}) => {
             />
           </View>
 
-          <View className=" top-[216px] bg-white w-[360px] h-[360px] rounded-full items-center ">
+          <View className="top-[216px] bg-white w-[360px] h-[360px] rounded-full items-center ">
             <Text className="text-gray-700  font-extrabold text-[32px] mt-[50px]">
               Sign up
             </Text>
@@ -146,6 +140,10 @@ const SignUpScreen = ({navigation}) => {
               name: '',
               ninNumber: '',
               contact: '',
+              incomeSource: '',
+              location: '',
+              reason: '',
+              financialCard: '',
               confirmPassword: '',
             }}
             onSubmit={values => handelRegister(values)}
@@ -203,79 +201,63 @@ const SignUpScreen = ({navigation}) => {
                 submitted={submitted}
               />
             </View>
+
             <View className="flex flex-col space-y-1 w-full px-3">
-              <Text className="text-gray-700 text-[12px] ml-3  font-semibold">
+              <Text className="text-gray-700 text-[12px] ml-3">
                 What is your source of income?
               </Text>
 
-              <Picker
-                selectedValue={employment}
-                onValueChange={(itemValue, itemIndex) =>
-                  setEmpolyment(itemValue)
-                }>
-                <Picker.Item label="Self Employment" value="option1" />
-                <Picker.Item label="Company Employment" value="option2" />
-                <Picker.Item label="Casual worker" value="option3" />
-                <Picker.Item label="Part-time Employment" value="option4" />
-                <Picker.Item label="Full-time Employment" value="option5" />
-              </Picker>
-
-              <View className="border-[#0d1c64]  border-b w-full" />
-            </View>
-            <View className="flex flex-col space-y-1 w-full px-3">
-              <Text className="text-gray-700 text-[12px] ml-3  font-semibold">
-                What is the purpose of the Loan?
-              </Text>
-
-              <Picker
-                selectedValue={reason}
-                onValueChange={(itemValue, itemIndex) => setReason(itemValue)}>
-                <Picker.Item label="Everyday Bills/Emergency" value="option1" />
-                <Picker.Item label="Auto repair" value="option2" />
-                <Picker.Item label="Auto purchase" value="option3" />
-                <Picker.Item label="Moving" value="option4" />
-                <Picker.Item label="Medical" value="option5" />
-                <Picker.Item label="Business" value="option6" />
-                <Picker.Item label="Taxes" value="option7" />
-                <Picker.Item label="Rent or mortgage" value="option8" />
-                <Picker.Item label="Major purchase" value="option9" />
-                <Picker.Item label="other" value="option10" />
-              </Picker>
-
-              <View className="border-[#0d1c64]  border-b w-full" />
-            </View>
-            <View className="flex flex-col space-y-1 w-full px-3 my-2">
-              <Text className="text-gray-700 text-[12px] ml-3 font-semibold">
-                Where do you reside ?
-              </Text>
-
-              <AppTextInput
-                onChangeText={data => setResidence(data)}
-                placeholder="kampala"
-                Icon={MapPinIcon}
+              <AppFormField
+                autoCapitalize="none"
+                autoCorrect={false}
+                placeholder="income"
+                Icon={CurrencyDollarIcon}
+                name="incomeSource"
               />
-
-              <View className="border-[#0d1c64]  border-b w-full" />
             </View>
-            <View className="flex flex-col space-y-1 w-full px-3 my-2">
-              <Text className="text-gray-700 text-[12px] ml-3  font-semibold">
-                Finacial Card
+
+            <View className="flex flex-col space-y-1 w-full px-3">
+              <Text className="text-gray-700 text-[12px] ml-3">
+                Where do you reside?
               </Text>
 
-              <View className="">
-                <TextInput
-                  placeholder="finacial card number"
-                  maxLength={8}
-                  placeholderTextColor={colors.dark}
-                  value={selectedDate}
-                  underlineColorAndroid="transparent"
-                  onChangeText={data => setSelectedDate(data)}
-                  className="w-full px-2 text-gray-600"
-                />
-              </View>
-
-              <View className="border-[#0d1c64]  border-b w-full" />
+              <AppFormField
+                autoCapitalize="none"
+                autoCorrect={false}
+                placeholder="location"
+                Icon={MapIcon}
+                name="location"
+              />
             </View>
+
+            <View className="flex flex-col space-y-1 w-full px-3">
+              <Text className="text-gray-700 text-[12px] ml-3">
+                What is your reason for this loan?
+              </Text>
+
+              <AppFormField
+                autoCapitalize="none"
+                autoCorrect={false}
+                placeholder="reason"
+                Icon={TableCellsIcon}
+                name="reason"
+              />
+            </View>
+
+            <View className="flex flex-col space-y-1 w-full px-3">
+              <Text className="text-gray-700 text-[12px] ml-3">
+                Financial Card
+              </Text>
+
+              <AppFormField
+                autoCapitalize="none"
+                autoCorrect={false}
+                placeholder="financialCard"
+                Icon={CreditCardIcon}
+                name="financialCard"
+              />
+            </View>
+
             <View className="flex flex-col space-y-1 w-full px-3 mt-2">
               <Text className="text-gray-700 text-[12px] ml-3">Password</Text>
 

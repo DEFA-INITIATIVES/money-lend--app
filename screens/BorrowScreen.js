@@ -26,7 +26,7 @@ const BorrowScreen = ({navigation}) => {
   const {item} = route.params;
   const [selectedLoan, SetSelectedLoan] = useState(item.minimumCredit);
   const [validateLoan, setValidateLoan] = useState(false);
-
+  console.log(item);
   const handleButtonPress = buttonText => {
     setActiveButton(buttonText);
   };
@@ -137,27 +137,6 @@ const BorrowScreen = ({navigation}) => {
             Life of loan
           </Text>
 
-          {/* <View className="flex-row items-center space-x-3 space-y-2 flex-wrap p-1 mt-2">
-            <Text className="text-white bg-[#0d1c64] border border-blue-500 py-1 px-2 rounded-full text-center">
-              6 months{' '}
-            </Text>
-            <Text className="text-gray-600 border border-gray-500 py-1 px-2 rounded-full text-center">
-              12 months{' '}
-            </Text>
-            <Text className="text-gray-600 border border-gray-500 py-1 px-2 rounded-full text-center">
-              {' '}
-              18 months{' '}
-            </Text>
-            <Text className="text-[#0d1c64] border border-gray-500 py-1 px-2 rounded-full text-center">
-              {' '}
-              24 months{' '}
-            </Text>
-            <Text className="text-gray-600 border border-gray-500 py-1 px-2 rounded-full text-center">
-              {' '}
-              other{' '}
-            </Text>
-          </View> */}
-
           <View className="flex-row items-center space-x-3 space-y-2 flex-wrap p-1 mt-2">
             <TouchableOpacity
               style={[styles.button, getButtonStyle('6 months')]}
@@ -215,18 +194,23 @@ const BorrowScreen = ({navigation}) => {
             </View>
 
             <View className="w-full flex-row justify-between mt-2 p-3">
+              <Text>selected Amount</Text>
+              <Text className="text-[#0d1c64] font-medium">
+                UGX {selectedLoan.toLocaleString()}
+              </Text>
+            </View>
+
+            <View className="w-full flex-row justify-between mt-2 p-3">
+              <Text> Daily Interest</Text>
+              <Text className="text-[#0d1c64] font-medium">
+                {' '}
+                {item.dailyInterest} %
+              </Text>
+            </View>
+
+            <View className="w-full flex-row justify-between mt-2 p-3">
               <Text>Down Payment</Text>
-              <Text className="text-[#0d1c64] font-medium">$ 800.00 </Text>
-            </View>
-
-            <View className="w-full flex-row justify-between mt-2 p-3">
-              <Text> Gross Interest</Text>
-              <Text className="text-[#0d1c64] font-medium">$ 2130.00 </Text>
-            </View>
-
-            <View className="w-full flex-row justify-between mt-2 p-3">
-              <Text>Due date</Text>
-              <Text className="text-[#0d1c64] font-medium"> 5th Month </Text>
+              <Text className="text-[#0d1c64] font-medium">UGX 800 </Text>
             </View>
           </View>
 

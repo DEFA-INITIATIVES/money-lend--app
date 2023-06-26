@@ -2,24 +2,47 @@ import {
   StyleSheet,
   Text,
   SafeAreaView,
+  ActivityIndicator,
   TouchableOpacity,
   TextInput,
   View,
   Image,
+  Alert,
 } from 'react-native';
 import React, {useState} from 'react';
-import {
-  ArrowLeftIcon,
-  EnvelopeIcon,
-  MegaphoneIcon,
-} from 'react-native-heroicons/outline';
+import {ArrowLeftIcon} from 'react-native-heroicons/outline';
+import {forgotPassword} from '../services/userService';
 
 const ForgotpasswordScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleResetPassword = () => {
+  const handleGenerateResetPin = async () => {
     // Handle password reset logic here
+
+    setIsLoading(true);
+    try {
+      const parameters = {
+        email: email,
+      };
+
+      console.log(parameters);
+
+      const {data} = await forgotPassword(parameters);
+      Alert.alert(` ${data} check your  email `);
+      navigation.navigate('Resetpassword');
+
+      setIsLoading(false);
+    } catch (ex) {
+      setIsLoading(false);
+
+      if (ex.response && ex.response.status === 400) {
+        console.log(ex.response.data);
+        Alert.alert(ex.response.data);
+      }
+    }
   };
+
   return (
     <SafeAreaView className="items-center relative bg-white w-full h-full">
       <View className="bg-[#0d1c64] h-[350px] w-full items-center">
@@ -43,35 +66,37 @@ const ForgotpasswordScreen = ({navigation}) => {
           </Text>
         </View>
       </View>
-      <View className="justify-center items-center">
+
+      <View className="flex items-center pt-20 h-full w-full">
         <TextInput
-          className="border  border-[#0d1c64] rounded-[10px] p-3 w-80 mb-5 top-[50px]"
-          placeholder="Enter your Email"
+          className="border  border-[#0d1c64] rounded-[10px] p-3 w-80 mb-5 top-[80px]"
+          placeholder=" Enter your  Email"
           value={email}
           onChangeText={setEmail}
           autoCapitalize="none"
-        />
-        <TextInput
-          className="border  border-[#0d1c64] rounded-[10px] p-3 w-80 mb-5 top-[50px]"
-          placeholder="Enter your Newpassword"
-          value={email}
-          onChangeText={setEmail}
-          autoCapitalize="none"
-        />
-        <TextInput
-          className="border  border-[#0d1c64] rounded-[10px] p-3 w-80 mb-5 top-[50px]"
-          placeholder=" confirm your password "
-          value={email}
-          onChangeText={setEmail}
-          autoCapitalize="none"
+          keyBoardType="email-address"
+          textContentType="emailAddress"
         />
 
         <TouchableOpacity
-          className={`bg-[#0d1c64] rounded-md p-3 w-full items-center  top-12
+          className={`bg-[#0d1c64] rounded-md p-3 w-80 items-center  top-20
           ${email ? 'opacity-100' : 'opacity-50'}`}
-          onPress={handleResetPassword}
+          onPress={handleGenerateResetPin}
           disabled={!email}>
-          <Text className="text-white font-bold ">Reset Password</Text>
+          <Text className="text-white font-bold">
+            {isLoading ? (
+              <Text clasaName="flex flex-row items-center space-x-3 justify-center ">
+                <Text className="mr-2">
+                  <ActivityIndicator size="small" color="white" />
+                </Text>
+                <Text className=" text-white text-base font-semibold">
+                  Generating reset token..
+                </Text>
+              </Text>
+            ) : (
+              <Text style={styles.text}>Generate reset Pin</Text>
+            )}
+          </Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
