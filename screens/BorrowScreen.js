@@ -19,6 +19,7 @@ import colors from '../config/colors';
 import {useRoute} from '@react-navigation/native';
 import AppButton from '../components/AppButton';
 import Bottombar from '../components/Bottombar';
+import {buttonlist} from '../utlis/buttonobj';
 
 const BorrowScreen = ({navigation}) => {
   const [activeButton, setActiveButton] = useState('6 months');
@@ -26,7 +27,11 @@ const BorrowScreen = ({navigation}) => {
   const {item} = route.params;
   const [selectedLoan, SetSelectedLoan] = useState(item.minimumCredit);
   const [validateLoan, setValidateLoan] = useState(false);
-  console.log(item);
+  const [lifeLoan, setLoanLife] = useState(6);
+  const monthlyInterest = item.dailyInterest * 30;
+  console.log(lifeLoan);
+
+  // console.log(item);
   const handleButtonPress = buttonText => {
     setActiveButton(buttonText);
   };
@@ -76,6 +81,16 @@ const BorrowScreen = ({navigation}) => {
       setValidateLoan(true);
     }
   };
+
+  const handleNavigate = () => {
+    const loanData = {
+      selectedLoan: selectedLoan,
+      lifeLoan: lifeLoan,
+    };
+
+    navigation.navigate('Details', loanData);
+  };
+
   return (
     <SafeAreaView className="bg-[#0d1c64] h-full">
       <ScrollView className="p-5">
@@ -86,7 +101,7 @@ const BorrowScreen = ({navigation}) => {
             onPress={() => navigation.navigate('Home')}
           />
 
-          <Text className="text-white text-lg font-medium"> Loan apply </Text>
+          <Text className="text-white text-lg font-medium">Loan apply </Text>
           <Text className="text-white text-sm"> Details</Text>
         </View>
 
@@ -138,48 +153,30 @@ const BorrowScreen = ({navigation}) => {
           </Text>
 
           <View className="flex-row items-center space-x-3 space-y-2 flex-wrap p-1 mt-2">
-            <TouchableOpacity
-              style={[styles.button, getButtonStyle('6 months')]}
-              onPress={() => handleButtonPress('6 months')}>
-              <Text style={[styles.buttonText, getButtonTextStyle('6 months')]}>
-                {'6 months'}
-              </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={[styles.button, getButtonStyle('12 months')]}
-              onPress={() => handleButtonPress('12 months')}>
-              <Text
-                style={[styles.buttonText, getButtonTextStyle('12 months')]}>
-                {'12 months'}
-              </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={[styles.button, getButtonStyle('18 months')]}
-              onPress={() => handleButtonPress('18 months')}>
-              <Text
-                style={[styles.buttonText, getButtonTextStyle('18 months')]}>
-                {'18 months'}
-              </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={[styles.button, getButtonStyle('24 months')]}
-              onPress={() => handleButtonPress('24 months')}>
-              <Text
-                style={[styles.buttonText, getButtonTextStyle('24 months')]}>
-                {'24 months'}
-              </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={[styles.button, getButtonStyle('other')]}
-              onPress={() => handleButtonPress('other')}>
-              <Text style={[styles.buttonText, getButtonTextStyle('other')]}>
-                {'other'}
-              </Text>
-            </TouchableOpacity>
+            {buttonlist.map(({_id, lifeTime, active}) => (
+              <View key={_id}>
+                {active && (
+                  <TouchableOpacity
+                    key={_id}
+                    style={[
+                      styles.button,
+                      getButtonStyle(`${lifeTime} months`),
+                    ]}
+                    onPress={() => {
+                      setLoanLife(lifeTime);
+                      handleButtonPress(`${lifeTime} months`);
+                    }}>
+                    <Text
+                      style={[
+                        styles.buttonText,
+                        getButtonTextStyle(`${lifeTime} months`),
+                      ]}>
+                      {lifeTime} months
+                    </Text>
+                  </TouchableOpacity>
+                )}
+              </View>
+            ))}
           </View>
 
           <View className="flex-row items-center justify-end space-x-2 px-3 mt-2 w-full bg-white rounded-md">
@@ -209,17 +206,16 @@ const BorrowScreen = ({navigation}) => {
             </View>
 
             <View className="w-full flex-row justify-between mt-2 p-3">
-              <Text>Down Payment</Text>
-              <Text className="text-[#0d1c64] font-medium">UGX 800 </Text>
+              <Text>Monthly interest </Text>
+              <Text className="text-[#0d1c64] font-medium">
+                {' '}
+                {monthlyInterest.toFixed(2)}%{' '}
+              </Text>
             </View>
           </View>
 
           <View className="w-full px-3 my-2">
-            <AppButton
-              title="Apply"
-              color="primary"
-              onPress={() => navigation.navigate('Details', selectedLoan)}
-            />
+            <AppButton title="Apply" color="primary" onPress={handleNavigate} />
           </View>
         </View>
       </ScrollView>

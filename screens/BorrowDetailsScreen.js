@@ -6,30 +6,54 @@ import {
   TouchableOpacity,
   ScrollView,
   TextInput,
+  ActivityIndicator,
+  Alert,
 } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
-import {
-  EnvelopeIcon,
-  MapPinIcon,
-  PhoneIcon,
-} from 'react-native-heroicons/outline';
-import AppTextInput from '../components/AppTextInput';
 import {ArrowLeftIcon, Bars3Icon} from 'react-native-heroicons/outline';
 import Bottombar from '../components/Bottombar';
 import colors from '../config/colors';
 import {AuthContext} from '../context/AuthContext';
 import {useRoute} from '@react-navigation/native';
+import {requestLoan} from '../services/kycService';
 
 const BorrowDetailsScreen = ({navigation}) => {
   const route = useRoute();
-  const selectedLoan = route.params;
+  const loanData = route.params;
   const [loanAmount, setLoanAmount] = useState('');
-
   const [selectedDate, setSelectedDate] = useState('');
   const [reason, setReason] = useState('');
+  const [loanDuration, setLoanDuration] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const {logout, userInfo} = useContext(AuthContext);
-  console.log(userInfo);
+
+  console.log('date selected ', loanDuration);
+  console.log('hello reason', reason);
+  console.log('my date', selectedDate);
+
+  const handleRequestLoan = async () => {
+    const parameters = {
+      contact: userInfo.contact,
+      amount: loanData.selectedLoan,
+    };
+
+    try {
+      setIsLoading(true);
+      const {data} = await requestLoan(parameters);
+      Alert.alert(data.status);
+      console.log('request Laon data ', data);
+      setIsLoading(false);
+    } catch (ex) {
+      setIsLoading(false);
+
+      if (ex.response && ex.response.status === 400) {
+        console.log(ex.response.data);
+        Alert.alert(ex.response.data);
+      }
+    }
+  };
+
   return (
     <SafeAreaView className="flex-1">
       <View className="">
@@ -78,7 +102,7 @@ const BorrowDetailsScreen = ({navigation}) => {
                 Amount requested
               </Text>
 
-              <Text> {selectedLoan} UGX</Text>
+              <Text> {loanData.selectedLoan} UGX</Text>
               <View className="border-[#0d1c64]  border-b w-full" />
             </View>
             <View className="flex flex-col space-y-1 w-full px-3 my-2">
@@ -96,14 +120,6 @@ const BorrowDetailsScreen = ({navigation}) => {
               </Text>
 
               <Text className="ml-3 font-bold ">{userInfo.incomeSource}</Text>
-              <View className="border-[#0d1c64]  border-b w-full" />
-            </View>
-            <View className="flex flex-col space-y-1 w-full px-3 my-2">
-              <Text className="text-gray-700 text-[12px] ml-3  font-semibold">
-                Reason for this loan
-              </Text>
-
-              <Text className="ml-3 font-bold ">{userInfo.reason}</Text>
               <View className="border-[#0d1c64]  border-b w-full" />
             </View>
 
@@ -124,6 +140,17 @@ const BorrowDetailsScreen = ({navigation}) => {
 
               <View className="border-[#0d1c64]  border-b w-full" />
             </View>
+            <View className="flex flex-col space-y-1 w-full px-3 my-2">
+              <Text className="text-gray-700 text-[12px] ml-3  font-semibold">
+                loan Life
+              </Text>
+
+              <Text className="ml-3 font-bold ">
+                {loanData.lifeLoan} months
+              </Text>
+
+              <View className="border-[#0d1c64]  border-b w-full" />
+            </View>
 
             <View className="flex flex-col space-y-1 w-full px-3">
               <Text className="text-gray-700 text-[12px] ml-3  font-semibold">
@@ -131,41 +158,52 @@ const BorrowDetailsScreen = ({navigation}) => {
               </Text>
 
               <Picker
-                selectedValue={reason}
-                onValueChange={(itemValue, itemIndex) => setReason(itemValue)}>
-                <Picker.Item label="Daily" value="option1" />
-                <Picker.Item label="Monthly " value="option2" />
-                <Picker.Item label="Fortnight" value="option3" />
+                selectedValue={loanDuration}
+                onValueChange={(itemValue, itemIndex) =>
+                  setLoanDuration(itemValue)
+                }>
+                <Picker.Item label="Daily" value="1" />
+                <Picker.Item label="Weekly" value="7" />
+                <Picker.Item label="Fortnightly" value="14" />
+                <Picker.Item label="Monthly" value="30" />
               </Picker>
 
               <View className="border-[#0d1c64]  border-b w-full" />
             </View>
-            <View className="flex flex-col space-y-1 w-full px-3 my-2">
-              <Text className="text-gray-700 text-[12px] ml-3  font-semibold">
-                {' '}
-                Payment Date
+            <View className="flex flex-col space-y-1 w-full px-3">
+              <Text className="text-gray-700 text-[12px] ml-3">
+                What is your reason for this loan?
               </Text>
 
-              <View className="">
-                <TextInput
-                  placeholder="10/25/23"
-                  maxLength={8}
-                  placeholderTextColor={colors.dark}
-                  value={selectedDate}
-                  underlineColorAndroid="transparent"
-                  onChangeText={data => setSelectedDate(data)}
-                  className="w-full px-2 text-gray-600"
-                />
-              </View>
-
+              <TextInput
+                placeholder="Reason"
+                placeholderTextColor={colors.dark}
+                value={reason}
+                underlineColorAndroid="transparent"
+                onChangeText={data => setReason(data)}
+                className="w-full px-2 text-gray-600"
+              />
               <View className="border-[#0d1c64]  border-b w-full" />
             </View>
 
             <View className="w-full my-2 px-3">
-              <TouchableOpacity className=" w-full flex-row items-center justify-center bg-[#0d1c64] p-2 rounded-md ">
-                <Text className="text-white uppercase text-lg">
-                  Request Loan
-                </Text>
+              <TouchableOpacity
+                onPress={handleRequestLoan}
+                className=" w-full flex-row items-center justify-center bg-[#0d1c64] p-2 rounded-md ">
+                {isLoading ? (
+                  <Text clasaName="flex flex-row items-center space-x-3 justify-center ">
+                    <Text className="mr-2">
+                      <ActivityIndicator size="small" color="white" />
+                    </Text>
+                    <Text className=" text-white text-lg font-semibold">
+                      Processing Loan...
+                    </Text>
+                  </Text>
+                ) : (
+                  <Text className="text-lg  uppercase  text-white">
+                    Request Loan
+                  </Text>
+                )}
               </TouchableOpacity>
             </View>
           </View>

@@ -13,14 +13,18 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import {getStaticData} from '../services/dataService';
 import {AuthContext} from '../context/AuthContext';
 import {numberWithCommas} from '../utlis/helper';
+import {availableCredit} from '../services/kycService';
 
 const HomeScreen = ({navigation}) => {
   const {getData, staticData} = useContext(AuthContext);
   const [refresh, setRefresh] = useState(false);
   useEffect(() => {
     const receiveStaticData = async () => {
-      const {data} = await getStaticData();
-      getData(data[0]);
+      // const {data} = await getStaticData();
+      // getData(data[0]);
+      const {data} = await availableCredit();
+      getData(data.amount);
+      // console.log(' my available money ', data);
     };
     receiveStaticData();
   }, [refresh]);
@@ -47,7 +51,9 @@ const HomeScreen = ({navigation}) => {
           </Text>
           <View className="flex-row">
             <Text className="text-white px-4  text-[30px] font-extrabold flex-1">
-              {staticData?.availableCredit?.toLocaleString()}
+              {/* {staticData?.availableCredit?.toLocaleString()} */}
+              {staticData ? parseFloat(staticData).toLocaleString() : ''}
+              .00
             </Text>
             <View className=" bg-white w-[130px] h-[45px]  rounded-md mr-3 items-center py-1">
               <Text className="font-bold text-[25px] text-[#515a71]">

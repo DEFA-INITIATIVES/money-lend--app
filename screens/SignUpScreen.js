@@ -40,7 +40,6 @@ const validationSchema = Yup.object().shape({
   contact: Yup.string().required().label('Contact'),
   incomeSource: Yup.string().required().label('IncomeSource'),
   location: Yup.string().required().label('Location'),
-  reason: Yup.string().required().label('Reason'),
   financialCard: Yup.string().required().label('FinancialCard'),
   confirmPassword: Yup.string().required().label('ConfirmPassword'),
 });
@@ -142,7 +141,6 @@ const SignUpScreen = ({navigation}) => {
               contact: '',
               incomeSource: '',
               location: '',
-              reason: '',
               financialCard: '',
               confirmPassword: '',
             }}
@@ -227,20 +225,6 @@ const SignUpScreen = ({navigation}) => {
                 placeholder="location"
                 Icon={MapIcon}
                 name="location"
-              />
-            </View>
-
-            <View className="flex flex-col space-y-1 w-full px-3">
-              <Text className="text-gray-700 text-[12px] ml-3">
-                What is your reason for this loan?
-              </Text>
-
-              <AppFormField
-                autoCapitalize="none"
-                autoCorrect={false}
-                placeholder="reason"
-                Icon={TableCellsIcon}
-                name="reason"
               />
             </View>
 

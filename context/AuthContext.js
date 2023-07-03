@@ -9,7 +9,7 @@ export const AuthProvider = ({children}) => {
   const [userToken, setUserToken] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
   const [user, setUser] = useState(null);
-  const [staticData, setStaticData] = useState(null);
+  const [staticData, setStaticData] = useState('');
 
   // Logging in User ...
   const login = ({token}) => {
