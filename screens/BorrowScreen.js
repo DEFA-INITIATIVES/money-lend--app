@@ -20,9 +20,12 @@ import {useRoute} from '@react-navigation/native';
 import AppButton from '../components/AppButton';
 import Bottombar from '../components/Bottombar';
 import {buttonlist} from '../utlis/buttonobj';
+import { getStaticData } from '../services/dataService';
 
 const BorrowScreen = ({navigation}) => {
+  const [refresh, setRefresh] = useState(false);
   const [activeButton, setActiveButton] = useState('6 months');
+  const [loanDurations , setLoanDuration] = useState([]);
   const route = useRoute();
   const {item} = route.params;
   const [selectedLoan, SetSelectedLoan] = useState(item.minimumCredit);
@@ -90,6 +93,15 @@ const BorrowScreen = ({navigation}) => {
 
     navigation.navigate('Details', loanData);
   };
+
+ 
+  useEffect(() => {
+    const receiveStaticData = async () => {
+      const {data} = await getStaticData();
+      console.log('Static variables:', data[0].loanDurations);
+    };
+    receiveStaticData();
+  }, [refresh]);
 
   return (
     <SafeAreaView className="bg-[#0d1c64] h-full">

@@ -51,9 +51,7 @@ const HomeScreen = ({navigation}) => {
           </Text>
           <View className="flex-row">
             <Text className="text-white px-4  text-[30px] font-extrabold flex-1">
-              {/* {staticData?.availableCredit?.toLocaleString()} */}
-              {staticData ? parseFloat(staticData).toLocaleString() : ''}
-              .00
+              {staticData }
             </Text>
             <View className=" bg-white w-[130px] h-[45px]  rounded-md mr-3 items-center py-1">
               <Text className="font-bold text-[25px] text-[#515a71]">
