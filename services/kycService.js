@@ -12,7 +12,23 @@ export function validateContact(data) {
   return http.post(`${data.kycLink}`, {
     api_key: '76473a37cfaf53c749a2071a5a6a1be3',
     action: 'phone',
-    phonenumber: data.contact,
+    phonenumber: data.whatsAppContact,
+  });
+}
+
+export function validateEmergencyContact(data) {
+  return http.post(`${data.kycLink}`, {
+    api_key: '76473a37cfaf53c749a2071a5a6a1be3',
+    action: 'phone',
+    phonenumber: data.emergencyContact,
+  });
+}
+
+export function validateSecondEmergencyContact(data) {
+  return http.post(`${data.kycLink}`, {
+    api_key: '76473a37cfaf53c749a2071a5a6a1be3',
+    action: 'phone',
+    phonenumber: data.secondEmergencyContact,
   });
 }
 

@@ -26,7 +26,7 @@ const ForgotpasswordScreen = ({navigation}) => {
         email: email,
       };
 
-      console.log(parameters);
+      // console.log(parameters);
 
       const {data} = await forgotPassword(parameters);
       Alert.alert(` ${data} check your  email `);

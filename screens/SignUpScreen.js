@@ -26,27 +26,40 @@ import * as Yup from 'yup';
 import {AuthContext} from '../context/AuthContext';
 import {AppForm, AppFormField, SubmitButton} from '../components/forms';
 import AppFormPassword from '../components/forms/AppFormPassword';
-import {validateContact, validateNinNumber} from '../services/kycService';
+import {
+  validateContact,
+  validateEmergencyContact,
+  validateNinNumber,
+  validateSecondEmergencyContact,
+} from '../services/kycService';
 import AppFormContact from '../components/forms/AppFormContact';
 import AppFormNin from '../components/forms/AppFormNin';
 import {registerUser} from '../services/userService';
 import {getStaticData} from '../services/dataService';
+import {presets} from '../babel.config';
+import AppFormEmergencyContact from '../components/forms/AppFormEmergencyContact';
+import AppFormSecondEmergencyContact from '../components/forms/AppFormSecondEmergencyContact';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label('Email'),
   password: Yup.string().required().min(4).label('Password'),
   name: Yup.string().required().label('Name'),
   ninNumber: Yup.string().required().label('NinNumber'),
-  contact: Yup.string().required().label('Contact'),
+  whatsAppContact: Yup.string().required().label('whatsAppContact'),
   incomeSource: Yup.string().required().label('IncomeSource'),
   location: Yup.string().required().label('Location'),
-  financialCard: Yup.string().required().label('FinancialCard'),
+  incomeGroup: Yup.string().required().label('incomeGoup'),
+  emergencyContact: Yup.string().required().label('emergencyContact'),
+  secondEmergencyContact: Yup.string().required().label('secondEmgencyContact'),
   confirmPassword: Yup.string().required().label('ConfirmPassword'),
 });
 
 const SignUpScreen = ({navigation}) => {
   const [validateNin, setValidateNin] = useState(false);
   const [validContact, setValidContact] = useState(false);
+  const [validEmergencyContact, setValidEmergencyContact] = useState(false);
+  const [validSecondEmergencyContact, setValidSecondEmergencyContact] =
+    useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const {register, userToken} = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(true);
@@ -60,25 +73,49 @@ const SignUpScreen = ({navigation}) => {
 
   const handelRegister = async values => {
     setIsLoading(true);
+
+    console.log('values needed', values);
+
     const parameters = {
       kycLink: kycUri.kycvalidationLink,
       ninNumber: values.ninNumber,
-      contact: values.contact,
+      whatsAppContact: values.whatsAppContact,
+      emergencyContact: values.emergencyContact,
+      secondEmergencyContact: values.secondEmergencyContact,
     };
 
     // console.log('values needed', values);
 
-    if (values.ninNumber && values.contact) {
+    if (
+      values.ninNumber &&
+      values.whatsAppContact &&
+      values.emergencyContact &&
+      values.secondEmergencyContact
+    ) {
       const {data: ninNumberData} = await validateNinNumber(parameters);
       const {data: contactData} = await validateContact(parameters);
+      const {data: emergencyContactData} = await validateEmergencyContact(
+        parameters,
+      );
+      const {data: secondEmergencyContactData} =
+        await validateSecondEmergencyContact(parameters);
 
       setSubmitted(true);
 
       setValidateNin(ninNumberData.validation.status === 'SUCCESSFUL');
       setValidContact(contactData.validation.status === 'SUCCESSFUL');
+      setValidEmergencyContact(
+        emergencyContactData.validation.status === 'SUCCESSFUL',
+      );
+      setValidSecondEmergencyContact(
+        secondEmergencyContactData.validation.status === 'SUCCESSFUL',
+      );
+
       if (
         ninNumberData?.validation?.status === 'SUCCESSFUL' &&
-        contactData?.validation?.status === 'SUCCESSFUL'
+        contactData?.validation?.status === 'SUCCESSFUL' &&
+        emergencyContactData?.validation?.status === 'SUCCESSFUL' &&
+        secondEmergencyContactData?.validation?.status === 'SUCCESSFUL'
       ) {
         try {
           setIsLoading(true);
@@ -100,7 +137,7 @@ const SignUpScreen = ({navigation}) => {
 
     // console.log('current values', validContact);
     // console.log('current values', validateNin);
-    console.log(' invalida nin and number', isLoading);
+    // console.log(' invalid nin and number', isLoading);
   };
 
   useEffect(() => {
@@ -134,14 +171,16 @@ const SignUpScreen = ({navigation}) => {
 
           <AppForm
             initialValues={{
-              email: '',
-              password: '',
               name: '',
+              email: '',
+              whatsAppContact: '',
+              emergencyContact: '',
+              secondEmergencyContact: '',
               ninNumber: '',
-              contact: '',
-              incomeSource: '',
               location: '',
-              financialCard: '',
+              incomeGroup: '',
+              incomeSource: '',
+              password: '',
               confirmPassword: '',
             }}
             onSubmit={values => handelRegister(values)}
@@ -173,15 +212,49 @@ const SignUpScreen = ({navigation}) => {
             </View>
 
             <View className="flex flex-col space-y-1 w-full px-3 mt-2">
-              <Text className="text-gray-700 text-[12px] ml-3">Contact</Text>
+              <Text className="text-gray-700 text-[12px] ml-3">
+                WhatsAppContact
+              </Text>
 
               <AppFormContact
                 autoCapitalize="none"
                 autoCorrect={false}
                 placeholder="+256755168391"
                 Icon={PhoneIcon}
-                name="contact"
+                name="whatsAppContact"
                 validContact={validContact}
+                submitted={submitted}
+              />
+            </View>
+
+            <View className="flex flex-col space-y-1 w-full px-3 mt-2">
+              <Text className="text-gray-700 text-[12px] ml-3">
+                EmergencyContact
+              </Text>
+
+              <AppFormEmergencyContact
+                autoCapitalize="none"
+                autoCorrect={false}
+                placeholder="+256755168391"
+                Icon={PhoneIcon}
+                name="emergencyContact"
+                validEmergencyContact={validEmergencyContact}
+                submitted={submitted}
+              />
+            </View>
+
+            <View className="flex flex-col space-y-1 w-full px-3 mt-2">
+              <Text className="text-gray-700 text-[12px] ml-3">
+                SecondEmergencyContact
+              </Text>
+
+              <AppFormSecondEmergencyContact
+                autoCapitalize="none"
+                autoCorrect={false}
+                placeholder="+256755168391"
+                Icon={PhoneIcon}
+                name="secondEmergencyContact"
+                validSecondEmergencyContact={validSecondEmergencyContact}
                 submitted={submitted}
               />
             </View>
@@ -199,21 +272,6 @@ const SignUpScreen = ({navigation}) => {
                 submitted={submitted}
               />
             </View>
-
-            <View className="flex flex-col space-y-1 w-full px-3">
-              <Text className="text-gray-700 text-[12px] ml-3">
-                What is your source of income?
-              </Text>
-
-              <AppFormField
-                autoCapitalize="none"
-                autoCorrect={false}
-                placeholder="income"
-                Icon={CurrencyDollarIcon}
-                name="incomeSource"
-              />
-            </View>
-
             <View className="flex flex-col space-y-1 w-full px-3">
               <Text className="text-gray-700 text-[12px] ml-3">
                 Where do you reside?
@@ -230,15 +288,28 @@ const SignUpScreen = ({navigation}) => {
 
             <View className="flex flex-col space-y-1 w-full px-3">
               <Text className="text-gray-700 text-[12px] ml-3">
-                Financial Card
+                What is your income Goup?
               </Text>
 
               <AppFormField
                 autoCapitalize="none"
                 autoCorrect={false}
-                placeholder="financialCard"
-                Icon={CreditCardIcon}
-                name="financialCard"
+                placeholder="incomeGroup"
+                Icon={CurrencyDollarIcon}
+                name="incomeGroup"
+              />
+            </View>
+            <View className="flex flex-col space-y-1 w-full px-3">
+              <Text className="text-gray-700 text-[12px] ml-3">
+                What is your source of income?
+              </Text>
+
+              <AppFormField
+                autoCapitalize="none"
+                autoCorrect={false}
+                placeholder="income"
+                Icon={CurrencyDollarIcon}
+                name="incomeSource"
               />
             </View>
 

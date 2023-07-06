@@ -18,12 +18,14 @@ import {availableCredit} from '../services/kycService';
 const HomeScreen = ({navigation}) => {
   const {getData, staticData} = useContext(AuthContext);
   const [refresh, setRefresh] = useState(false);
+  const {logout, userInfo} = useContext(AuthContext);
   useEffect(() => {
     const receiveStaticData = async () => {
-      // const {data} = await getStaticData();
-      // getData(data[0]);
-      const {data} = await availableCredit();
-      getData(data.amount);
+      const {data} = await getStaticData();
+      getData(data[0]);
+      console.log(' my available money ', data);
+      // const {data} = await availableCredit();
+      // getData(data.amount);
       // console.log(' my available money ', data);
     };
     receiveStaticData();
@@ -46,12 +48,10 @@ const HomeScreen = ({navigation}) => {
             Not the same finacial life
           </Text>
 
-          <Text className="text-white px-4 mt-7 text-[14px]">
-            Available Credit
-          </Text>
+          <Text className="text-white px-4 mt-7 text-[14px]">Due Amount</Text>
           <View className="flex-row">
             <Text className="text-white px-4  text-[30px] font-extrabold flex-1">
-              {staticData }
+              {userInfo.dueAmount.toLocaleString()}.00
             </Text>
             <View className=" bg-white w-[130px] h-[45px]  rounded-md mr-3 items-center py-1">
               <Text className="font-bold text-[25px] text-[#515a71]">

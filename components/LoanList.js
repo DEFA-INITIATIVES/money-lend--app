@@ -1,10 +1,11 @@
 import {View, Text, FlatList, RefreshControl} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
 import {BASE_URL} from '../config';
 import moment from 'moment';
 import {ActivityIndicator} from 'react-native-paper';
+import {AuthContext} from '../context/AuthContext';
 
 const Item = ({
   createdAt,
@@ -14,6 +15,7 @@ const Item = ({
   minimumCredit,
   minimumValidation,
   type,
+  userInfo,
   getnavigation,
 }) => (
   <View>
@@ -29,8 +31,9 @@ const Item = ({
             {minimumValidation} -{maximumValidation} days
           </Text>
           <Text
+            // disabled={userInfo.dueAmount > 0}
             onPress={getnavigation}
-            className="text-white bg-[#0d1c64]  w-14 rounded justify-center items-center p-2 ml-3">
+            className="text-white  bg-[#0d1c64]  w-14 rounded justify-center items-center p-2 ml-3">
             Apply
           </Text>
         </View>
@@ -54,6 +57,7 @@ const Item = ({
 );
 
 const LoanList = () => {
+  const {userInfo} = useContext(AuthContext);
   const [refreshing, setRefreshing] = useState(false);
   const navigation = useNavigation();
   const [data, setData] = useState(null);
@@ -106,6 +110,7 @@ const LoanList = () => {
           minimumCredit={item.minimumCredit?.toLocaleString()}
           minimumValidation={item.minimumValidation}
           type={item.type}
+          userInfo={userInfo}
           getnavigation={() => navigation.navigate('Borrow', {item})}
         />
       )}

@@ -58,15 +58,15 @@ const ResetPasswordScreen = ({navigation}) => {
 
         <View className=" top-[116px] bg-white w-[360px] h-[360px] rounded-full items-center ">
           <Text className="text-gray-700  font-extrabold text-[17px] mt-[50px]">
-            Forgot Password
+            Reset Password
           </Text>
         </View>
       </View>
 
-      <View className="justify-center items-center  h-full w-full pt-5">
+      <View className=" h-full w-full px-7">
         <TextInput
           className="border  border-[#0d1c64] rounded-[10px] p-3 w-80 mb-5 top-[50px]"
-          placeholder=" Enter your  Email"
+          placeholder=" Enter Reset  Pin"
           value={pin}
           onChangeText={setPin}
           autoCapitalize="none"
@@ -74,7 +74,7 @@ const ResetPasswordScreen = ({navigation}) => {
         />
         <TextInput
           className="border  border-[#0d1c64] rounded-[10px] p-3 w-80 mb-5 top-[50px]"
-          placeholder=" Enter your  Email"
+          placeholder=" New Password"
           value={password}
           onChangeText={setPassword}
           autoCapitalize="none"
@@ -82,17 +82,15 @@ const ResetPasswordScreen = ({navigation}) => {
         />
         <TextInput
           className="border border-[#0d1c64] rounded-[10px] p-3 w-80 mb-5 top-[50px]"
-          placeholder=" Enter your  Email"
+          placeholder=" Confirm New Password"
           value={confirmPassword}
           onChangeText={setConfirmPassword}
           autoCapitalize="none"
           keyBoardType="confirmPassword"
         />
         <TouchableOpacity
-          className={`border border-[#0d1c64] rounded-[10px] p-3 w-80 mb-5  top-12
-        ${pin ? 'opacity-100' : 'opacity-50'}`}
-          onPress={handleResetPassword}
-          disabled={!pin}>
+          className="border border-[#0d1c64] bg-[#0d1c64] justify-center items-center rounded-[10px] p-3 w-80 mb-5  top-12"
+          onPress={handleResetPassword}>
           <Text className="text-white font-bold">
             {isLoading ? (
               <Text clasaName="flex flex-row items-center space-x-3 justify-center ">

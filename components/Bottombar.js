@@ -1,13 +1,15 @@
 import {View, Text, TouchableOpacity} from 'react-native';
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   CurrencyDollarIcon,
   EnvelopeOpenIcon,
   HomeIcon,
   MegaphoneIcon,
 } from 'react-native-heroicons/outline';
+import {AuthContext} from '../context/AuthContext';
 
 const Bottombar = ({borrow, navigation}) => {
+  const {logout, userInfo} = useContext(AuthContext);
   return (
     <View
       className={`${
@@ -27,13 +29,14 @@ const Bottombar = ({borrow, navigation}) => {
         <MegaphoneIcon size={24} color="white" />
         <Text className="text-white">Notifications</Text>
       </TouchableOpacity>
-
-      {/* <TouchableOpacity
-        className="items-center"
-        onPress={() => navigation.navigate('Pay')}>
-        <CurrencyDollarIcon size={24} color="white" />
-        <Text className="text-white">pay</Text>
-      </TouchableOpacity> */}
+      {userInfo.dueAmount > 0 && (
+        <TouchableOpacity
+          className="items-center"
+          onPress={() => navigation.navigate('Pay')}>
+          <CurrencyDollarIcon size={24} color="white" />
+          <Text className="text-white">pay</Text>
+        </TouchableOpacity>
+      )}
 
       <TouchableOpacity
         className="items-center"

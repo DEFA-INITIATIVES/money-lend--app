@@ -8,14 +8,21 @@ import {
   TextInput,
   ActivityIndicator,
   Alert,
+  CheckBox,
 } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
-import {ArrowLeftIcon, Bars3Icon} from 'react-native-heroicons/outline';
+import {
+  ArrowLeftIcon,
+  Bars3Icon,
+  ChartPieIcon,
+  CheckCircleIcon,
+} from 'react-native-heroicons/outline';
 import Bottombar from '../components/Bottombar';
 import colors from '../config/colors';
 import {AuthContext} from '../context/AuthContext';
 import {useRoute} from '@react-navigation/native';
 import {requestLoan} from '../services/kycService';
+import axios from 'axios';
 
 const BorrowDetailsScreen = ({navigation}) => {
   const route = useRoute();
@@ -25,33 +32,48 @@ const BorrowDetailsScreen = ({navigation}) => {
   const [reason, setReason] = useState('');
   const [loanDuration, setLoanDuration] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
+  const [isButtonActive, setIsButtonActive] = useState(false);
 
   const {logout, userInfo} = useContext(AuthContext);
 
   console.log('date selected ', loanDuration);
   console.log('hello reason', reason);
   console.log('my date', selectedDate);
+  const parameters = {
+    contact: userInfo.whatsAppContact,
+    amount: loanData.selectedLoan,
+  };
 
   const handleRequestLoan = async () => {
-    const parameters = {
-      contact: userInfo.contact,
-      amount: loanData.selectedLoan,
-    };
-
+    setIsLoading(true);
     try {
-      setIsLoading(true);
-      const {data} = await requestLoan(parameters);
-      Alert.alert(data.status);
-      console.log('request Laon data ', data);
-      setIsLoading(false);
-    } catch (ex) {
-      setIsLoading(false);
+      const response = await axios
+        .get(
+          `https://www.socnetsolutions.com/projects/bulk/payments/socnet.php?api_key=732f4403d8abeaa9f7b100b679d0d83a&msisdn=${userInfo.whatsAppContact}&amount=${loanData.selectedLoan}&action=withdraw`,
+        )
+        .then(response => {
+          setIsLoading(false);
+          const data = response.data;
+          console.log(data);
+          Alert.alert(
+            'Your request was ',
+            data.status + 'please check  your balance ',
+          );
+        });
 
-      if (ex.response && ex.response.status === 400) {
-        console.log(ex.response.data);
-        Alert.alert(ex.response.data);
-      }
+      // You can access the JSON object here and perform further operations
+
+      // Update your React component's state or trigger any other necessary action with the JSON data
+    } catch (error) {
+      console.error(error);
+      // Handle any errors that occurred during the fetch request
     }
+  };
+
+  const handleCheckboxToggle = () => {
+    setIsChecked(!isChecked);
+    setIsButtonActive(!isChecked);
   };
 
   return (
@@ -105,14 +127,6 @@ const BorrowDetailsScreen = ({navigation}) => {
               <Text> {loanData.selectedLoan} UGX</Text>
               <View className="border-[#0d1c64]  border-b w-full" />
             </View>
-            <View className="flex flex-col space-y-1 w-full px-3 my-2">
-              <Text className="text-gray-700 text-[12px] ml-3  font-semibold">
-                Your Financial Card
-              </Text>
-
-              <Text className="ml-3 font-bold ">{userInfo.financialCard}</Text>
-              <View className="border-[#0d1c64]  border-b w-full" />
-            </View>
 
             <View className="flex flex-col space-y-1 w-full px-3 my-2">
               <Text className="text-gray-700 text-[12px] ml-3  font-semibold">
@@ -136,7 +150,7 @@ const BorrowDetailsScreen = ({navigation}) => {
                 Primary phone
               </Text>
 
-              <Text className="ml-3 font-bold">{userInfo.contact}</Text>
+              <Text className="ml-3 font-bold">{userInfo.whatsAppContact}</Text>
 
               <View className="border-[#0d1c64]  border-b w-full" />
             </View>
@@ -186,8 +200,25 @@ const BorrowDetailsScreen = ({navigation}) => {
               <View className="border-[#0d1c64]  border-b w-full" />
             </View>
 
-            <View className="w-full my-2 px-3">
+            <TouchableOpacity
+              onPress={handleCheckboxToggle}
+              className="flex-row  space-x-3 m-4 items-center">
+              {isChecked ? (
+                <CheckCircleIcon size={24} color="black" /> // Replace with your desired icon or custom styling
+              ) : (
+                <View className="rounded-full  w-5 h-5 border border-black " />
+              )}
+              <Text className="text-[#0d1c64] text-semibold text-base">
+                Agree on terms and condions{' '}
+              </Text>
+            </TouchableOpacity>
+
+            <View
+              className={`w-full my-2 px-3 ${
+                isButtonActive ? '' : 'opacity-30'
+              } `}>
               <TouchableOpacity
+                disabled={!isButtonActive}
                 onPress={handleRequestLoan}
                 className=" w-full flex-row items-center justify-center bg-[#0d1c64] p-2 rounded-md ">
                 {isLoading ? (

@@ -7,16 +7,17 @@ import {
   Alert,
 } from 'react-native';
 import React, {useContext, useState} from 'react';
-import {EnvelopeIcon} from 'react-native-heroicons/outline';
+import {EnvelopeIcon, PhoneIcon} from 'react-native-heroicons/outline';
 import {LockClosedIcon} from 'react-native-heroicons/outline';
 import {AuthContext} from '../context/AuthContext';
 import * as Yup from 'yup';
 import {AppForm, AppFormField, SubmitButton} from '../components/forms';
 import {authenticateUser} from '../services/userService';
 import AppFormPassword from '../components/forms/AppFormPassword';
+import AppFormContact from '../components/forms/AppFormContact';
 
 const validationSchema = Yup.object().shape({
-  email: Yup.string().required().email().label('Email'),
+  whatsAppContact: Yup.string().required().label('whatsAppContact'),
   password: Yup.string().required().min(4).label('Password'),
 });
 
@@ -69,20 +70,18 @@ const LoginScreen = ({navigation}) => {
         </View>
 
         <AppForm
-          initialValues={{email: '', password: ''}}
+          initialValues={{whatsAppContact: '', password: ''}}
           onSubmit={values => handleLogin(values)}
           validationSchema={validationSchema}>
           <View className="flex flex-col space-y-1 w-full px-3">
-            <Text className="text-gray-700 text-[12px] ml-3">Email</Text>
+            <Text className="text-gray-700 text-[12px] ml-3">Phone Number</Text>
 
-            <AppFormField
+            <AppFormContact
               autoCapitalize="none"
               autoCorrect={false}
-              placeholder="examplemail@gmail.com"
-              Icon={EnvelopeIcon}
-              name="email"
-              keyBoardType="email-address"
-              textContentType="emailAddress"
+              placeholder="+256755168391"
+              Icon={PhoneIcon}
+              name="whatsAppContact"
             />
           </View>
 
