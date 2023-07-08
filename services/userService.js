@@ -19,3 +19,16 @@ export function resetPassword(data) {
     newPassword: data.newPassword,
   });
 }
+
+export function AddLoan(data) {
+  return http.post(`${BASE_URL}/api/users/register/loan/${data._id}`, {
+    principal: data.principal,
+    interestRate: data.interestRate,
+    loanLife: data.loanLife,
+    modeOfPayment: data.modeOfPayment,
+    reason: data.reason,
+    termsAndConditions: true
+  });
+}
+
+

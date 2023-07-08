@@ -19,20 +19,19 @@ import colors from '../config/colors';
 import {useRoute} from '@react-navigation/native';
 import AppButton from '../components/AppButton';
 import Bottombar from '../components/Bottombar';
-import {buttonlist} from '../utlis/buttonobj';
 import { getStaticData } from '../services/dataService';
 
 const BorrowScreen = ({navigation}) => {
   const [refresh, setRefresh] = useState(false);
   const [activeButton, setActiveButton] = useState('6 months');
-  const [loanDurations , setLoanDuration] = useState([]);
+  const [loanDurations , setLoanDurations] = useState([]);
   const route = useRoute();
   const {item} = route.params;
   const [selectedLoan, SetSelectedLoan] = useState(item.minimumCredit);
   const [validateLoan, setValidateLoan] = useState(false);
   const [lifeLoan, setLoanLife] = useState(6);
   const monthlyInterest = item.dailyInterest * 30;
-  console.log(lifeLoan);
+  
 
   // console.log(item);
   const handleButtonPress = buttonText => {
@@ -86,9 +85,11 @@ const BorrowScreen = ({navigation}) => {
   };
 
   const handleNavigate = () => {
+    
     const loanData = {
       selectedLoan: selectedLoan,
       lifeLoan: lifeLoan,
+      interestRate : item.dailyInterest 
     };
 
     navigation.navigate('Details', loanData);
@@ -98,7 +99,9 @@ const BorrowScreen = ({navigation}) => {
   useEffect(() => {
     const receiveStaticData = async () => {
       const {data} = await getStaticData();
-      console.log('Static variables:', data[0].loanDurations);
+      // console.log('Static variables:', data[0].loanDurations);
+      setLoanDurations(data[0].loanDurations);
+
     };
     receiveStaticData();
   }, [refresh]);
@@ -147,7 +150,7 @@ const BorrowScreen = ({navigation}) => {
 
               <TouchableOpacity
                 className="flex items-center justify-center bg-gray-200 p-3 rounded-md"
-                onPress={handleIcrement}>
+                onPress={ handleIcrement }>
                 <PlusIcon color={colors.medium} size={14} />
               </TouchableOpacity>
             </View>
@@ -165,25 +168,25 @@ const BorrowScreen = ({navigation}) => {
           </Text>
 
           <View className="flex-row items-center space-x-3 space-y-2 flex-wrap p-1 mt-2">
-            {buttonlist.map(({_id, lifeTime, active}) => (
+            {loanDurations?.map(({_id, lifeTime, active}) => (
               <View key={_id}>
                 {active && (
                   <TouchableOpacity
                     key={_id}
                     style={[
                       styles.button,
-                      getButtonStyle(`${lifeTime} months`),
+                      getButtonStyle(`${lifeTime} ${ lifeTime === 1 ? "daily" : "weekly"}`),
                     ]}
                     onPress={() => {
                       setLoanLife(lifeTime);
-                      handleButtonPress(`${lifeTime} months`);
+                      handleButtonPress(`${lifeTime} ${ lifeTime === 1 ? "daily" : "weekly"}`);
                     }}>
                     <Text
                       style={[
                         styles.buttonText,
-                        getButtonTextStyle(`${lifeTime} months`),
+                        getButtonTextStyle(`${lifeTime} ${ lifeTime === 1 ? "daily" : "weekly"}`),
                       ]}>
-                      {lifeTime} months
+                      { lifeTime === 1 ? "daily" : "weekly"}
                     </Text>
                   </TouchableOpacity>
                 )}
