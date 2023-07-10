@@ -6,6 +6,8 @@ import {
   ScrollView,
   Image,
   Alert,
+  PermissionsAndroid,
+  Platform,
 } from 'react-native';
 import React, {useState, useContext, useEffect} from 'react';
 import {
@@ -39,6 +41,7 @@ import {getStaticData} from '../services/dataService';
 import {presets} from '../babel.config';
 import AppFormEmergencyContact from '../components/forms/AppFormEmergencyContact';
 import AppFormSecondEmergencyContact from '../components/forms/AppFormSecondEmergencyContact';
+import {PERMISSIONS, request} from 'react-native-permissions';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label('Email'),
@@ -67,11 +70,40 @@ const SignUpScreen = ({navigation}) => {
   const [kycUri, setKycUri] = useState({});
   // console.log(userToken);
 
+  const requestLocationPermission = async () => {
+    try {
+      if (Platform.OS === 'android') {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        );
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          console.log('Location permission granted');
+          // Do something with the location permission
+        } else {
+          console.log('Location permission denied');
+          // Handle denied permission
+        }
+      } else {
+        const result = await request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
+        if (result === 'granted') {
+          console.log('Location permission granted');
+          // Do something with the location permission
+        } else {
+          console.log('Location permission denied');
+          // Handle denied permission
+        }
+      }
+    } catch (error) {
+      console.error('Failed to request location permission:', error);
+    }
+  };
+
   const toggleVisibility = () => {
     setShowPassword(!showPassword);
   };
 
   const handelRegister = async values => {
+    requestLocationPermission;
     setIsLoading(true);
 
     console.log('values needed', values);

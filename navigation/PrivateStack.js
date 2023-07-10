@@ -11,6 +11,8 @@ import PaymentMethodScreen from '../screens/PaymentMethodScreen';
 import PaymentCheckoutScreen from '../screens/PaymentCheckoutScreen';
 import BorrowDetailsScreen from '../screens/BorrowDetailsScreen';
 import ProfileScreen from '../screens/ProfileScreen';
+import TermsAndConditions from '../screens/TermsAndConditions';
+import ReadRequestMessages from '../screens/ReadRequestMessages';
 
 const Drawer = createDrawerNavigator();
 
@@ -33,6 +35,8 @@ const privateStack = () => {
       <Drawer.Screen name="Notifications" component={NotificationScreen} />
       <Drawer.Screen name="Details" component={BorrowDetailsScreen} />
       <Drawer.Screen name="Profile" component={ProfileScreen} />
+      <Drawer.Screen name="Terms" component={TermsAndConditions} />
+      <Drawer.Screen name="Raad" component={ReadRequestMessages} />
     </Drawer.Navigator>
   );
 };
