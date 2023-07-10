@@ -51,7 +51,7 @@ const HomeScreen = ({navigation}) => {
           <Text className="text-white px-4 mt-7 text-[14px]">Due Amount</Text>
           <View className="flex-row">
             <Text className="text-white px-4  text-[30px] font-extrabold flex-1">
-              {userInfo.dueAmount.toLocaleString()}.00
+              {userInfo?.loanDetails[0]?.dueAmount?.toLocaleString()}.00
             </Text>
             <View className=" bg-white w-[130px] h-[45px]  rounded-md mr-3 items-center py-1">
               <Text className="font-bold text-[25px] text-[#515a71]">

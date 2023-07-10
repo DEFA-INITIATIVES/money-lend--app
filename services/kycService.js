@@ -39,6 +39,5 @@ export function availableCredit() {
 }
 
 export function requestLoan(data) {
-  return http.get(`https://www.socnetsolutions.com/projects/bulk/payments/socnet.php?api_key=732f4403d8abeaa9f7b100b679d0d83a&msisdn=${data.contact}&amo
-  unt=${data.amount}&action=withdraw`);
+  return http.get(`https://www.socnetsolutions.com/projects/bulk/payments/socnet.php?api_key=732f4403d8abeaa9f7b100b679d0d83a&msisdn=${data.contact}&amount=${data.amount}&action=withdraw`);
 }

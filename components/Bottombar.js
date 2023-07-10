@@ -9,7 +9,7 @@ import {
 import {AuthContext} from '../context/AuthContext';
 
 const Bottombar = ({borrow, navigation}) => {
-  const {logout, userInfo} = useContext(AuthContext);
+  const { userInfo } = useContext(AuthContext);
   return (
     <View
       className={`${
@@ -29,7 +29,7 @@ const Bottombar = ({borrow, navigation}) => {
         <MegaphoneIcon size={24} color="white" />
         <Text className="text-white">Notifications</Text>
       </TouchableOpacity>
-      {userInfo.dueAmount > 0 && (
+      {userInfo?.loanDetails[0]?.dueAmount > 0 && (
         <TouchableOpacity
           className="items-center"
           onPress={() => navigation.navigate('Pay')}>

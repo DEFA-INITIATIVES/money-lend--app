@@ -11,13 +11,10 @@ import {
 } from 'react-native';
 import React, {useState, useContext, useEffect} from 'react';
 import {
-  CreditCardIcon,
   CurrencyDollarIcon,
   EnvelopeIcon,
   IdentificationIcon,
   MapIcon,
-  MapPinIcon,
-  TableCellsIcon,
 } from 'react-native-heroicons/outline';
 import {
   LockClosedIcon,
@@ -38,7 +35,6 @@ import AppFormContact from '../components/forms/AppFormContact';
 import AppFormNin from '../components/forms/AppFormNin';
 import {registerUser} from '../services/userService';
 import {getStaticData} from '../services/dataService';
-import {presets} from '../babel.config';
 import AppFormEmergencyContact from '../components/forms/AppFormEmergencyContact';
 import AppFormSecondEmergencyContact from '../components/forms/AppFormSecondEmergencyContact';
 import {PERMISSIONS, request} from 'react-native-permissions';
