@@ -7,8 +7,8 @@ import {
   Image,
   Alert,
   PermissionsAndroid,
-  Platform,
 } from 'react-native';
+import Geolocation from 'react-native-geolocation-service';
 import React, {useState, useContext, useEffect} from 'react';
 import {
   CurrencyDollarIcon,
@@ -36,8 +36,10 @@ import AppFormNin from '../components/forms/AppFormNin';
 import {registerUser} from '../services/userService';
 import {getStaticData} from '../services/dataService';
 import AppFormEmergencyContact from '../components/forms/AppFormEmergencyContact';
+import {Picker} from '@react-native-picker/picker';
 import AppFormSecondEmergencyContact from '../components/forms/AppFormSecondEmergencyContact';
 import {PERMISSIONS, request} from 'react-native-permissions';
+import AppFormPicker from '../components/forms/AppFormPicker';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label('Email'),
@@ -47,7 +49,6 @@ const validationSchema = Yup.object().shape({
   whatsAppContact: Yup.string().required().label('whatsAppContact'),
   incomeSource: Yup.string().required().label('IncomeSource'),
   location: Yup.string().required().label('Location'),
-  incomeGroup: Yup.string().required().label('incomeGoup'),
   emergencyContact: Yup.string().required().label('emergencyContact'),
   secondEmergencyContact: Yup.string().required().label('secondEmgencyContact'),
   confirmPassword: Yup.string().required().label('ConfirmPassword'),
@@ -57,49 +58,116 @@ const SignUpScreen = ({navigation}) => {
   const [validateNin, setValidateNin] = useState(false);
   const [validContact, setValidContact] = useState(false);
   const [validEmergencyContact, setValidEmergencyContact] = useState(false);
+  const [incomeRange, setIncomeRange] = useState('');
   const [validSecondEmergencyContact, setValidSecondEmergencyContact] =
     useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const {register, userToken} = useContext(AuthContext);
+  const {register} = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(true);
   const [submitted, setSubmitted] = useState(false);
   const [kycUri, setKycUri] = useState({});
-  // console.log(userToken);
+  const [location, setLocation] = useState(false);
+  const [currentLongitude, setCurrentLongitude] = React.useState('...');
 
-  const requestLocationPermission = async () => {
-    try {
-      if (Platform.OS === 'android') {
-        const granted = await PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-        );
-        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-          console.log('Location permission granted');
-          // Do something with the location permission
-        } else {
-          console.log('Location permission denied');
-          // Handle denied permission
-        }
-      } else {
-        const result = await request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
-        if (result === 'granted') {
-          console.log('Location permission granted');
-          // Do something with the location permission
-        } else {
-          console.log('Location permission denied');
-          // Handle denied permission
-        }
-      }
-    } catch (error) {
-      console.error('Failed to request location permission:', error);
+  //get current location
+  const getLocation = () => {
+    //checking if location permission is granted
+
+    if (location) {
+      //get current location
+      Geolocation.getCurrentPosition(
+        //Will give you the current location
+        position => {
+          //getting the Longitude from the location json
+          const currentLongitude = JSON.stringify(position.coords.longitude);
+
+          //getting the Latitude from the location json
+          const currentLatitude = JSON.stringify(position.coords.latitude);
+
+          //Setting Longitude state
+          setCurrentLongitude(currentLongitude);
+
+          //Setting Longitude state
+          setCurrentLongitude(currentLatitude);
+        },
+      );
+    } else {
+      //if location permission is not granted
+      //ask for permission
+      askForLocationPermission();
     }
   };
+
+  //request for android location permission
+  const askForLocationPermission = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        {
+          title: 'Location Permission',
+          message: 'This app needs access to your location',
+          buttonNeutral: 'Ask Me Later',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK',
+        },
+      );
+      if (granted == PermissionsAndroid.RESULTS.GRANTED) {
+        //console.log('You can use the location');
+        //setLocation(true);
+        Geolocation.getCurrentPosition(
+          //Will give you the current location
+          position => {
+            //getting the Longitude from the location json
+            const currentLongitude = JSON.stringify(position.coords.longitude);
+
+            //getting the Latitude from the location json
+            const currentLatitude = JSON.stringify(position.coords.latitude);
+
+            //Setting Longitude state
+            setCurrentLongitude(currentLongitude);
+
+            //Setting Longitude state
+            setCurrentLongitude(currentLatitude);
+          },
+        );
+      } else {
+        //console.log('Location permission denied');
+        Alert.alert('Location Permission Denied');
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+
+  //check for location permission
+
+  async function checkLocationPermission() {
+    try {
+      const granted = await PermissionsAndroid.check(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        //console.log('You can use the location');
+        setLocation(true);
+      } else {
+        //console.log('Location permission denied');
+        askForLocationPermission();
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  }
+
+  // console.log(userToken);
 
   const toggleVisibility = () => {
     setShowPassword(!showPassword);
   };
 
   const handelRegister = async values => {
-    requestLocationPermission;
+    if (incomeRange === '') return Alert.alert('Income Range not specified. ');
+
+    checkLocationPermission();
     setIsLoading(true);
 
     console.log('values needed', values);
@@ -147,7 +215,16 @@ const SignUpScreen = ({navigation}) => {
       ) {
         try {
           setIsLoading(true);
-          const {data: token} = await registerUser(values);
+
+          const registerParams = {
+            ...values,
+            incomeGroup: incomeRange,
+          };
+
+          // console.log('register body', registerParams);
+
+          const {data: token} = await registerUser(registerParams);
+
           register({token});
           setIsLoading(false);
         } catch (ex) {
@@ -162,10 +239,6 @@ const SignUpScreen = ({navigation}) => {
         setIsLoading(false);
       }
     }
-
-    // console.log('current values', validContact);
-    // console.log('current values', validateNin);
-    // console.log(' invalid nin and number', isLoading);
   };
 
   useEffect(() => {
@@ -206,7 +279,6 @@ const SignUpScreen = ({navigation}) => {
               secondEmergencyContact: '',
               ninNumber: '',
               location: '',
-              incomeGroup: '',
               incomeSource: '',
               password: '',
               confirmPassword: '',
@@ -314,10 +386,12 @@ const SignUpScreen = ({navigation}) => {
               />
             </View>
 
-            <View className="flex flex-col space-y-1 w-full px-3">
+            {/* <View className="flex flex-col space-y-1 w-full px-3">
               <Text className="text-gray-700 text-[12px] ml-3">
-                What is your income Goup?
+                What is your income Group?
               </Text>
+
+               // <AppFormPicker name="incomeGroup" /> 
 
               <AppFormField
                 autoCapitalize="none"
@@ -326,7 +400,28 @@ const SignUpScreen = ({navigation}) => {
                 Icon={CurrencyDollarIcon}
                 name="incomeGroup"
               />
+            </View> */}
+
+            <View className="flex flex-col space-y-1 w-full px-3">
+              <Text className="text-gray-700 text-[12px] ml-3  font-semibold">
+                What is your income Group?
+              </Text>
+
+              <Picker
+                selectedValue={incomeRange}
+                onValueChange={(itemValue, itemIndex) =>
+                  setIncomeRange(itemValue)
+                }>
+                <Picker.Item label="Select income group" value="" />
+                <Picker.Item label="1,000 - 10,000" value="10000" />
+                <Picker.Item label="11,000 - 50,000" value="50,000" />
+                <Picker.Item label="51,000 - 100,000" value="100,000" />
+                <Picker.Item label="110,000 - 200,000" value="200,000" />
+              </Picker>
+
+              <View className="border-[#0d1c64]  border-b w-full" />
             </View>
+
             <View className="flex flex-col space-y-1 w-full px-3">
               <Text className="text-gray-700 text-[12px] ml-3">
                 What is your source of income?

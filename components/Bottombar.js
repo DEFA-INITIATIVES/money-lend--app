@@ -9,7 +9,7 @@ import {
 import {AuthContext} from '../context/AuthContext';
 
 const Bottombar = ({borrow, navigation}) => {
-  const { userInfo } = useContext(AuthContext);
+  const {userInfo} = useContext(AuthContext);
   return (
     <View
       className={`${

@@ -1,94 +1,39 @@
-import {View, SafeAreaView, Text, TouchableOpacity} from 'react-native';
-import React, {useContext, useState} from 'react';
-import {BookOpenIcon} from 'react-native-heroicons/solid';
-import {ArrowLeftIcon, CheckCircleIcon} from 'react-native-heroicons/outline';
-import {AuthContext} from '../context/AuthContext';
-import {AddLoan} from '../services/userService';
-import {sendNotification} from '../services/dataService';
+import {View, Text, TouchableOpacity, ActivityIndicator} from 'react-native';
+import React from 'react';
+import Modal from 'react-native-modal';
+import {
+  BookOpenIcon,
+  CheckCircleIcon,
+  XMarkIcon,
+} from 'react-native-heroicons/outline';
 
-const TermsAndConditions = ({navigation}) => {
-  const [isChecked, setIsChecked] = useState(false);
-  const [isButtonActive, setIsButtonActive] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const {userInfo} = useContext(AuthContext);
-  const [reason, setReason] = useState('');
-
-  const parameters = {
-    contact: userInfo.whatsAppContact,
-    amount: loanData.selectedLoan,
-  };
-
-  const loanParameters = {
-    _id: userInfo._id,
-    principal: loanData.selectedLoan,
-    interestRate: loanData.interestRate,
-    loanLife: loanData.lifeLoan,
-    modeOfPayment: loanData.modeOfPayment,
-    reason: reason,
-  };
-  const notificationParameters = {
-    title: 'Borrowed',
-    message: `Congratulations! Your loan application has been approved. Loan Amount: ugx ${loanData.selectedLoan} and you have Signed the  attached agreement and conditions for the loan.`,
-    userID: userInfo._id,
-  };
-
-  const handleRequestLoan = async () => {
-    try {
-      setIsLoading(true);
-
-      const {data} = await requestLoan(parameters);
-
-      console.log(data);
-
-      setIsLoading(false);
-
-      Alert.alert(
-        'Your request was ',
-        data.status + 'Please check  your balance ',
-      );
-
-      if (data.status === 'Successful') {
-        try {
-          // Add Loan ......
-          const {data: newUserData} = await AddLoan(loanParameters);
-
-          console.log('New User Data:', newUserData);
-
-          // Send Notification...
-          const {data: notification} = await sendNotification(
-            notificationParameters,
-          );
-
-          console.log('Notification ', notification);
-        } catch (ex) {
-          setIsLoading(false);
-
-          if (ex.response && ex.response.status === 400) {
-            console.log(ex.response.data);
-            Alert.alert(ex.response.data);
-          }
-        }
-      }
-    } catch (ex) {
-      setIsLoading(false);
-
-      if (ex.response && ex.response.status === 400) {
-        console.log(ex.response.data);
-        Alert.alert(ex.response.data);
-      }
-    }
-  };
-
-  const handleCheckboxToggle = () => {
-    setIsChecked(!isChecked);
-    setIsButtonActive(!isChecked);
-  };
-
+const TermsAndConditionModle = ({
+  visible,
+  onClose,
+  handleRequestLoan,
+  handleCheckboxToggle,
+  isChecked,
+  isButtonActive,
+  isLoading,
+}) => {
   return (
-    <SafeAreaView>
-      <View>
-        <TouchableOpacity className="m-4" onPress={() => navigation.goBack()}>
-          <ArrowLeftIcon color="#0d1c64" size={30} />
+    <Modal
+      visible={visible}
+      animationIn="bounceInUp"
+      animationOut="bounceOutDown"
+      animationInTiming={900}
+      animationOutTiming={500}
+      backdropTransitionInTiming={1000}
+      backdropTransitionOutTiming={500}
+      style={{
+        justifyContent: 'flex-end',
+        margin: 0,
+        marginBottom: 0,
+        // backgroundColor: "#E66975",
+      }}>
+      <View className="h-82 bg-white shadow-lg rounded-[30px] ">
+        <TouchableOpacity onPress={onClose} className="m-3 absolute right-2">
+          <XMarkIcon color="black" size={24} />
         </TouchableOpacity>
 
         <View className="flex-row items-center m-5 ">
@@ -144,7 +89,7 @@ const TermsAndConditions = ({navigation}) => {
         <View className={`w-full  px-3 ${isButtonActive ? '' : 'opacity-30'} `}>
           <TouchableOpacity
             disabled={!isButtonActive}
-            onPress={(onPress = {handleRequestLoan})}
+            onPress={handleRequestLoan}
             className=" w-full flex-row items-center justify-center bg-[#0d1c64] p-2 rounded-md  mb-5">
             {isLoading ? (
               <Text clasaName="flex flex-row items-center space-x-3 justify-center ">
@@ -163,8 +108,8 @@ const TermsAndConditions = ({navigation}) => {
           </TouchableOpacity>
         </View>
       </View>
-    </SafeAreaView>
+    </Modal>
   );
 };
 
-export default TermsAndConditions;
+export default TermsAndConditionModle;

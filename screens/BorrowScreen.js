@@ -19,19 +19,18 @@ import colors from '../config/colors';
 import {useRoute} from '@react-navigation/native';
 import AppButton from '../components/AppButton';
 import Bottombar from '../components/Bottombar';
-import { getStaticData } from '../services/dataService';
+import {getStaticData} from '../services/dataService';
 
 const BorrowScreen = ({navigation}) => {
   const [refresh, setRefresh] = useState(false);
-  const [activeButton, setActiveButton] = useState('6 months');
-  const [loanDurations , setLoanDurations] = useState([]);
+  const [activeButton, setActiveButton] = useState('day');
+  const [loanDurations, setLoanDurations] = useState([]);
   const route = useRoute();
   const {item} = route.params;
   const [selectedLoan, SetSelectedLoan] = useState(item.minimumCredit);
   const [validateLoan, setValidateLoan] = useState(false);
-  const [lifeLoan, setLoanLife] = useState(6);
-  const monthlyInterest = item.dailyInterest * 30;
-  
+  const [lifeLoan, setLoanLife] = useState(1);
+  const weeklyInterest = item.dailyInterest * 7;
 
   // console.log(item);
   const handleButtonPress = buttonText => {
@@ -85,23 +84,21 @@ const BorrowScreen = ({navigation}) => {
   };
 
   const handleNavigate = () => {
-    
     const loanData = {
       selectedLoan: selectedLoan,
       lifeLoan: lifeLoan,
-      interestRate : item.dailyInterest 
+      interestRate: item.dailyInterest,
+      modeOfPayment: lifeLoan,
     };
 
     navigation.navigate('Details', loanData);
   };
 
- 
   useEffect(() => {
     const receiveStaticData = async () => {
       const {data} = await getStaticData();
       // console.log('Static variables:', data[0].loanDurations);
       setLoanDurations(data[0].loanDurations);
-
     };
     receiveStaticData();
   }, [refresh]);
@@ -150,7 +147,7 @@ const BorrowScreen = ({navigation}) => {
 
               <TouchableOpacity
                 className="flex items-center justify-center bg-gray-200 p-3 rounded-md"
-                onPress={ handleIcrement }>
+                onPress={handleIcrement}>
                 <PlusIcon color={colors.medium} size={14} />
               </TouchableOpacity>
             </View>
@@ -163,8 +160,8 @@ const BorrowScreen = ({navigation}) => {
             )}
           </View>
 
-          <Text className="text-base font-semibold text-gray-700 px-4 mt-2">
-            Life of loan
+          <Text className="text-base  text-gray-700 px-4 mt-2">
+            Select Life of your loan.
           </Text>
 
           <View className="flex-row items-center space-x-3 space-y-2 flex-wrap p-1 mt-2">
@@ -175,18 +172,24 @@ const BorrowScreen = ({navigation}) => {
                     key={_id}
                     style={[
                       styles.button,
-                      getButtonStyle(`${lifeTime} ${ lifeTime === 1 ? "daily" : "weekly"}`),
+                      getButtonStyle(
+                        `${lifeTime} ${lifeTime === 1 ? 'day' : 'week'}`,
+                      ),
                     ]}
                     onPress={() => {
                       setLoanLife(lifeTime);
-                      handleButtonPress(`${lifeTime} ${ lifeTime === 1 ? "daily" : "weekly"}`);
+                      handleButtonPress(
+                        `${lifeTime} ${lifeTime === 1 ? 'day' : 'week'}`,
+                      );
                     }}>
                     <Text
                       style={[
                         styles.buttonText,
-                        getButtonTextStyle(`${lifeTime} ${ lifeTime === 1 ? "daily" : "weekly"}`),
+                        getButtonTextStyle(
+                          `${lifeTime} ${lifeTime === 1 ? 'day' : 'week'}`,
+                        ),
                       ]}>
-                      { lifeTime === 1 ? "daily" : "weekly"}
+                      {lifeTime === 1 ? 'day' : 'week'}
                     </Text>
                   </TouchableOpacity>
                 )}
@@ -221,10 +224,10 @@ const BorrowScreen = ({navigation}) => {
             </View>
 
             <View className="w-full flex-row justify-between mt-2 p-3">
-              <Text>Monthly interest </Text>
+              <Text>Weekly interest </Text>
               <Text className="text-[#0d1c64] font-medium">
                 {' '}
-                {monthlyInterest.toFixed(2)}%{' '}
+                {weeklyInterest.toFixed(2)}%{' '}
               </Text>
             </View>
           </View>
@@ -250,7 +253,7 @@ const styles = StyleSheet.create({
   },
   button: {
     paddingVertical: 5,
-    paddingHorizontal: 10,
+    paddingHorizontal: 20,
     borderRadius: 18,
     marginVertical: 3,
     marginHorizontal: 3,

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -9,8 +9,18 @@ import {
 } from 'react-native';
 import {ChevronLeftIcon} from 'react-native-heroicons/outline';
 import colors from '../config/colors';
+import ModalPopup from '../components/Model';
 
 const PaymentMethodScreen = ({navigation}) => {
+  const [modalVisible, setModalVisible] = useState(false);
+  const openModal = () => {
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+
   return (
     <SafeAreaView className="bg-[#0d1c64] h-full">
       <ScrollView className="p-5">
@@ -57,7 +67,7 @@ const PaymentMethodScreen = ({navigation}) => {
               </View>
             </View>
 
-            <View className="flex-row items-center space-x-3 p-5 w-full h-20  rounded-md bg-white border border-white shadow-xl">
+            <View className="flex-row items-center space-x-3 p-5 w-full h-20  rounded-md bg-white border  border-pink-400 shadow-xl">
               <View className=" w-16 h-16 rounded-md">
                 <Image
                   source={require('../assets/images/mobile.jpeg')}
@@ -71,7 +81,7 @@ const PaymentMethodScreen = ({navigation}) => {
               </View>
             </View>
 
-            <View className="flex-row items-center space-x-3 p-5 w-full h-20  rounded-md bg-white border border-pink-400">
+            <View className="flex-row items-center space-x-3 p-5 w-full h-20  rounded-md bg-white border  border-white ">
               <View className=" w-16 h-16 rounded-md">
                 <Image
                   source={require('../assets/images/visa.jpg')}
@@ -89,32 +99,32 @@ const PaymentMethodScreen = ({navigation}) => {
               <Text className="font-semibold">CURRENT METHOD</Text>
             </View>
 
-            <View className="flex-row items-center space-x-3 p-5 w-full h-20  rounded-md bg-white shadow-2xl">
+            <View className="flex-row items-center space-x-3 p-5 w-full h-20  rounded-md bg-white border border-white shadow-xl">
               <View className=" w-16 h-16 rounded-md">
                 <Image
-                  source={require('../assets/images/visa.jpg')}
-                  className="w-full h-full object-cover"
-                  resizeMode="cover"
+                  source={require('../assets/images/mobile.jpeg')}
+                  className="w-full h-full object-contain"
+                  resizeMode="contain"
                 />
               </View>
               <View className="font-semibold">
-                <Text>******************444</Text>
-                <Text>Expires 09/25</Text>
+                <Text> +256************</Text>
+                <Text> via mobile money</Text>
               </View>
             </View>
-
             <View className="w-full my-2">
               <TouchableOpacity
                 className="flex-row items-center justify-center bg-[#0d1c64] p-2 rounded-md "
-                onPress={() => navigation.navigate('Checkout')}>
+                onPress={openModal}>
                 <Text className="text-white uppercase text-lg">
-                  Add Payment Method
+                  Make Payment
                 </Text>
               </TouchableOpacity>
             </View>
           </View>
         </View>
       </ScrollView>
+      <ModalPopup visible={modalVisible} onClose={closeModal} />
     </SafeAreaView>
   );
 };

@@ -36,7 +36,7 @@ const privateStack = () => {
       <Drawer.Screen name="Details" component={BorrowDetailsScreen} />
       <Drawer.Screen name="Profile" component={ProfileScreen} />
       <Drawer.Screen name="Terms" component={TermsAndConditions} />
-      <Drawer.Screen name="Raad" component={ReadRequestMessages} />
+      <Drawer.Screen name="Read" component={ReadRequestMessages} />
     </Drawer.Navigator>
   );
 };

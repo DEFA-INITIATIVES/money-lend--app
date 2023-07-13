@@ -13,12 +13,21 @@ import {
   ViewfinderCircleIcon,
 } from 'react-native-heroicons/outline';
 import colors from '../config/colors';
+import ModalPopup from '../components/Model';
 
 const PaymentCheckoutScreen = ({navigation}) => {
+  const [modalVisible, setModalVisible] = useState(false);
   const [name, setName] = useState('');
   const [cardNumber, setCardNumber] = useState('');
   const [expiry, setExpiry] = useState('');
   const [cvcnumber, setCvcNumber] = useState('');
+  const openModal = () => {
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+  };
 
   return (
     <SafeAreaView className="bg-[#0d1c64] h-full">
@@ -39,8 +48,8 @@ const PaymentCheckoutScreen = ({navigation}) => {
 
         <View className="bg-gray-100 w-full h-auto rounded-md px-2 pb-5 mt-5">
           <View className="flex items-center justify-center mt-5 p-2">
-            <Text className="text-3xl font-semibold text-[#0d1c64] px-4 mt-2 ">
-              Add credit card
+            <Text className="text-3xl  text-[#0d1c64] px-4 mt-2 font-bold  ">
+              Make Payment
             </Text>
           </View>
 
@@ -65,7 +74,7 @@ const PaymentCheckoutScreen = ({navigation}) => {
 
             <View className="flex flex-col space-y-1 w-full  mb-3 px-3">
               <Text className=" text-[12px] ml-3 text-gray-600 font-medium">
-                Credit Card Number
+                Phone Number
               </Text>
               <View className="flex-row p-3">
                 <TextInput
@@ -82,12 +91,12 @@ const PaymentCheckoutScreen = ({navigation}) => {
               <View className="border-[#0d1c64]  border-b w-full" />
             </View>
 
-            <View className="w-32 my-2">
+            {/* <View className="w-32 my-2">
               <TouchableOpacity className="flex-row items-center justify-center space-x-2 bg-[#0d1c64] p-2 rounded-md">
                 <ViewfinderCircleIcon color={colors.white} size={20} />
                 <Text className="text-white text-md"> Scan Card </Text>
               </TouchableOpacity>
-            </View>
+            </View> */}
 
             <View className="flex-row items-center justify-around w-full ">
               <View className="flex flex-col space-y-1  p-3">
@@ -178,9 +187,7 @@ const PaymentCheckoutScreen = ({navigation}) => {
             <View className="w-full my-2">
               <TouchableOpacity
                 className="flex-row items-center justify-center bg-[#0d1c64] p-2 rounded-md "
-                onPress={() =>
-                  console.log('...........Making payment..........')
-                }>
+                onPress={openModal}>
                 <Text className="text-white uppercase text-lg">
                   Make Payment
                 </Text>
@@ -189,6 +196,7 @@ const PaymentCheckoutScreen = ({navigation}) => {
           </View>
         </View>
       </ScrollView>
+      <ModalPopup visible={modalVisible} onClose={closeModal} />
     </SafeAreaView>
   );
 };

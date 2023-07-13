@@ -1,19 +1,18 @@
-import {
-  View,
-  Text,
-  SafeAreaView,
-  TouchableOpacity,
-  Image,
-  ScrollView,
-} from 'react-native';
+import {View, Text, SafeAreaView, TouchableOpacity, Image} from 'react-native';
 import React from 'react';
 import {ArrowLeftIcon} from 'react-native-heroicons/outline';
 import {EllipsisVerticalIcon} from 'react-native-heroicons/solid';
 import Bottombar from '../components/Bottombar';
+import {useRoute} from '@react-navigation/native';
+import moment from 'moment';
 
 const ReadRequestMessages = ({navigation}) => {
+  const route = useRoute();
+  const {item} = route.params;
+  console.log('my messages data', item.message);
+
   return (
-    <SafeAreaView>
+    <SafeAreaView className="flex-1">
       <View className="  flex-row space-x-5 border-[0.5px] pb-5 w-full pt-4 px-4 bg-white">
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <ArrowLeftIcon color="#0d1c64" size={25} />
@@ -34,29 +33,20 @@ const ReadRequestMessages = ({navigation}) => {
           <EllipsisVerticalIcon color="#0d1c64" size={30} />
         </TouchableOpacity>
       </View>
-      <View className="items-center h-full w-full">
-        <ScrollView>
-          <View className=" rounded-[6.45px] w-72 h-32 bg-[#0d1c64] items-center  pt-3 m-54 ">
-            <Text className="text-white  font-semibold">
-              hello you Request was successfull and received 2000 UGX
-            </Text>
 
-            <Text className="text-white absolute bottom-1 right-1   font-medium">
-              2 hours ago{' '}
+      <View className="flex-1">
+        <View style={{flex: 1}}>
+          <View className="relative p-4 py-8 bg-gray-200 mx-3 my-5 rounded-lg">
+            <Text>{item.message} </Text>
+            <Text className="absolute bottom-2 right-2">
+              {' '}
+              {moment(item.createdAt).format('MMMM Do YYYY, h:mm: a')}
             </Text>
           </View>
-          <View className=" rounded-[6.45px] w-72 h-32 bg-[#0d1c64] items-center  pt-3 m-4 ">
-            <Text className="text-white  font-semibold">
-              hello you Request was successfull and received 2000 UGX
-            </Text>
-
-            <Text className="text-white absolute bottom-1 right-1   font-medium">
-              2 hours ago{' '}
-            </Text>
-          </View>
-        </ScrollView>
+        </View>
       </View>
-      {/* <Bottombar navigation={navigation} borrow={true} /> */}
+
+      <Bottombar navigation={navigation} />
     </SafeAreaView>
   );
 };

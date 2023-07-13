@@ -27,8 +27,12 @@ export function AddLoan(data) {
     loanLife: data.loanLife,
     modeOfPayment: data.modeOfPayment,
     reason: data.reason,
-    termsAndConditions: true
+    termsAndConditions: true,
   });
 }
 
-
+export function payLoan(data) {
+  return http.post(`${BASE_URL}/api/users/register/payment/${data._id}`, {
+    amount: parseInt(data.amount),
+  });
+}

@@ -12,7 +12,7 @@ const ContactScreen = ({navigation}) => {
         <View className="flex items-center justify-center  mt-4 pt-10">
           <Text className="text-gray-600 font-bold text-lg"> Contact</Text>
 
-          <Text className=" text-[16px] text-left text-justify mx-10  font-serif mb-2 font-semibold">
+          <Text className=" text-[16px]  mx-10 mt-5 font-serif mb-2 font-semibold">
             Feel free to get in touch with us via Contact from below. Our
             representatives will respond you as soon as possible.
           </Text>
@@ -50,7 +50,7 @@ const ContactScreen = ({navigation}) => {
 
           <View className=" mt-7 mx-3">
             <TouchableOpacity className="flex-row items-center justify-center bg-[#0d1c64] p-2 rounded-md ">
-              <Text className="text-white uppercase text-lg">Send</Text>
+              <Text className="text-white uppercase text-lg">Send message</Text>
             </TouchableOpacity>
           </View>
         </View>

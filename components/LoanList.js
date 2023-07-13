@@ -30,14 +30,25 @@ const Item = ({
           <Text className="ml-3 bg-gray-300 rounded-md p-1">
             {minimumValidation} -{maximumValidation} days
           </Text>
-          <Text
-            // disabled={userInfo.dueAmount > 0}
-            onPress={getnavigation}
-            className="text-white  bg-[#0d1c64]  w-14 rounded justify-center items-center p-2 ml-3">
-            Apply
-          </Text>
+
+          {!userInfo?.loanDetails[0]?.dueAmount && (
+            <Text
+              onPress={getnavigation}
+              className="text-white  bg-[#0d1c64]  w-14 rounded justify-center items-center p-2 ml-3">
+              Apply
+            </Text>
+          )}
         </View>
+
         <View className="w-full border-b border-gray-300" />
+
+        <Text>
+          {userInfo?.loanDetails[0]?.dueAmount && (
+            <Text className="text-sm font-semibold text-red-700  p-2 ml-3">
+              clear pending Loan Balance to re apply.
+            </Text>
+          )}
+        </Text>
         <View className="flex-row space-x-10 mt-2 px-4">
           <Text className="text-gray-400">Available Credit</Text>
           <Text className="text-gray-400">Daily interest </Text>
@@ -58,6 +69,7 @@ const Item = ({
 
 const LoanList = () => {
   const {userInfo} = useContext(AuthContext);
+  const [applybtn, setApplybtn] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const navigation = useNavigation();
   const [data, setData] = useState(null);
@@ -100,7 +112,7 @@ const LoanList = () => {
     </View>
   ) : (
     <FlatList
-      data={data}
+      data={userInfo?.creditScore === 1 ? data?.slice(0, 1) : data?.slice(0, 2)}
       renderItem={({item}) => (
         <Item
           createdAt={item.createdAt}
@@ -111,6 +123,8 @@ const LoanList = () => {
           minimumValidation={item.minimumValidation}
           type={item.type}
           userInfo={userInfo}
+          applybtn={applybtn}
+          setApplybtn={setApplybtn}
           getnavigation={() => navigation.navigate('Borrow', {item})}
         />
       )}
