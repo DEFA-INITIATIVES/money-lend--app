@@ -36,13 +36,13 @@ export const AuthProvider = ({children}) => {
   };
 
   // Logout user...
-  const logout = () => {
-    setIsLoading(true);
-    setUserToken(null);
-    AsyncStorage.removeItem('decodedToken');
-    AsyncStorage.removeItem('userToken');
-    setIsLoading(false);
-  };
+  // const logout = () => {
+  //   setIsLoading(true);
+  //   setUserToken(null);
+  //   AsyncStorage.removeItem('decodedToken');
+  //   AsyncStorage.removeItem('userToken');
+  //   setIsLoading(false);
+  // };
 
   const isLoggedIn = async () => {
     try {

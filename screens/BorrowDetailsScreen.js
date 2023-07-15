@@ -22,6 +22,7 @@ import {requestLoan} from '../services/kycService';
 import {AddLoan} from '../services/userService';
 import {sendNotification} from '../services/dataService';
 import TermsAndConditionModle from '../components/TermsAndConditionModle';
+import {useDispatch, useSelector} from 'react-redux';
 
 const BorrowDetailsScreen = ({navigation}) => {
   const route = useRoute();
@@ -30,8 +31,9 @@ const BorrowDetailsScreen = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [isButtonActive, setIsButtonActive] = useState(false);
-  const {userInfo} = useContext(AuthContext);
+  //const {encodedToken} = useContext(AuthContext);
   const [modalVisible, setModalVisible] = useState(false);
+  const encodedToken = useSelector(state => state.auth.encodedToken);
 
   const openModal = () => {
     setModalVisible(true);
@@ -42,12 +44,12 @@ const BorrowDetailsScreen = ({navigation}) => {
   };
 
   const parameters = {
-    contact: userInfo.whatsAppContact,
+    contact: encodedToken.whatsAppContact,
     amount: loanData.selectedLoan,
   };
 
   const loanParameters = {
-    _id: userInfo._id,
+    _id: encodedToken._id,
     principal: loanData.selectedLoan,
     interestRate: loanData.interestRate,
     loanLife: loanData.lifeLoan,
@@ -58,7 +60,7 @@ const BorrowDetailsScreen = ({navigation}) => {
   const notificationParameters = {
     title: 'Borrowed',
     message: `Congratulations! Your loan application has been approved. Loan Amount: ugx ${loanData.selectedLoan} and you have Signed the  attached agreement and conditions for the loan.`,
-    userID: userInfo._id,
+    userID: encodedToken._id,
   };
 
   const handleRequestLoan = async () => {
@@ -155,7 +157,7 @@ const BorrowDetailsScreen = ({navigation}) => {
                 Your Email
               </Text>
 
-              <Text className="ml-3 font-bold ">{userInfo.email}</Text>
+              <Text className="ml-3 font-bold ">{encodedToken.email}</Text>
               <View className="border-[#0d1c64]  border-b w-full" />
             </View>
 
@@ -173,7 +175,9 @@ const BorrowDetailsScreen = ({navigation}) => {
                 your source of income
               </Text>
 
-              <Text className="ml-3 font-bold ">{userInfo.incomeSource}</Text>
+              <Text className="ml-3 font-bold ">
+                {encodedToken.incomeSource}
+              </Text>
               <View className="border-[#0d1c64]  border-b w-full" />
             </View>
 
@@ -182,7 +186,7 @@ const BorrowDetailsScreen = ({navigation}) => {
                 Residence
               </Text>
 
-              <Text className="ml-3 font-bold ">{userInfo.location}</Text>
+              <Text className="ml-3 font-bold ">{encodedToken.location}</Text>
               <View className="border-[#0d1c64]  border-b w-full" />
             </View>
             <View className="flex flex-col space-y-1 w-full px-3 my-2">
@@ -190,7 +194,9 @@ const BorrowDetailsScreen = ({navigation}) => {
                 Primary phone
               </Text>
 
-              <Text className="ml-3 font-bold">{userInfo.whatsAppContact}</Text>
+              <Text className="ml-3 font-bold">
+                {encodedToken.whatsAppContact}
+              </Text>
 
               <View className="border-[#0d1c64]  border-b w-full" />
             </View>

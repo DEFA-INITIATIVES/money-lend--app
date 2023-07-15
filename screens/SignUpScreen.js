@@ -40,6 +40,7 @@ import AppFormSecondEmergencyContact from '../components/forms/AppFormSecondEmer
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label('Email'),
+
   password: Yup.string().required().min(4).label('Password'),
   name: Yup.string().required().label('Name'),
   ninNumber: Yup.string().required().label('NinNumber'),

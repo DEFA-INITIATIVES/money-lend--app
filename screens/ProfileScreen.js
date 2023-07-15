@@ -1,5 +1,6 @@
 import {View, Text, SafeAreaView, Image, TouchableOpacity} from 'react-native';
-import React, {useContext} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import React, {useState} from 'react';
 import {
   ArrowRightCircleIcon,
   ArrowRightIcon,
@@ -11,9 +12,18 @@ import {
 } from 'react-native-heroicons/outline';
 import Bottombar from '../components/Bottombar';
 import {AuthContext} from '../context/AuthContext';
+import {logout} from '../redux/slices/authSlice';
 
 const ProfileScreen = ({navigation}) => {
-  const {logout, userInfo} = useContext(AuthContext);
+  //const {logout, userInfo} = useContext(AuthContext);
+  const dispatch = useDispatch();
+
+  const encodedToken = useSelector(state => state.auth.encodedToken);
+  //console.log(encodedToken);
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
   return (
     <SafeAreaView className="bg-[#f5f5f5]  h-full w-full">
       <Text className=" text-black  font-semibold m-2 text-[25px]  font-sans pl-3">
@@ -31,16 +41,15 @@ const ProfileScreen = ({navigation}) => {
           </View>
           <View className="flex-1 ml-5">
             <Text className="text-white  font-bold text-[17px]">
-              {userInfo.name}
+              {encodedToken.name}
             </Text>
             <Text className="text-white  font-bold text-[13px]">
-              {userInfo.email}
+              {encodedToken.email}
             </Text>
           </View>
           <PencilIcon size={20} color="white" className="" />
         </View>
       </View>
-
       <View className="w-82   m-2 h-80 shadow-3xlg shadow-white bg-white rounded-[5px]">
         <View className="flex-row items-center  m-5">
           <View className="w-10 h-10 bg-gray-300 rounded-full items-center justify-center">
@@ -66,7 +75,7 @@ const ProfileScreen = ({navigation}) => {
         </View>
         <TouchableOpacity
           className="flex-row items-center  m-5"
-          onPress={() => logout()}>
+          onPress={handleLogout}>
           <View className="w-10 h-10 bg-gray-300 rounded-full items-center justify-center">
             <ArrowRightOnRectangleIcon color="#0d1c64" />
           </View>
@@ -79,7 +88,6 @@ const ProfileScreen = ({navigation}) => {
         </TouchableOpacity>
       </View>
       <Text className="text-black font-bold text-[15px] pl-3"> More</Text>
-
       <View className="w-82   m-2 h-40 flex-1 shadow-3xlg shadow-white bg-white rounded-[5px]">
         <View className="flex-row items-center  m-5">
           <View className="w-10 h-10 bg-gray-300 rounded-full items-center justify-center">

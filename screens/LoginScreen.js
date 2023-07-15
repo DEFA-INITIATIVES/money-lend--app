@@ -6,6 +6,8 @@ import {
   Image,
   Alert,
 } from 'react-native';
+import jwt_decode from 'jwt-decode';
+import {useDispatch, useSelector} from 'react-redux';
 import React, {useContext, useState} from 'react';
 import {EnvelopeIcon, PhoneIcon} from 'react-native-heroicons/outline';
 import {LockClosedIcon} from 'react-native-heroicons/outline';
@@ -15,6 +17,11 @@ import {AppForm, AppFormField, SubmitButton} from '../components/forms';
 import {authenticateUser} from '../services/userService';
 import AppFormPassword from '../components/forms/AppFormPassword';
 import AppFormContact from '../components/forms/AppFormContact';
+import {
+  loginRequest,
+  loginSuccess,
+  setEncodedToken,
+} from '../redux/slices/authSlice';
 
 const validationSchema = Yup.object().shape({
   whatsAppContact: Yup.string().required().label('whatsAppContact'),
@@ -23,23 +30,37 @@ const validationSchema = Yup.object().shape({
 
 const LoginScreen = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(false);
-  const {login} = useContext(AuthContext);
+  const dispatch = useDispatch();
+
+  //const {login} = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(true);
+  //const isLoading = useSelector(state => state.auth.isLoading);
+  const error = useSelector(state => state.auth.error);
 
   const toggleVisibility = () => {
     setShowPassword(!showPassword);
   };
 
   const handleLogin = async values => {
+    //dispatch(loginRequest());
     setIsLoading(true);
 
     try {
-      setIsLoading(true);
+      //dispatch(loginRequest());
+      //setIsLoading(false);
       const {data: token} = await authenticateUser(values);
-      // console.log('RETURNED Data : ', data);
-      login({token});
+      console.log('RETURNED Data : .............', token);
+      const encodedToken = jwt_decode(token);
+
+      // login({token});
+      dispatch(loginSuccess(token));
+      dispatch(setEncodedToken(encodedToken));
+
+      // dispatch(loginRequest());
       setIsLoading(false);
     } catch (ex) {
+      // dispatch(loginRequest());
+      // dispatch(loginSuccess());
       setIsLoading(false);
 
       if (ex.response && ex.response.status === 400) {

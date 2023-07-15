@@ -6,15 +6,17 @@ import Bottombar from '../components/Bottombar';
 import {getMessages} from '../services/dataService';
 import {AuthContext} from '../context/AuthContext';
 import {BellAlertIcon} from 'react-native-heroicons/solid';
+import {useDispatch, useSelector} from 'react-redux';
 
 const MessageScreen = ({navigation}) => {
-  const {userInfo} = useContext(AuthContext);
+  // const {encodedToken} = useContext(AuthContext);
+  const encodedToken = useSelector(state => state.auth.encodedToken);
 
   const [notifications, setNotifications] = useState([]);
 
   const getNotifications = async () => {
     const parameters = {
-      _id: userInfo._id,
+      _id: encodedToken._id,
     };
     try {
       const {data} = await getMessages(parameters);
