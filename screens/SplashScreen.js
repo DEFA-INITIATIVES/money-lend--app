@@ -1,13 +1,87 @@
-import {View, Text, Image, SafeAreaView, TouchableOpacity} from 'react-native';
-import React, { useEffect } from 'react';
+import {
+  View,
+  Text,
+  Image,
+  SafeAreaView,
+  TouchableOpacity,
+  PermissionsAndroid,
+  Platform,
+} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import {ArrowRightIcon} from 'react-native-heroicons/outline';
+import Geolocation from 'react-native-geolocation-service';
+import Contacts from 'react-native-contacts';
 
-const SplashScreen = ({ navigation }) => {
- 
+const SplashScreen = ({navigation}) => {
+  const [location, setLocation] = useState(false);
+  const [currentLongitude, setCurrentLongitude] = useState('...');
+
+  const requestContactsPermission = async () => {
+    try {
+      const granted = await Contacts.requestPermission();
+      if (granted === 'authorized') {
+        Contacts.getAll((err, contacts) => {
+          if (err) {
+            console.warn(err);
+          } else {
+            console.log(contacts);
+          }
+        });
+      } else {
+        console.log('Contacts permission denied');
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+
+  const requestLocationPermission = async () => {
+    if (Platform.OS === 'android') {
+      try {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+          {
+            title: 'Location Permission',
+            message: 'We need your permission to access your location.',
+            buttonNeutral: 'Ask Me Later',
+            buttonNegative: 'Cancel',
+            buttonPositive: 'OK',
+          },
+        );
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          Geolocation.getCurrentPosition(
+            position => {
+              const {latitude, longitude} = position.coords;
+              console.log('Latitude: ', latitude);
+              console.log('Longitude: ', longitude);
+            },
+            error => {
+              console.log(error.code, error.message);
+            },
+            {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+          );
+        } else {
+          console.log('Location permission denied');
+        }
+      } catch (err) {
+        console.warn(err);
+      }
+    }
+  };
+
+  // useEffect(() => {
+
+  // }, []);
+
+  useEffect(() => {
+    // requestContactsPermission();
+    requestLocationPermission();
+  }, []);
+
   useEffect(() => {
     setTimeout(() => {
       navigation.navigate('Login');
-    }, 4000);
+    }, 5000);
   }, []);
 
   return (

@@ -6,9 +6,8 @@ import {
   ScrollView,
   Image,
   Alert,
-  PermissionsAndroid,
 } from 'react-native';
-import Geolocation from 'react-native-geolocation-service';
+
 import React, {useState, useContext, useEffect} from 'react';
 import {
   CurrencyDollarIcon,
@@ -38,8 +37,6 @@ import {getStaticData} from '../services/dataService';
 import AppFormEmergencyContact from '../components/forms/AppFormEmergencyContact';
 import {Picker} from '@react-native-picker/picker';
 import AppFormSecondEmergencyContact from '../components/forms/AppFormSecondEmergencyContact';
-import {PERMISSIONS, request} from 'react-native-permissions';
-import AppFormPicker from '../components/forms/AppFormPicker';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label('Email'),
@@ -67,98 +64,26 @@ const SignUpScreen = ({navigation}) => {
   const [submitted, setSubmitted] = useState(false);
   const [kycUri, setKycUri] = useState({});
   const [location, setLocation] = useState(false);
-  const [currentLongitude, setCurrentLongitude] = React.useState('...');
+  const [currentLongitude, setCurrentLongitude] = useState('...');
 
-  //get current location
-  const getLocation = () => {
-    //checking if location permission is granted
-
-    if (location) {
-      //get current location
-      Geolocation.getCurrentPosition(
-        //Will give you the current location
-        position => {
-          //getting the Longitude from the location json
-          const currentLongitude = JSON.stringify(position.coords.longitude);
-
-          //getting the Latitude from the location json
-          const currentLatitude = JSON.stringify(position.coords.latitude);
-
-          //Setting Longitude state
-          setCurrentLongitude(currentLongitude);
-
-          //Setting Longitude state
-          setCurrentLongitude(currentLatitude);
-        },
-      );
-    } else {
-      //if location permission is not granted
-      //ask for permission
-      askForLocationPermission();
-    }
-  };
-
-  //request for android location permission
-  const askForLocationPermission = async () => {
-    try {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-        {
-          title: 'Location Permission',
-          message: 'This app needs access to your location',
-          buttonNeutral: 'Ask Me Later',
-          buttonNegative: 'Cancel',
-          buttonPositive: 'OK',
-        },
-      );
-      if (granted == PermissionsAndroid.RESULTS.GRANTED) {
-        //console.log('You can use the location');
-        //setLocation(true);
-        Geolocation.getCurrentPosition(
-          //Will give you the current location
-          position => {
-            //getting the Longitude from the location json
-            const currentLongitude = JSON.stringify(position.coords.longitude);
-
-            //getting the Latitude from the location json
-            const currentLatitude = JSON.stringify(position.coords.latitude);
-
-            //Setting Longitude state
-            setCurrentLongitude(currentLongitude);
-
-            //Setting Longitude state
-            setCurrentLongitude(currentLatitude);
-          },
-        );
-      } else {
-        //console.log('Location permission denied');
-        Alert.alert('Location Permission Denied');
-      }
-    } catch (err) {
-      console.warn(err);
-    }
-  };
-
-  //check for location permission
-
-  async function checkLocationPermission() {
-    try {
-      const granted = await PermissionsAndroid.check(
-        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-      );
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        //console.log('You can use the location');
-        setLocation(true);
-      } else {
-        //console.log('Location permission denied');
-        askForLocationPermission();
-      }
-    } catch (err) {
-      console.warn(err);
-    }
-  }
-
-  // console.log(userToken);
+  // const requestContactsPermission = async () => {
+  //   try {
+  //     const granted = await Contacts.requestPermission();
+  //     if (granted === 'authorized') {
+  //       Contacts.getAll((err, contacts) => {
+  //         if (err) {
+  //           console.warn(err);
+  //         } else {
+  //           console.log(contacts);
+  //         }
+  //       });
+  //     } else {
+  //       console.log('Contacts permission denied');
+  //     }
+  //   } catch (err) {
+  //     console.warn(err);
+  //   }
+  // };
 
   const toggleVisibility = () => {
     setShowPassword(!showPassword);
@@ -167,7 +92,6 @@ const SignUpScreen = ({navigation}) => {
   const handelRegister = async values => {
     if (incomeRange === '') return Alert.alert('Income Range not specified. ');
 
-    checkLocationPermission();
     setIsLoading(true);
 
     console.log('values needed', values);
@@ -409,9 +333,7 @@ const SignUpScreen = ({navigation}) => {
 
               <Picker
                 selectedValue={incomeRange}
-                onValueChange={(itemValue, itemIndex) =>
-                  setIncomeRange(itemValue)
-                }>
+                onValueChange={itemValue => setIncomeRange(itemValue)}>
                 <Picker.Item label="Select income group" value="" />
                 <Picker.Item label="1,000 - 10,000" value="10000" />
                 <Picker.Item label="11,000 - 50,000" value="50,000" />
