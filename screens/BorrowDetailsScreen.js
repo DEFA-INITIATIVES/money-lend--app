@@ -44,23 +44,23 @@ const BorrowDetailsScreen = ({navigation}) => {
   };
 
   const parameters = {
-    contact: encodedToken.whatsAppContact,
+    contact: encodedToken?.whatsAppContact,
     amount: loanData.selectedLoan,
   };
 
   const loanParameters = {
-    _id: encodedToken._id,
-    principal: loanData.selectedLoan,
-    interestRate: loanData.interestRate,
-    loanLife: loanData.lifeLoan,
-    modeOfPayment: loanData.modeOfPayment,
+    _id: encodedToken?._id,
+    principal: loanData?.selectedLoan,
+    interestRate: loanData?.interestRate,
+    loanLife: loanData?.lifeLoan,
+    modeOfPayment: loanData?.modeOfPayment,
     reason: reason,
   };
 
   const notificationParameters = {
     title: 'Borrowed',
     message: `Congratulations! Your loan application has been approved. Loan Amount: ugx ${loanData.selectedLoan} and you have Signed the  attached agreement and conditions for the loan.`,
-    userID: encodedToken._id,
+    userID: encodedToken?._id,
   };
 
   const handleRequestLoan = async () => {
@@ -118,6 +118,7 @@ const BorrowDetailsScreen = ({navigation}) => {
     setIsButtonActive(!isChecked);
   };
 
+  console.log('hello...', encodedToken);
   return (
     <SafeAreaView className="flex-1">
       <View className="">
@@ -157,7 +158,7 @@ const BorrowDetailsScreen = ({navigation}) => {
                 Your Email
               </Text>
 
-              <Text className="ml-3 font-bold ">{encodedToken.email}</Text>
+              <Text className="ml-3 font-bold ">{encodedToken?.email}</Text>
               <View className="border-[#0d1c64]  border-b w-full" />
             </View>
 
@@ -176,7 +177,7 @@ const BorrowDetailsScreen = ({navigation}) => {
               </Text>
 
               <Text className="ml-3 font-bold ">
-                {encodedToken.incomeSource}
+                {encodedToken?.incomeSource}
               </Text>
               <View className="border-[#0d1c64]  border-b w-full" />
             </View>
@@ -186,7 +187,7 @@ const BorrowDetailsScreen = ({navigation}) => {
                 Residence
               </Text>
 
-              <Text className="ml-3 font-bold ">{encodedToken.location}</Text>
+              <Text className="ml-3 font-bold ">{encodedToken?.location}</Text>
               <View className="border-[#0d1c64]  border-b w-full" />
             </View>
             <View className="flex flex-col space-y-1 w-full px-3 my-2">
@@ -195,7 +196,7 @@ const BorrowDetailsScreen = ({navigation}) => {
               </Text>
 
               <Text className="ml-3 font-bold">
-                {encodedToken.whatsAppContact}
+                {encodedToken?.whatsAppContact}
               </Text>
 
               <View className="border-[#0d1c64]  border-b w-full" />

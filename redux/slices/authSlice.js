@@ -5,7 +5,6 @@ const initialState = {
   encodedToken: null,
   isLoading: false,
   error: null,
-  getdaata: null,
 };
 
 const authSlice = createSlice({
