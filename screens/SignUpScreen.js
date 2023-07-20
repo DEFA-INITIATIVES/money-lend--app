@@ -6,6 +6,8 @@ import {
   ScrollView,
   Image,
   Alert,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 
 import React, {useState, useContext, useEffect} from 'react';
@@ -21,7 +23,6 @@ import {
   PencilSquareIcon,
 } from 'react-native-heroicons/outline';
 import * as Yup from 'yup';
-import {AuthContext} from '../context/AuthContext';
 import {AppForm, AppFormField, SubmitButton} from '../components/forms';
 import AppFormPassword from '../components/forms/AppFormPassword';
 import {
@@ -37,9 +38,12 @@ import {getStaticData} from '../services/dataService';
 import AppFormEmergencyContact from '../components/forms/AppFormEmergencyContact';
 import {Picker} from '@react-native-picker/picker';
 import AppFormSecondEmergencyContact from '../components/forms/AppFormSecondEmergencyContact';
-
+import {useDispatch} from 'react-redux';
+import {setEncodedToken, signupSuccess} from '../redux/slices/authSlice';
+import jwt_decode from 'jwt-decode';
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label('Email'),
+
   password: Yup.string().required().min(4).label('Password'),
   name: Yup.string().required().label('Name'),
   ninNumber: Yup.string().required().label('NinNumber'),
@@ -59,31 +63,14 @@ const SignUpScreen = ({navigation}) => {
   const [validSecondEmergencyContact, setValidSecondEmergencyContact] =
     useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const {register} = useContext(AuthContext);
+
+  //const {register} = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(true);
   const [submitted, setSubmitted] = useState(false);
   const [kycUri, setKycUri] = useState({});
   const [location, setLocation] = useState(false);
   const [currentLongitude, setCurrentLongitude] = useState('...');
-
-  // const requestContactsPermission = async () => {
-  //   try {
-  //     const granted = await Contacts.requestPermission();
-  //     if (granted === 'authorized') {
-  //       Contacts.getAll((err, contacts) => {
-  //         if (err) {
-  //           console.warn(err);
-  //         } else {
-  //           console.log(contacts);
-  //         }
-  //       });
-  //     } else {
-  //       console.log('Contacts permission denied');
-  //     }
-  //   } catch (err) {
-  //     console.warn(err);
-  //   }
-  // };
+  const dispatch = useDispatch();
 
   const toggleVisibility = () => {
     setShowPassword(!showPassword);
@@ -148,8 +135,15 @@ const SignUpScreen = ({navigation}) => {
           // console.log('register body', registerParams);
 
           const {data: token} = await registerUser(registerParams);
+          const encodedToken = jwt_decode(token);
 
-          register({token});
+          //register({token});
+          dispatch(signupSuccess(token));
+          console.log(' tonennenen.....', token);
+          dispatch(setEncodedToken(encodedToken));
+
+          console.log(' data  endcoded back', encodedToken);
+
           setIsLoading(false);
         } catch (ex) {
           setIsLoading(false);

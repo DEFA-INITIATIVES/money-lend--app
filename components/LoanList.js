@@ -6,6 +6,7 @@ import {BASE_URL} from '../config';
 import moment from 'moment';
 import {ActivityIndicator} from 'react-native-paper';
 import {AuthContext} from '../context/AuthContext';
+import {useDispatch, useSelector} from 'react-redux';
 
 const Item = ({
   createdAt,
@@ -15,7 +16,7 @@ const Item = ({
   minimumCredit,
   minimumValidation,
   type,
-  userInfo,
+  encodedToken,
   getnavigation,
 }) => (
   <View>
@@ -31,7 +32,7 @@ const Item = ({
             {minimumValidation} -{maximumValidation} days
           </Text>
 
-          {!userInfo?.loanDetails[0]?.dueAmount && (
+          {!encodedToken?.loanDetails[0]?.dueAmount && (
             <Text
               onPress={getnavigation}
               className="text-white  bg-[#0d1c64]  w-14 rounded justify-center items-center p-2 ml-3">
@@ -43,7 +44,7 @@ const Item = ({
         <View className="w-full border-b border-gray-300" />
 
         <Text>
-          {userInfo?.loanDetails[0]?.dueAmount && (
+          {encodedToken?.loanDetails[0]?.dueAmount && (
             <Text className="text-sm font-semibold text-red-700  p-2 ml-3">
               clear pending Loan Balance to re apply.
             </Text>
@@ -68,12 +69,13 @@ const Item = ({
 );
 
 const LoanList = () => {
-  const {userInfo} = useContext(AuthContext);
+  // const {userInfo} = useContext(AuthContext);
   const [applybtn, setApplybtn] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const navigation = useNavigation();
   const [data, setData] = useState(null);
   const [isLoading, setLoading] = useState(false);
+  const encodedToken = useSelector(state => state.auth.encodedToken);
 
   useEffect(() => {
     setLoading(true);
@@ -112,7 +114,9 @@ const LoanList = () => {
     </View>
   ) : (
     <FlatList
-      data={userInfo?.creditScore === 1 ? data?.slice(0, 1) : data?.slice(0, 2)}
+      data={
+        encodedToken?.creditScore === 1 ? data?.slice(0, 1) : data?.slice(0, 2)
+      }
       renderItem={({item}) => (
         <Item
           createdAt={item.createdAt}
@@ -122,7 +126,7 @@ const LoanList = () => {
           minimumCredit={item.minimumCredit?.toLocaleString()}
           minimumValidation={item.minimumValidation}
           type={item.type}
-          userInfo={userInfo}
+          encodedToken={encodedToken}
           applybtn={applybtn}
           setApplybtn={setApplybtn}
           getnavigation={() => navigation.navigate('Borrow', {item})}

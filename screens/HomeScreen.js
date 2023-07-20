@@ -14,15 +14,19 @@ import {getStaticData} from '../services/dataService';
 import {AuthContext} from '../context/AuthContext';
 import {numberWithCommas} from '../utlis/helper';
 import {availableCredit} from '../services/kycService';
+import {useDispatch, useSelector} from 'react-redux';
+import {allgetStaticData} from '../redux/slices/dataSlice';
 
 const HomeScreen = ({navigation}) => {
-  const {getData, staticData} = useContext(AuthContext);
+  //const {getData, staticData} = useContext(AuthContext);
   const [refresh, setRefresh] = useState(false);
-  const {logout, userInfo} = useContext(AuthContext);
+  const encodedToken = useSelector(state => state.auth.encodedToken);
+  // const {logout, userInfo} = useContext(AuthContext);
+  const dispatch = useDispatch();
   useEffect(() => {
     const receiveStaticData = async () => {
       const {data} = await getStaticData();
-      getData(data[0]);
+      dispatch(allgetStaticData(data[0]));
       console.log(' my available money ', data);
       // const {data} = await availableCredit();
       // getData(data.amount);
@@ -30,7 +34,7 @@ const HomeScreen = ({navigation}) => {
     };
     receiveStaticData();
   }, [refresh]);
-  console.log('hello', staticData);
+  // console.log('hello', staticData);
   return (
     <View className="flex-1 bg-white">
       <View className="">
@@ -51,8 +55,8 @@ const HomeScreen = ({navigation}) => {
           <Text className="text-white px-4 mt-7 text-[14px]">Due Amount</Text>
           <View className="flex-row">
             <Text className="text-white px-4  text-[30px] font-extrabold flex-1">
-              {userInfo?.loanDetails[0]?.dueAmount > 0
-                ? userInfo?.loanDetails[0]?.dueAmount?.toLocaleString()
+              {encodedToken?.loanDetails[0]?.dueAmount > 0
+                ? encodedToken?.loanDetails[0]?.dueAmount?.toLocaleString()
                 : 0}
               .00
             </Text>
