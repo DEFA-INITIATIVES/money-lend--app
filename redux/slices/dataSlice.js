@@ -1,15 +1,15 @@
 import {createSlice} from '@reduxjs/toolkit';
 
 const initialState = {
-  geteData: null,
+  getData: null,
 };
 
 const allData = createSlice({
   name: 'data',
   initialState,
   reducers: {
-    allgetStaticData: (state, action) => {
-      state.geteData = action.payload;
+    getStaticData: (state, action) => {
+      state.getData = action.payload;
     },
   },
 });
