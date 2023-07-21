@@ -7,9 +7,11 @@ import {
   MegaphoneIcon,
 } from 'react-native-heroicons/outline';
 import {AuthContext} from '../context/AuthContext';
+import {useDispatch, useSelector} from 'react-redux';
 
 const Bottombar = ({borrow, navigation}) => {
-  //const {userInfo} = useContext(AuthContext);
+    const encodedToken = useSelector(state => state.auth.encodedToken);
+
   return (
     <View
       className={`${
@@ -29,14 +31,14 @@ const Bottombar = ({borrow, navigation}) => {
         <MegaphoneIcon size={24} color="white" />
         <Text className="text-white">Notifications</Text>
       </TouchableOpacity>
-      {/* //{userInfo?.loanDetails[0]?.dueAmount > 0 && (
+       {encodedToken?.loanDetails[0]?.dueAmount > 0 && (
         <TouchableOpacity
           className="items-center"
           onPress={() => navigation.navigate('Pay')}>
           <CurrencyDollarIcon size={24} color="white" />
           <Text className="text-white">pay</Text>
         </TouchableOpacity>
-      )} */}
+      )}
 
       <TouchableOpacity
         className="items-center"

@@ -87,7 +87,7 @@ const BorrowScreen = ({navigation}) => {
     const loanData = {
       selectedLoan: selectedLoan,
       lifeLoan: lifeLoan,
-      interestRate: item.dailyInterest,
+      interestRate: lifeLoan === 1 ? item.dailyInterest : weeklyInterest,
       modeOfPayment: lifeLoan,
     };
 

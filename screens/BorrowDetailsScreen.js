@@ -23,6 +23,7 @@ import {AddLoan} from '../services/userService';
 import {sendNotification} from '../services/dataService';
 import TermsAndConditionModle from '../components/TermsAndConditionModle';
 import {useDispatch, useSelector} from 'react-redux';
+import {setEncodedToken} from'../redux/slices/authSlice'
 
 const BorrowDetailsScreen = ({navigation}) => {
   const route = useRoute();
@@ -34,6 +35,8 @@ const BorrowDetailsScreen = ({navigation}) => {
   //const {encodedToken} = useContext(AuthContext);
   const [modalVisible, setModalVisible] = useState(false);
   const encodedToken = useSelector(state => state.auth.encodedToken);
+
+  const dispatch = useDispatch()
 
   const openModal = () => {
     setModalVisible(true);
@@ -59,7 +62,7 @@ const BorrowDetailsScreen = ({navigation}) => {
 
   const notificationParameters = {
     title: 'Borrowed',
-    message: `Congratulations! Your loan application has been approved. Loan Amount: ugx ${loanData.selectedLoan} and you have Signed the  attached agreement and conditions for the loan.`,
+    message: `Congratulations! Your loan application has been approved. Loan Amount: ugx ${loanData.selectedLoan} valid for a ${loanData.lifeLoan === 1 ? "day": "week"} at an interest of ${loanData.interestRate} and you have Signed the  attached agreement and conditions for the loan.`,
     userID: encodedToken?._id,
   };
 
@@ -87,14 +90,14 @@ const BorrowDetailsScreen = ({navigation}) => {
         const {data: newUserData} = await AddLoan(loanParameters);
 
         console.log('***New User Data*****:', newUserData);
-
+        dispatch(setEncodedToken(newUserData));
         console.log('--------Sending  notification to the user -----------');
         // Send Notification...
         const {data: notification} = await sendNotification(
           notificationParameters,
         );
 
-        console.log('***NOTIFICATION****:', notification);
+        console.log('***NOTIFICATION SENT****:', notification);
       }
 
       // Alert The user ...
@@ -119,6 +122,8 @@ const BorrowDetailsScreen = ({navigation}) => {
   };
 
   console.log('hello...', encodedToken);
+  console.log("Loan Life",loanData.lifeLoan);
+  console.log("Interest Rate",loanData.interestRate);
   return (
     <SafeAreaView className="flex-1">
       <View className="">

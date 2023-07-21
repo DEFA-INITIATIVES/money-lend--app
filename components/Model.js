@@ -9,27 +9,36 @@ import {
 import React, {useState, useContext} from 'react';
 import Modal from 'react-native-modal';
 import {XMarkIcon} from 'react-native-heroicons/outline';
-import {makePayment} from '../services/kycService';
+import {makePayment, sendOTP } from '../services/kycService';
 import {sendNotification} from '../services/dataService';
 import {AuthContext} from '../context/AuthContext';
 import {payLoan} from '../services/userService';
+import {useDispatch, useSelector} from 'react-redux';
+import {setEncodedToken} from'../redux/slices/authSlice'
 
 const ModalPopup = ({visible, onClose}) => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [amount, setAmount] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const {userInfo} = useContext(AuthContext);
+
+    const encodedToken = useSelector(state => state.auth.encodedToken);
+    const dispatch =useDispatch()
 
   const paymentParameters = {
-    _id: userInfo._id,
+    _id: encodedToken._id,
     contact: phoneNumber,
     amount: amount,
+  };
+
+  const OTpParameters = {
+    message : "1234",
+    number : phoneNumber
   };
 
   const notificationParameters = {
     title: 'Paid',
     message: ` Thank you for making your payment of ugx ${amount}. We really appreciate your promptness and support. Your payment helps us continue providing quality services. If you have any questions, feel free to reach out.`,
-    userID: userInfo._id,
+    userID: encodedToken._id,
   };
 
   const handlePayment = async () => {
@@ -42,28 +51,32 @@ const ModalPopup = ({visible, onClose}) => {
         console.log('***Response Body***:', data);
         console.log('KYC PAY OUT RESPONSE:', data.status);
 
-        if (data.status === 'Pending') {
-          console.log('KYC DEPOSIT RESPONSE : ', data.status);
-          try {
-            // save paid loan credentials...
-            const {data: newUserData} = await payLoan(paymentParameters);
-            console.log('****Payment New user Info***:', newUserData);
+        const { data:msg } = await sendOTP(OTpParameters);
+        console.log('KYC PAY OUT RESPONSE:', msg );
 
-            // Send Notification...
-            const {data: notification} = await sendNotification(
-              notificationParameters,
-            );
-
-            console.log('****Payment Notification***', notification);
-          } catch (ex) {
-            setIsLoading(false);
-
-            if (ex.response && ex.response.status === 400) {
-              console.log(ex.response.data);
-              Alert.alert(ex.response.data);
-            }
-          }
-        }
+//        if (data.status === 'Pending') {
+//          console.log('KYC DEPOSIT RESPONSE : ', data.status);
+//          try {
+//            // save paid loan credentials...
+//            const {data: newUserData} = await payLoan(paymentParameters);
+//            console.log('****Payment New user Info***:', newUserData);
+//
+//            dispatch(setEncodedToken(newUserData));
+//            // Send Notification...
+//            const {data: notification} = await sendNotification(
+//              notificationParameters,
+//            );
+//
+//            console.log('****Payment Notification***', notification);
+//          } catch (ex) {
+//            setIsLoading(false);
+//
+//            if (ex.response && ex.response.status === 400) {
+//              console.log(ex.response.data);
+//              Alert.alert(ex.response.data);
+//            }
+//          }
+//        }
       } catch (ex) {
         setIsLoading(false);
 

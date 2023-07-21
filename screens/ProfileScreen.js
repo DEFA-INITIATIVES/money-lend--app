@@ -15,7 +15,6 @@ import {AuthContext} from '../context/AuthContext';
 import {logout} from '../redux/slices/authSlice';
 
 const ProfileScreen = ({navigation}) => {
-  //const {logout, userInfo} = useContext(AuthContext);
   const dispatch = useDispatch();
 
   const encodedToken = useSelector(state => state.auth.encodedToken);

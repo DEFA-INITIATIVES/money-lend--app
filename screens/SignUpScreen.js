@@ -153,8 +153,9 @@ const SignUpScreen = ({navigation}) => {
           }
         }
       } else {
-        Alert.alert('Provide Valid Phone Number And Nin Number');
         setIsLoading(false);
+        Alert.alert('Provide Valid Phone Number And Nin Number');
+
       }
     }
   };
@@ -163,10 +164,12 @@ const SignUpScreen = ({navigation}) => {
     const receiveStaticData = async () => {
       const {data} = await getStaticData();
       setKycUri(data[0]);
+//      console.log("INCOME RANGES", data[0].incomeRanges);
     };
     receiveStaticData();
   });
 
+//console.log(kycUri);
   return (
     <SafeAreaView>
       <ScrollView>
@@ -329,10 +332,9 @@ const SignUpScreen = ({navigation}) => {
                 selectedValue={incomeRange}
                 onValueChange={itemValue => setIncomeRange(itemValue)}>
                 <Picker.Item label="Select income group" value="" />
-                <Picker.Item label="1,000 - 10,000" value="10000" />
-                <Picker.Item label="11,000 - 50,000" value="50,000" />
-                <Picker.Item label="51,000 - 100,000" value="100,000" />
-                <Picker.Item label="110,000 - 200,000" value="200,000" />
+                { kycUri?.incomeRanges?.map((category) => (
+                <Picker.Item key = {category._id} label={category.range} value={category.value.toString()} />
+                ))}
               </Picker>
 
               <View className="border-[#0d1c64]  border-b w-full" />
